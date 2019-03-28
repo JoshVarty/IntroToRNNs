@@ -1,24 +1,72 @@
 <html>
 <head>
+    <style>
+        pre { 
+            background: #1e1e1e;
+            padding: 15px;
+            color: #dfdfdf;
+        }
+
+        .comment {
+            color: #688e49;
+        }
+
+        .for {
+            color: #b680ba;
+        }
+
+        .in {
+            color: #5b94cf;
+        }
+
+    </style>
 </head>
 <body>
 
 
     <p>test</p>
     <p>
-       <code>
-xs, hs, ys, ps = {}, {}, {}, {}<br/>
-hs[-1] = np.copy(hprev)<br/>
+       <pre>
+xs, hidden_states, outputs, probabilities = {}, {}, {}, {} 
+hidden_states[-1] = np.copy(hidden_state_prev)
 loss = 0
-# forward pass
-for t in range(len(inputs)):
-    xs[t] = np.zeros((vocab_size,1)) # one-hot-encoding
-    xs[t][inputs[t]] = 1
-    hs[t] = np.tanh(input_weights_U @ xs[t] + hidden_weights_W @ hs[t-1] + hidden_bias) # hidden state
-    ys[t] = output_weights_V @ hs[t] + output_bias # unnormalized log probabilities for next chars
-    ps[t] = np.exp(ys[t]) / np.sum(np.exp(ys[t])) # probabilities for next chars
-    loss += -np.log(ps[t][targets[t],0]) # softmax (cross-entropy loss)
-       </code> 
+<span class="for">for</span> t <span class="in">in</span> range(len(inputs)): 
+    <span class="comment"># one-hot-encoding the input character</span> 
+    xs[t] = np.zeros((vocab_size,1))  
+    character = inputs[t]
+    xs[t][character] = 1 
+    <span class="comment"># Compute hidden state </span>
+    hidden_states[t] = np.tanh(input_weights_U @ xs[t] + hidden_weights_W @ hidden_states[t-1] + hidden_bias) 
+    <span class="comment"># Compute output and probabilities</span>
+    outputs[t] = output_weights_V @ hidden_states[t] + output_bias
+    probabilities[t] = np.exp(outputs[t]) / np.sum(np.exp(outputs[t]))
+    <span class="comment">#Compute cross-entropy loss</span>
+    loss += -np.log(probabilities[t][targets[t],0]) 
+       </pre> 
     </p>
+
+    <svg width =900 height=400>
+
+    </svg>
+
+
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript">
+    
+    function x (i) {
+	    return 120 + i * 40;
+    }
+
+    d3.select("svg").selectAll("rect").data([0,14]).enter().append("rect")
+			.attr("x", function (d,i) { 
+                    return x(d)-25;
+                })
+            .attr("y",50)
+            .attr("style", "fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)")
+			.attr("width",150).attr("height",0)
+			.transition().delay(function(d,i){return i*500;}).duration(500)
+			.attr("height",150);
+    </script>
 </body>
 </html>

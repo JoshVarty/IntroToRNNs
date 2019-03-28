@@ -6,7 +6,7 @@ import numpy as np
 np.random.seed(42)
 
 # data I/O
-data = open('new.txt', 'r').read() # should be simple plain text file
+data = open('simple_pattern.txt', 'r').read() # should be simple plain text file
 chars = list(set(data))
 data_size = len(data)
 vocab_size = len(chars)
