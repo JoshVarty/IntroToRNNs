@@ -1,0 +1,24 @@
+<html>
+<head>
+</head>
+<body>
+
+
+    <p>test</p>
+    <p>
+       <code>
+xs, hs, ys, ps = {}, {}, {}, {}<br/>
+hs[-1] = np.copy(hprev)<br/>
+loss = 0
+# forward pass
+for t in range(len(inputs)):
+    xs[t] = np.zeros((vocab_size,1)) # one-hot-encoding
+    xs[t][inputs[t]] = 1
+    hs[t] = np.tanh(input_weights_U @ xs[t] + hidden_weights_W @ hs[t-1] + hidden_bias) # hidden state
+    ys[t] = output_weights_V @ hs[t] + output_bias # unnormalized log probabilities for next chars
+    ps[t] = np.exp(ys[t]) / np.sum(np.exp(ys[t])) # probabilities for next chars
+    loss += -np.log(ps[t][targets[t],0]) # softmax (cross-entropy loss)
+       </code> 
+    </p>
+</body>
+</html>
