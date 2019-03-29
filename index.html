@@ -89,40 +89,47 @@
         var state = -1
         function goBack() {
             state = state - 1;
-            goState(state)
+            goState(state, false)
         }
 
         function goFoward() {
             state = state + 1;
-            goState(state)
+            goState(state, true)
         }
 
         function goState0(doTransition) {
 
             transition_dict = {}
             if (doTransition) {
-                //populate transition dict
+                transition_dict['startOpacity'] = 0
+                transition_dict['endOpacity'] = 1
             }
 
             placeRNNBlock(50, 50, transition_dict)
 
             var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-            placeTensor("U", 150, 155, U);
+            placeTensor("U", 150, 155, U, transition_dict);
         }
 
         function goState1(doTransition) {
 
-            goState0(doTransition=false);
+            goState0(false);
+
+            transition_dict = {}
+            if (doTransition) {
+                transition_dict['startOpacity'] = 0
+                transition_dict['endOpacity'] = 1
+            }
 
             var W = [[0.01579213, 0.00767435, -0.00469474],
             [0.0054256, -0.00463418, -0.0046573],
             [0.00241962, -0.0191328, -0.01724918]]
-            placeTensor("W", 30, 70, W);
+            placeTensor("W", 30, 70, W, transition_dict);
         }
 
         function goState2() {
 
-            goState1(doTransition=false)
+            goState1(false)
 
             transition_dict = {}
 
@@ -132,7 +139,7 @@
 
         function goState3() {
 
-            goState2(doTransition=false)
+            goState2(false)
 
             var output_weights = [[-0.00562288, -0.01012831, 0.00314247],
             [-0.00908024, -0.01412304, 0.01465649]]
@@ -140,33 +147,33 @@
         }
 
         function goState4() {
-            goState3(doTransition=false)
+            goState3(false)
 
             var output_bias = [[0, 0]]
             placeTensor_2Elements("", 215, 30, output_bias);
         }
 
         function goState5() {
-            goState4(doTransition=false)
+            goState4(false)
         }
 
         function goState6() {
-            goState5(doTransition=false)
+            goState5(false)
             placeText("loss", "0", 0, 20);
         }
 
         function goState7() {
-            goState6(doTransition=false)
+            goState6(false)
 
             var hidden_state_prev = [[0.0, 0.0, 0.0]]
             placeTensor("h", 0, 105, hidden_state_prev);
         }
 
         function goState8() {
-            goState7(doTransition=false)
+            goState7(false)
         }
 
-        function goState(state) {
+        function goState(state, doTransition) {
             //Clear the svg and but our arrowhead definitions
             d3.select("svg").selectAll("*").remove()
             d3.select("svg").append("defs")
@@ -191,52 +198,55 @@
             if (state == 0) {
                 var activeLine = document.getElementById("line1")
                 activeLine.setAttribute('class', 'active-line')
-                return goState0()
+                return goState0(doTransition)
             }
             else if (state == 1) {
                 var activeLine = document.getElementById("line2")
                 activeLine.setAttribute('class', 'active-line')
-                return goState1();
+                return goState1(doTransition);
             }
             else if (state == 2) {
                 var activeLine = document.getElementById("line3")
                 activeLine.setAttribute('class', 'active-line')
-                return goState2();
+                return goState2(doTransition);
             }
             else if (state == 3) {
                 var activeLine = document.getElementById("line4")
                 activeLine.setAttribute('class', 'active-line')
-                return goState3();
+                return goState3(doTransition);
             }
             else if (state == 4) {
                 var activeLine = document.getElementById("line5")
                 activeLine.setAttribute('class', 'active-line')
-                return goState4();
+                return goState4(doTransition);
             }
             else if (state == 5) {
                 var activeLine = document.getElementById("line7")
                 activeLine.setAttribute('class', 'active-line')
-                return goState5();
+                return goState5(doTransition);
             }
             else if (state == 6) {
                 var activeLine = document.getElementById("line8")
                 activeLine.setAttribute('class', 'active-line')
-                return goState6();
+                return goState6(doTransition);
             }
             else if (state == 7) {
                 var activeLine = document.getElementById("line9")
                 activeLine.setAttribute('class', 'active-line')
-                return goState7();
+                return goState7(doTransition);
             }
             else if (state == 8) {
                 var activeLine = document.getElementById("line10")
                 activeLine.setAttribute('class', 'active-line')
-                return goState8();
+                return goState8(doTransition);
             }
             else if (state == 9) {
-                return goState9();
+                return goState9(doTransition);
             }
-            else if (state == 10) { return goState10(); }
+            else if (state == 10) {
+
+                return goState10(doTransition); 
+            }
         }
 
         function placeText(name, value, xOffset, yOffset) {
@@ -269,13 +279,9 @@
                 .attr("width", 100).attr("height", 0)
                 .attr("height", 100)
 
-            // if (transition_dict.length >  {
-            //     rect.transition()
-            //         .attr('x', transition_dict['x'])
-            // }
 
             //bottom arrow
-            diagramContainer.append("line")
+            var line = diagramContainer.append("line")
                 .attr("x1", xOffset + 250)
                 .attr("y1", yOffset + 350)
                 .attr("x2", xOffset + 250)
@@ -285,7 +291,7 @@
                 .attr("marker-end", "url(#arrow)")
 
             //left arrow
-            diagramContainer.append("line")
+            var leftArrow = diagramContainer.append("line")
                 .attr("x1", xOffset + 75)
                 .attr("y1", yOffset + 175)
                 .attr("x2", xOffset + 175)
@@ -295,7 +301,7 @@
                 .attr("marker-end", "url(#arrow)")
 
             //top arrow
-            diagramContainer.append("line")
+            var topArrow = diagramContainer.append("line")
                 .attr("x1", xOffset + 250)
                 .attr("y1", yOffset + 125)
                 .attr("x2", xOffset + 250)
@@ -303,46 +309,59 @@
                 .attr("stroke", "black")
                 .attr("stroke-width", "3")
                 .attr("marker-end", "url(#arrow)")
+            
+            if (transition_dict && transition_dict.startOpacity !== undefined) {
+                for (let item of [rect, line, leftArrow, topArrow]) {
+                    item.attr('opacity', transition_dict['startOpacity'])
+                    .transition()
+                    .attr('opacity', transition_dict['endOpacity'])
+                }
+            }
         }
 
 
-        function placeTensor(name, xOffset, yOffset, tensorElements) {
+        function placeTensor(name, xOffset, yOffset, tensorElements, transition_dict) {
 
             var container = d3.select("svg").append('svg')
                 .attr('x', xOffset)
                 .attr('y', yOffset)
 
-            container.append('text')
+            var text = container.append('text')
                 .attr('x', xOffset + 10)
                 .attr('y', yOffset + 45)
                 .attr('class', 'array-name')
                 .text(name)
 
-
-            container.append('text')
+            var lb = container.append('text')
                 .attr('x', xOffset + 30)
                 .attr('y', yOffset + 52)
                 .attr('class', 'array-bracket')
                 .text('[')
 
             var numberOfColumns = tensorElements.length;
-            container.append('text')
+            var rb = container.append('text')
                 .attr('x', xOffset + (numberOfColumns * 40) + 40)
                 .attr('y', yOffset + 52)
                 .attr('class', 'array-bracket')
                 .text(']')
 
-            container.selectAll('svg').data(tensorElements).enter().append("svg")
+            var elements = container.selectAll('svg').data(tensorElements).enter().append("svg")
                 .attr("class", 'array')
                 .attr("x", function (d, i, j) { return (i * 40) + 50 + xOffset; })
                 .selectAll('text')
                 .data(function (d, i, j) { return d; }).enter().append('text')
                 .text(function (d, i, j) { return d.toFixed(2); })
                 .attr("y", function (d, i, j) {
-                    console.log(i);
-                    console.log(d);
                     return (i * 20) + 20 + yOffset;
                 })
+
+            if (transition_dict && transition_dict.startOpacity !== undefined) {
+                for (let item of [text, lb, rb, elements]) {
+                    item.attr('opacity', transition_dict['startOpacity'])
+                    .transition()
+                    .attr('opacity', transition_dict['endOpacity'])
+                }
+            }
         }
 
 
@@ -378,8 +397,6 @@
                 .data(function (d, i, j) { return d; }).enter().append('text')
                 .text(function (d, i, j) { return d.toFixed(2); })
                 .attr("y", function (d, i, j) {
-                    console.log(i);
-                    console.log(d);
                     return (i * 20) + 30 + yOffset;
                 })
         }
