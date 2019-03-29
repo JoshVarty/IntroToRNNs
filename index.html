@@ -130,24 +130,26 @@ loss = 0
             .attr('class', 'array-name')
             .text(name)
 
+
         container.append('text')
             .attr('x', xOffset + 30)
             .attr('y', yOffset + 52)
             .attr('class', 'array-bracket')
             .text('[')
         
+        var numberOfColumns = tensorElements.length;
         container.append('text')
-            .attr('x', xOffset + 120)
+            .attr('x', xOffset + (numberOfColumns * 40) + 40)
             .attr('y', yOffset + 52)
             .attr('class', 'array-bracket')
             .text(']')
             
         container.selectAll('svg').data(tensorElements).enter().append("svg")
             .attr("class",'array')
-            .attr("x", function(d,i,j) { return (i * 40) + 49 + xOffset; })
+            .attr("x", function(d,i,j) { return (i * 40) + 50 + xOffset; })
             .selectAll('text')
             .data(function (d, i, j) { return d; }).enter().append('text')
-            .text(function (d,i,j) { return d;})
+            .text(function (d,i,j) { return d.toFixed(2);})
             .attr("y", function(d,i,j) { 
                 console.log(i);
                 console.log(d);
@@ -158,6 +160,8 @@ loss = 0
     var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
     placeTensor("U", 140, 135, U);
 
+    var W = [[0.00, 0.00, 0.00]]    
+    placeTensor("W", 35, 40, W);
 
         
     </script>
