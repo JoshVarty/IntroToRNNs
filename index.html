@@ -116,7 +116,6 @@ loss = 0
             .attr("marker-end", "url(#arrow)")
     }
 
-    placeRNNBlock(0,0)
 
     function placeTensor(name, xOffset, yOffset, tensorElements) {
 
@@ -156,13 +155,60 @@ loss = 0
                 return (i * 20) + 20 + yOffset; })
     }
 
+
+    function placeTensor_2Elements(name, xOffset, yOffset, tensorElements) {
+
+        var container = d3.select("svg").append('svg')
+                .attr('x', xOffset)
+                .attr('y', yOffset)
+            
+        container.append('text')
+            .attr('x', xOffset + 10)
+            .attr('y', yOffset + 45)
+            .attr('class', 'array-name')
+            .text(name)
+
+        container.append('text')
+            .attr('x', xOffset + 30)
+            .attr('y', yOffset + 52)
+            .attr('class', 'array-bracket')
+            .text('[')
+        
+        var numberOfColumns = tensorElements.length;
+        container.append('text')
+            .attr('x', xOffset + (numberOfColumns * 40) + 40)
+            .attr('y', yOffset + 52)
+            .attr('class', 'array-bracket')
+            .text(']')
+            
+        container.selectAll('svg').data(tensorElements).enter().append("svg")
+            .attr("class",'array')
+            .attr("x", function(d,i,j) { return (i * 40) + 50 + xOffset; })
+            .selectAll('text')
+            .data(function (d, i, j) { return d; }).enter().append('text')
+            .text(function (d,i,j) { return d.toFixed(2);})
+            .attr("y", function(d,i,j) { 
+                console.log(i);
+                console.log(d);
+                return (i * 20) + 30 + yOffset; })
+    }
+
     //Draw U array
+    placeRNNBlock(50,0)
+
     var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-    placeTensor("U", 140, 135, U);
+    placeTensor("U", 150, 135, U);
 
-    var W = [[0.00, 0.00, 0.00]]    
-    placeTensor("W", 35, 40, W);
+    var W = [[ 0.01579213,  0.00767435, -0.00469474],
+       [ 0.0054256 , -0.00463418, -0.0046573 ],
+       [ 0.00241962, -0.0191328 , -0.01724918]]
+    placeTensor("W", 30, 30, W);
+    
+    var hidden_state = [[0.00, 0.00, 0.00]]
+    placeTensor("h", 0, 70, hidden_state);
 
+    var x = [[0, 0]]
+    placeTensor_2Elements("x", 115, 175, x);
         
     </script>
 </body>
