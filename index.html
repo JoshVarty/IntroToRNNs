@@ -96,28 +96,21 @@
         goState(state)
     }
 
-    function goState0() {
+    function goState0(doTransition) {
 
-        //Set active line
-        var activeLine = document.getElementById("line1")
-        activeLine.setAttribute('class', 'active-line')
+        transition_dict = {}
+        if (doTransition) {
+            //populate transition dict
+        }
         
-        placeRNNBlock(50,50)
+        placeRNNBlock(50,50, transition_dict)
         
         var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
         placeTensor("U", 150, 155, U);
-
-        // var W = [[ 0.01579213,  0.00767435, -0.00469474],
-        // [ 0.0054256 , -0.00463418, -0.0046573 ],
-        // [ 0.00241962, -0.0191328 , -0.01724918]]
-        // placeTensor("W", 30, 70, W);
     }
 
-    function goState1() {
-        //Set active line
-        var activeLine = document.getElementById("line2")
-        activeLine.setAttribute('class', 'active-line')
-        
+    function goState1(doTransition) {
+
         placeRNNBlock(50,50)
         
         var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
@@ -130,11 +123,9 @@
     }
     
     function goState2() {
-        //Set active line
-        var activeLine = document.getElementById("line3")
-        activeLine.setAttribute('class', 'active-line')
         
-        placeRNNBlock(50,50)
+        transition_dict = {}
+        placeRNNBlock(50,50, transition_dict)
         
         var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
         placeTensor("U", 150, 155, U);
@@ -149,10 +140,6 @@
     }
     
     function goState3() {
-        //Set active line
-        var activeLine = document.getElementById("line4")
-        activeLine.setAttribute('class', 'active-line')
-        
         placeRNNBlock(50,50)
         
         var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
@@ -172,9 +159,7 @@
     }
     
     function goState4() {
-        //Set active line
-        var activeLine = document.getElementById("line5")
-        activeLine.setAttribute('class', 'active-line')
+
         
         placeRNNBlock(50,50)
         
@@ -198,9 +183,6 @@
     }
     
     function goState5() {
-        //Set active line
-        var activeLine = document.getElementById("line7")
-        activeLine.setAttribute('class', 'active-line')
         
         placeRNNBlock(50,50)
         
@@ -224,9 +206,6 @@
     }
 
     function goState6() {
-        //Set active line
-        var activeLine = document.getElementById("line8")
-        activeLine.setAttribute('class', 'active-line')
         
         placeRNNBlock(50,50)
         
@@ -252,9 +231,6 @@
     }
 
     function goState7() {
-        //Set active line
-        var activeLine = document.getElementById("line9")
-        activeLine.setAttribute('class', 'active-line')
         
         placeRNNBlock(50,50)
         
@@ -284,9 +260,6 @@
     }
 
     function goState8() {
-        //Set active line
-        var activeLine = document.getElementById("line10")
-        activeLine.setAttribute('class', 'active-line')
         
         placeRNNBlock(50,50)
         
@@ -337,17 +310,55 @@
             currentActiveLine.classList.remove('active-line')
         }
 
-        if(state == 0) { return goState0() }
-        else if (state == 1) { return goState1() }
-        else if (state == 2) { return goState2() }
-        else if (state == 3) { return goState3() }
-        else if (state == 4) { return goState4() }
-        else if (state == 5) { return goState5() }
-        else if (state == 6) { return goState6() }
-        else if (state == 7) { return goState7() }
-        else if (state == 8) { return goState8() }
-        else if (state == 9) { return goState9() }
-        else if (state == 10) { return goState10() }
+        if(state == 0) { 
+            var activeLine = document.getElementById("line1")
+            activeLine.setAttribute('class', 'active-line')
+            return goState0() 
+        }
+        else if (state == 1) { 
+            var activeLine = document.getElementById("line2")
+            activeLine.setAttribute('class', 'active-line')
+            return goState1();
+        }
+        else if (state == 2) {
+            var activeLine = document.getElementById("line3")
+            activeLine.setAttribute('class', 'active-line')
+            return goState2();
+        }
+        else if (state == 3) { 
+            var activeLine = document.getElementById("line4")
+            activeLine.setAttribute('class', 'active-line')
+            return goState3();
+        }
+        else if (state == 4) {
+            var activeLine = document.getElementById("line5")
+            activeLine.setAttribute('class', 'active-line')
+            return goState4();
+        }
+        else if (state == 5) {
+            var activeLine = document.getElementById("line7")
+            activeLine.setAttribute('class', 'active-line')
+            return goState5();
+        }
+        else if (state == 6) { 
+            var activeLine = document.getElementById("line8")
+            activeLine.setAttribute('class', 'active-line')
+            return goState6();
+        }
+        else if (state == 7) {
+            var activeLine = document.getElementById("line9")
+            activeLine.setAttribute('class', 'active-line')
+            return goState7();
+        }
+        else if (state == 8) {
+            var activeLine = document.getElementById("line10")
+            activeLine.setAttribute('class', 'active-line')
+            return goState8();
+        }
+        else if (state == 9) { 
+            return goState9();
+        }
+        else if (state == 10) { return goState10(); }
     }
     
     function placeText(name, value, xOffset, yOffset) {
@@ -369,16 +380,21 @@
             .attr('y', yOffset);
     }
 
-    function placeRNNBlock(xOffset, yOffset) {
+    function placeRNNBlock(xOffset, yOffset, transition_dict) {
         //Create diagram container
         var diagramContainer = d3.select("svg").append("svg");
         //Draw first hidden-state square
-        diagramContainer.append("rect")
+        var rect = diagramContainer.append("rect")
                 .attr("x",xOffset + 200) 
                 .attr("y", yOffset + 125)
                 .attr("style", "fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)")
                 .attr("width",100).attr("height",0)
                 .attr("height",100)
+
+        // if (transition_dict.length >  {
+        //     rect.transition()
+        //         .attr('x', transition_dict['x'])
+        // }
 
         //bottom arrow
         diagramContainer.append("line")
