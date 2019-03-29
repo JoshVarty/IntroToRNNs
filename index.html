@@ -76,7 +76,6 @@ loss = 0
 
     function placeRNNBlock(xOffset, yOffset) {
         //Create diagram container
-        var svg = d3.select("svg");
         var diagramContainer = d3.select("svg").append("svg");
         //Draw first hidden-state square
         diagramContainer.append("rect")
@@ -119,42 +118,46 @@ loss = 0
 
     placeRNNBlock(0,0)
 
-    //Draw U array
-    var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-    
+    function placeTensor(name, xOffset, yOffset, tensorElements) {
 
-    var container = d3.select("svg").append('svg')
-            .attr('x',250)
-            .attr('y',275)
-        
+        var container = d3.select("svg").append('svg')
+                .attr('x', xOffset)
+                .attr('y', yOffset)
+            
         container.append('text')
-            .attr('x', 10)
-            .attr('y', 45)
+            .attr('x', xOffset + 10)
+            .attr('y', yOffset + 45)
             .attr('class', 'array-name')
-            .text('U')
+            .text(name)
 
         container.append('text')
-            .attr('x', 30)
-            .attr('y', 52)
+            .attr('x', xOffset + 30)
+            .attr('y', yOffset + 52)
             .attr('class', 'array-bracket')
             .text('[')
         
         container.append('text')
-            .attr('x', 120)
-            .attr('y', 52)
+            .attr('x', xOffset + 120)
+            .attr('y', yOffset + 52)
             .attr('class', 'array-bracket')
             .text(']')
             
-        container.selectAll('svg').data(U).enter().append("svg")
+        container.selectAll('svg').data(tensorElements).enter().append("svg")
             .attr("class",'array')
-            .attr("x", function(d,i,j) { return (i * 40) + 49; })
+            .attr("x", function(d,i,j) { return (i * 40) + 49 + xOffset; })
             .selectAll('text')
             .data(function (d, i, j) { return d; }).enter().append('text')
             .text(function (d,i,j) { return d;})
             .attr("y", function(d,i,j) { 
                 console.log(i);
                 console.log(d);
-                return (i * 20) + 20; })
+                return (i * 20) + 20 + yOffset; })
+    }
+
+    //Draw U array
+    var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
+    placeTensor("U", 140, 135, U);
+
 
         
     </script>
