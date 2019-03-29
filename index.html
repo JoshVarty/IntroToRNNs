@@ -62,7 +62,7 @@ loss = 0
        </pre> 
     </p>
 
-    <svg width =900 height=400>
+    <svg width =900 height=500>
         <defs>
             <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
                 <path d="M0,0 L0,6 L9,3 z" fill="#000" />
@@ -73,50 +73,51 @@ loss = 0
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
-    
-    //Create diagram container
-    var diagramContainer = d3.select("svg").selectAll("svg").data([0]).enter().append("svg")
 
-    //Draw first hidden-state square
-    diagramContainer.append("rect")
-			.attr("x",200) 
-            .attr("y",125)
-            .attr("style", "fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)")
-			.attr("width",100).attr("height",0)
-			.attr("height",100)
+    function placeRNNBlock(xOffset, yOffset) {
+        //Create diagram container
+        var svg = d3.select("svg");
+        var diagramContainer = d3.select("svg").append("svg");
+        //Draw first hidden-state square
+        diagramContainer.append("rect")
+                .attr("x",xOffset + 200) 
+                .attr("y", yOffset + 125)
+                .attr("style", "fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)")
+                .attr("width",100).attr("height",0)
+                .attr("height",100)
 
-    //bottom arrow
-    diagramContainer.append("line")
-        .attr("x1",250) 
-        .attr("y1",350)
-        .attr("x2",250) 
-        .attr("y2",250)
-        .attr("stroke","black")
-        .attr("stroke-width","3")
-        .attr("marker-end", "url(#arrow)")
+        //bottom arrow
+        diagramContainer.append("line")
+            .attr("x1", xOffset + 250) 
+            .attr("y1", yOffset + 350)
+            .attr("x2", xOffset + 250) 
+            .attr("y2", yOffset + 250)
+            .attr("stroke","black")
+            .attr("stroke-width","3")
+            .attr("marker-end", "url(#arrow)")
 
-    //left arrow
-    diagramContainer.append("line")
-        .attr("x1",75) 
-        .attr("y1",175)
-        .attr("x2",175) 
-        .attr("y2",175)
-        .attr("stroke","black")
-        .attr("stroke-width","3")
-        .attr("marker-end", "url(#arrow)")
+        //left arrow
+        diagramContainer.append("line")
+            .attr("x1", xOffset + 75) 
+            .attr("y1", yOffset + 175)
+            .attr("x2", xOffset + 175) 
+            .attr("y2", yOffset + 175)
+            .attr("stroke","black")
+            .attr("stroke-width","3")
+            .attr("marker-end", "url(#arrow)")
 
-    //top arrow
-    diagramContainer.append("line")
-        .attr("x1",250) 
-        .attr("y1",125)
-        .attr("x2",250) 
-        .attr("y2",40)
-        .attr("stroke","black")
-        .attr("stroke-width","3")
-        .attr("marker-end", "url(#arrow)")
+        //top arrow
+        diagramContainer.append("line")
+            .attr("x1", xOffset + 250) 
+            .attr("y1", yOffset + 125)
+            .attr("x2", xOffset + 250) 
+            .attr("y2", yOffset + 40)
+            .attr("stroke","black")
+            .attr("stroke-width","3")
+            .attr("marker-end", "url(#arrow)")
+    }
 
-    //marker-end="url(#arrow)" />
-    //<line x1="0" y1="80" x2="100" y2="20" stroke="black" />
+    placeRNNBlock(0,0)
 
     //Draw U array
     var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
