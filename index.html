@@ -112,10 +112,7 @@
 
         function goState1(doTransition) {
 
-            placeRNNBlock(50, 50)
-
-            var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-            placeTensor("U", 150, 155, U);
+            goState0(doTransition=false);
 
             var W = [[0.01579213, 0.00767435, -0.00469474],
             [0.0054256, -0.00463418, -0.0046573],
@@ -125,34 +122,17 @@
 
         function goState2() {
 
+            goState1(doTransition=false)
+
             transition_dict = {}
-            placeRNNBlock(50, 50, transition_dict)
-
-            var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-            placeTensor("U", 150, 155, U);
-
-            var W = [[0.01579213, 0.00767435, -0.00469474],
-            [0.0054256, -0.00463418, -0.0046573],
-            [0.00241962, -0.0191328, -0.01724918]]
-            placeTensor("W", 30, 70, W);
 
             var hidden_bias = [[0.00, 0.00, 0.00]]
             placeTensor("", 30, 30, hidden_bias);
         }
 
         function goState3() {
-            placeRNNBlock(50, 50)
 
-            var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-            placeTensor("U", 150, 155, U);
-
-            var W = [[0.01579213, 0.00767435, -0.00469474],
-            [0.0054256, -0.00463418, -0.0046573],
-            [0.00241962, -0.0191328, -0.01724918]]
-            placeTensor("W", 30, 70, W);
-
-            var hidden_bias = [[0.00, 0.00, 0.00]]
-            placeTensor("", 30, 30, hidden_bias);
+            goState2(doTransition=false)
 
             var output_weights = [[-0.00562288, -0.01012831, 0.00314247],
             [-0.00908024, -0.01412304, 0.01465649]]
@@ -160,134 +140,31 @@
         }
 
         function goState4() {
-
-
-            placeRNNBlock(50, 50)
-
-            var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-            placeTensor("U", 150, 155, U);
-
-            var W = [[0.01579213, 0.00767435, -0.00469474],
-            [0.0054256, -0.00463418, -0.0046573],
-            [0.00241962, -0.0191328, -0.01724918]]
-            placeTensor("W", 30, 70, W);
-
-            var hidden_bias = [[0.00, 0.00, 0.00]]
-            placeTensor("", 30, 30, hidden_bias);
-
-            var output_weights = [[-0.00562288, -0.01012831, 0.00314247],
-            [-0.00908024, -0.01412304, 0.01465649]]
-            placeTensor("V", 160, 30, output_weights);
+            goState3(doTransition=false)
 
             var output_bias = [[0, 0]]
             placeTensor_2Elements("", 215, 30, output_bias);
         }
 
         function goState5() {
-
-            placeRNNBlock(50, 50)
-
-            var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-            placeTensor("U", 150, 155, U);
-
-            var W = [[0.01579213, 0.00767435, -0.00469474],
-            [0.0054256, -0.00463418, -0.0046573],
-            [0.00241962, -0.0191328, -0.01724918]]
-            placeTensor("W", 30, 70, W);
-
-            var hidden_bias = [[0.00, 0.00, 0.00]]
-            placeTensor("", 30, 30, hidden_bias);
-
-            var output_weights = [[-0.00562288, -0.01012831, 0.00314247],
-            [-0.00908024, -0.01412304, 0.01465649]]
-            placeTensor("V", 160, 30, output_weights);
-
-            var output_bias = [[0, 0]]
-            placeTensor_2Elements("", 215, 30, output_bias);
+            goState4(doTransition=false)
         }
 
         function goState6() {
-
-            placeRNNBlock(50, 50)
-
-            var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-            placeTensor("U", 150, 155, U);
-
-            var W = [[0.01579213, 0.00767435, -0.00469474],
-            [0.0054256, -0.00463418, -0.0046573],
-            [0.00241962, -0.0191328, -0.01724918]]
-            placeTensor("W", 30, 70, W);
-
-            var hidden_bias = [[0.00, 0.00, 0.00]]
-            placeTensor("", 30, 30, hidden_bias);
-
-            var output_weights = [[-0.00562288, -0.01012831, 0.00314247],
-            [-0.00908024, -0.01412304, 0.01465649]]
-            placeTensor("V", 160, 30, output_weights);
-
-            var output_bias = [[0, 0]]
-            placeTensor_2Elements("", 215, 30, output_bias);
-
+            goState5(doTransition=false)
             placeText("loss", "0", 0, 20);
         }
 
         function goState7() {
-
-            placeRNNBlock(50, 50)
-
-            var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-            placeTensor("U", 150, 155, U);
-
-            var W = [[0.01579213, 0.00767435, -0.00469474],
-            [0.0054256, -0.00463418, -0.0046573],
-            [0.00241962, -0.0191328, -0.01724918]]
-            placeTensor("W", 30, 70, W);
-
-            var hidden_bias = [[0.00, 0.00, 0.00]]
-            placeTensor("", 30, 30, hidden_bias);
-
-            var output_weights = [[-0.00562288, -0.01012831, 0.00314247],
-            [-0.00908024, -0.01412304, 0.01465649]]
-            placeTensor("V", 160, 30, output_weights);
-
-            var output_bias = [[0, 0]]
-            placeTensor_2Elements("", 215, 30, output_bias);
-
-            placeText("loss", "0", 0, 20);
+            goState6(doTransition=false)
 
             var hidden_state_prev = [[0.0, 0.0, 0.0]]
             placeTensor("h", 0, 105, hidden_state_prev);
-
         }
 
         function goState8() {
-
-            placeRNNBlock(50, 50)
-
-            var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-            placeTensor("U", 150, 155, U);
-
-            var W = [[0.01579213, 0.00767435, -0.00469474],
-            [0.0054256, -0.00463418, -0.0046573],
-            [0.00241962, -0.0191328, -0.01724918]]
-            placeTensor("W", 30, 70, W);
-
-            var hidden_bias = [[0.00, 0.00, 0.00]]
-            placeTensor("", 30, 30, hidden_bias);
-
-            var output_weights = [[-0.00562288, -0.01012831, 0.00314247],
-            [-0.00908024, -0.01412304, 0.01465649]]
-            placeTensor("V", 160, 30, output_weights);
-
-            var output_bias = [[0, 0]]
-            placeTensor_2Elements("", 215, 30, output_bias);
-
-            placeText("loss", "0", 0, 20);
-
-            var hidden_state_prev = [[0.0, 0.0, 0.0]]
-            placeTensor("h", 0, 105, hidden_state_prev);
+            goState7(doTransition=false)
         }
-
 
         function goState(state) {
             //Clear the svg and but our arrowhead definitions
