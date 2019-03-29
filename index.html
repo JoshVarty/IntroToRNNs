@@ -36,6 +36,11 @@
             font-size: 1.5em;
         }
 
+        .active-line {
+            background:yellow;
+            color:black;
+        }
+
     </style>
 </head>
 <body>
@@ -44,35 +49,88 @@
     <p>test</p>
     <p>
        <pre>
-xs, hidden_states, outputs, probabilities = {}, {}, {}, {} 
-hidden_states[-1] = np.copy(hidden_state_prev)
-loss = 0
-<span class="for">for</span> t <span class="in">in</span> range(len(inputs)): 
-    <span class="comment"># one-hot-encoding the input character</span> 
-    xs[t] = np.zeros((vocab_size,1))  
-    character = inputs[t]
-    xs[t][character] = 1 
-    <span class="comment"># Compute hidden state </span>
-    hidden_states[t] = np.tanh(input_weights_U @ xs[t] + hidden_weights_W @ hidden_states[t-1] + hidden_bias) 
-    <span class="comment"># Compute output and probabilities</span>
-    outputs[t] = output_weights_V @ hidden_states[t] + output_bias
-    probabilities[t] = np.exp(outputs[t]) / np.sum(np.exp(outputs[t]))
-    <span class="comment">#Compute cross-entropy loss</span>
-    loss += -np.log(probabilities[t][targets[t],0]) 
+<span id="line0">xs, hidden_states, outputs, probabilities = {}, {}, {}, {}</span>
+<span id="line1">hidden_states[-1] = np.copy(hidden_state_prev)</span>
+<span id="line2">loss = 0</span>
+<span id="line3"><span class="for">for</span> t <span class="in">in</span> range(len(inputs)): </span>
+    <span id="line4"><span class="comment"># one-hot-encoding the input character</span> </span>
+    <span id="line5">xs[t] = np.zeros((vocab_size,1))  </span>
+    <span id="line6">character = inputs[t]</span>
+    <span id="line7">xs[t][character] = 1 </span>
+    <span id="line8"><span class="comment"># Compute hidden state </span></span>
+    <span id="line9">hidden_states[t] = np.tanh(input_weights_U @ xs[t] + hidden_weights_W @ hidden_states[t-1] + hidden_bias) </span>
+    <span id="line10"><span class="comment"># Compute output and probabilities</span></span>
+    <span id="line11">outputs[t] = output_weights_V @ hidden_states[t] + output_bias</span>
+    <span id="line12">probabilities[t] = np.exp(outputs[t]) / np.sum(np.exp(outputs[t]))</span>
+    <span id="line13"><span class="comment">#Compute cross-entropy loss</span></span>
+    <span id="line14">loss += -np.log(probabilities[t][targets[t],0]) </span>
        </pre> 
     </p>
 
+    <button onclick="goBack()">Back</button>
+    <button onclick="goFoward()">Forward</button>
+    <br/>
+
     <svg width =900 height=500>
-        <defs>
-            <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
-                <path d="M0,0 L0,6 L9,3 z" fill="#000" />
-            </marker>
-        </defs>
     </svg>
 
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
+
+    var state = -1
+    function goBack() {
+        state = state - 1;
+        goState(state)
+    }
+
+    function goFoward() {
+        state = state + 1;
+        goState(state)
+    }
+
+    function goState0() {
+
+        //Set active line
+        var activeLine = document.getElementById("line0")
+        activeLine.setAttribute('class', 'active-line')
+        
+        placeRNNBlock(50,50)
+        
+        var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
+        placeTensor("U", 150, 155, U);
+
+        var W = [[ 0.01579213,  0.00767435, -0.00469474],
+        [ 0.0054256 , -0.00463418, -0.0046573 ],
+        [ 0.00241962, -0.0191328 , -0.01724918]]
+        placeTensor("W", 30, 70, W);
+    }
+
+    function goState(state) {
+        //Clear the svg and but our arrowhead definitions
+        d3.select("svg").selectAll("*").remove()
+        d3.select("svg").append("defs")
+            .append("marker")
+            .attr("id", "arrow")
+            .attr("markerWidth", 10)
+            .attr("markerHeight", 10)
+            .attr("refX", 0)
+            .attr("refY", 3)
+            .attr("orient", "auto")
+            .append('path')
+                .attr('d', 'M0,0 L0,6 L9,3 z')
+                .attr('fill', '#000')
+
+        //Clear active line
+        var activeLines = document.getElementsByClassName("active-line");
+        for(var i = 0; i < activeLines.length; i++) {
+            var currentActiveLine = activeLines[i];
+            currentActiveLine.classList.remove('active-line')
+        }
+
+        if(state == 0) { return goState0() }
+        else if (state == 1) { return goState1() }
+    }
 
     function placeRNNBlock(xOffset, yOffset) {
         //Create diagram container
@@ -194,21 +252,21 @@ loss = 0
     }
 
     //Draw U array
-    placeRNNBlock(50,0)
+    //placeRNNBlock(50,0)
 
-    var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-    placeTensor("U", 150, 135, U);
+    // var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
+    // placeTensor("U", 150, 135, U);
 
-    var W = [[ 0.01579213,  0.00767435, -0.00469474],
-       [ 0.0054256 , -0.00463418, -0.0046573 ],
-       [ 0.00241962, -0.0191328 , -0.01724918]]
-    placeTensor("W", 30, 30, W);
+    // var W = [[ 0.01579213,  0.00767435, -0.00469474],
+    //    [ 0.0054256 , -0.00463418, -0.0046573 ],
+    //    [ 0.00241962, -0.0191328 , -0.01724918]]
+    // placeTensor("W", 30, 30, W);
     
-    var hidden_state = [[0.00, 0.00, 0.00]]
-    placeTensor("h", 0, 70, hidden_state);
+    // var hidden_state = [[0.00, 0.00, 0.00]]
+    // placeTensor("h", 0, 70, hidden_state);
 
-    var x = [[0, 0]]
-    placeTensor_2Elements("x", 115, 175, x);
+    // var x = [[0, 0]]
+    // placeTensor_2Elements("x", 115, 175, x);
         
     </script>
 </body>
