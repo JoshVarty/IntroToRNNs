@@ -98,78 +98,68 @@
         }
 
         function goState0(doTransition) {
-
-            transition_dict = {}
-            if (doTransition) {
-                transition_dict['startOpacity'] = 0
-                transition_dict['endOpacity'] = 1
-            }
-
-            placeRNNBlock(50, 50, transition_dict)
+            let fadeIn = doTransition
+            placeRNNBlock(50, 50, fadeIn)
 
             var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-            placeTensor("U", 150, 155, U, transition_dict);
+            placeTensor("U", 150, 155, U, fadeIn);
         }
 
         function goState1(doTransition) {
-
             goState0(false);
-
-            transition_dict = {}
-            if (doTransition) {
-                transition_dict['startOpacity'] = 0
-                transition_dict['endOpacity'] = 1
-            }
+            let fadeIn = doTransition
 
             var W = [[0.01579213, 0.00767435, -0.00469474],
             [0.0054256, -0.00463418, -0.0046573],
             [0.00241962, -0.0191328, -0.01724918]]
-            placeTensor("W", 30, 70, W, transition_dict);
+            placeTensor("W", 30, 70, W, fadeIn);
         }
 
-        function goState2() {
-
-            goState1(false)
-
-            transition_dict = {}
+        function goState2(doTransition) {
+            goState1(false);
+            let fadeIn = doTransition;
 
             var hidden_bias = [[0.00, 0.00, 0.00]]
-            placeTensor("", 30, 30, hidden_bias);
+            placeTensor("", 30, 30, hidden_bias, fadeIn);
         }
 
-        function goState3() {
-
-            goState2(false)
+        function goState3(doTransition) {
+            goState2(false);
+            let fadeIn = doTransition;
 
             var output_weights = [[-0.00562288, -0.01012831, 0.00314247],
             [-0.00908024, -0.01412304, 0.01465649]]
-            placeTensor("V", 160, 30, output_weights);
+            placeTensor("V", 160, 30, output_weights, fadeIn);
         }
 
-        function goState4() {
-            goState3(false)
+        function goState4(doTransition) {
+            goState3(false);
+            let fadeIn = doTransition
 
             var output_bias = [[0, 0]]
-            placeTensor_2Elements("", 215, 30, output_bias);
+            placeTensor_2Elements("", 215, 30, output_bias, fadeIn);
         }
 
-        function goState5() {
-            goState4(false)
+        function goState5(doTransition) {
+            goState4(false);
         }
 
-        function goState6() {
-            goState5(false)
-            placeText("loss", "0", 0, 20);
+        function goState6(doTransition) {
+            goState5(false);
+            let fadeIn = doTransition;
+
+            placeText("loss", "0", 0, 20, fadeIn);
         }
 
-        function goState7() {
-            goState6(false)
+        function goState7(doTransition) {
+            goState6(false);
+            let fadeIn = doTransition;
 
             var hidden_state_prev = [[0.0, 0.0, 0.0]]
-            placeTensor("h", 0, 105, hidden_state_prev);
+            placeTensor("h", 0, 105, hidden_state_prev, fadeIn);
         }
 
-        function goState8() {
+        function goState8(doTransition) {
             goState7(false)
         }
 
@@ -249,26 +239,35 @@
             }
         }
 
-        function placeText(name, value, xOffset, yOffset) {
+        function placeText(name, value, xOffset, yOffset, fadeIn) {
             //TODO: Make it look better (font and size)
             var container = d3.select("svg").append("svg");
-            container.append("text")
+            var label = container.append("text")
                 .text(name)
                 .attr('x', xOffset)
                 .attr('y', yOffset);
 
-            container.append("text")
+            var equals = container.append("text")
                 .text('=')
                 .attr('x', xOffset + 27)
                 .attr('y', yOffset);
 
-            container.append("text")
+            var value = container.append("text")
                 .text(value)
                 .attr('x', xOffset + 40)
                 .attr('y', yOffset);
+
+            if (fadeIn) {
+                for (let item of [label, equals, value]) {
+                    item.attr('opacity', 0)
+                    .transition()
+                    .attr('opacity', 1)
+                }
+            }
+            
         }
 
-        function placeRNNBlock(xOffset, yOffset, transition_dict) {
+        function placeRNNBlock(xOffset, yOffset, fadeIn) {
             //Create diagram container
             var diagramContainer = d3.select("svg").append("svg");
             //Draw first hidden-state square
@@ -310,17 +309,16 @@
                 .attr("stroke-width", "3")
                 .attr("marker-end", "url(#arrow)")
             
-            if (transition_dict && transition_dict.startOpacity !== undefined) {
+            if (fadeIn) {
                 for (let item of [rect, line, leftArrow, topArrow]) {
-                    item.attr('opacity', transition_dict['startOpacity'])
+                    item.attr('opacity', 0)
                     .transition()
-                    .attr('opacity', transition_dict['endOpacity'])
+                    .attr('opacity', 1)
                 }
             }
         }
 
-
-        function placeTensor(name, xOffset, yOffset, tensorElements, transition_dict) {
+        function placeTensor(name, xOffset, yOffset, tensorElements, fadeIn) {
 
             var container = d3.select("svg").append('svg')
                 .attr('x', xOffset)
@@ -355,42 +353,42 @@
                     return (i * 20) + 20 + yOffset;
                 })
 
-            if (transition_dict && transition_dict.startOpacity !== undefined) {
+            if (fadeIn === true) {
                 for (let item of [text, lb, rb, elements]) {
-                    item.attr('opacity', transition_dict['startOpacity'])
+                    item.attr('opacity', 0)
                     .transition()
-                    .attr('opacity', transition_dict['endOpacity'])
+                    .attr('opacity', 1)
                 }
             }
         }
 
 
-        function placeTensor_2Elements(name, xOffset, yOffset, tensorElements) {
+        function placeTensor_2Elements(name, xOffset, yOffset, tensorElements, fadeIn) {
 
             var container = d3.select("svg").append('svg')
                 .attr('x', xOffset)
                 .attr('y', yOffset)
 
-            container.append('text')
+            var text = container.append('text')
                 .attr('x', xOffset + 10)
                 .attr('y', yOffset + 45)
                 .attr('class', 'array-name')
                 .text(name)
 
-            container.append('text')
+            var lb = container.append('text')
                 .attr('x', xOffset + 30)
                 .attr('y', yOffset + 52)
                 .attr('class', 'array-bracket')
                 .text('[')
 
             var numberOfColumns = tensorElements.length;
-            container.append('text')
+            var rb = container.append('text')
                 .attr('x', xOffset + (numberOfColumns * 40) + 40)
                 .attr('y', yOffset + 52)
                 .attr('class', 'array-bracket')
                 .text(']')
 
-            container.selectAll('svg').data(tensorElements).enter().append("svg")
+            var elements = container.selectAll('svg').data(tensorElements).enter().append("svg")
                 .attr("class", 'array')
                 .attr("x", function (d, i, j) { return (i * 40) + 50 + xOffset; })
                 .selectAll('text')
@@ -399,6 +397,14 @@
                 .attr("y", function (d, i, j) {
                     return (i * 20) + 30 + yOffset;
                 })
+
+            if (fadeIn === true) {
+                for (let item of [text, lb, rb, elements]) {
+                    item.attr('opacity', 0)
+                    .transition()
+                    .attr('opacity', 1)
+                }
+            }
         }
 
     //Draw U array
