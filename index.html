@@ -21,18 +21,15 @@
         }
 
         .array {
-            color: black;
             font: bold;
         }
 
         .array-bracket {
-            color: black;
             font-family: sans-serif;
             font-size: 4em;
         }
 
         .array-name {
-            color: black;
             font-family: sans-serif;
             font-size: 1.5em;
         }
@@ -160,7 +157,33 @@
         }
 
         function goState8(doTransition) {
-            goState7(false)
+            goState7(false);
+        }
+        
+        function goState9(doTransition) {
+            goState8(false);
+            let fadeIn = doTransition;
+
+            let input_tensor = [[0.0, 0.0]];
+            placeTensor_2Elements("x", 118, 200, input_tensor, fadeIn);
+        }
+        
+        function goState10(doTransition) {
+            goState9(false);
+            let fadeIn = doTransition;
+
+            let input_tensor = [[0.0, 0.0]];
+            placeText("char", "1", 270, 495, fadeIn);
+        }
+
+        function goState11(doTransition) {
+            goState10(false);
+            let fadeIn = false;
+            let contentsChanged = true;
+
+            d3.select('#x').remove();
+            let input_tensor = [[0.0, 1.0]];
+            placeTensor_2Elements("x", 118, 200, input_tensor, fadeIn, contentsChanged);
         }
 
         function goState(state, doTransition) {
@@ -231,11 +254,19 @@
                 return goState8(doTransition);
             }
             else if (state == 9) {
+                var activeLine = document.getElementById("line12")
+                activeLine.setAttribute('class', 'active-line')
                 return goState9(doTransition);
             }
             else if (state == 10) {
-
+                var activeLine = document.getElementById("line13")
+                activeLine.setAttribute('class', 'active-line')
                 return goState10(doTransition); 
+            }
+            else if (state == 11) {
+                var activeLine = document.getElementById("line14")
+                activeLine.setAttribute('class', 'active-line')
+                return goState11(doTransition); 
             }
         }
 
@@ -318,11 +349,12 @@
             }
         }
 
-        function placeTensor(name, xOffset, yOffset, tensorElements, fadeIn) {
+        function placeTensor(name, xOffset, yOffset, tensorElements, fadeIn, contentsChanged) {
 
             var container = d3.select("svg").append('svg')
                 .attr('x', xOffset)
                 .attr('y', yOffset)
+                .attr('id', name)
 
             var text = container.append('text')
                 .attr('x', xOffset + 10)
@@ -360,14 +392,21 @@
                     .attr('opacity', 1)
                 }
             }
+            
+            if (contentsChanged === true) {
+                console.log("Black to red");
+                for (let item of [elements]) {
+                    item.style('fill', 'red')
+                }
+            }
         }
 
-
-        function placeTensor_2Elements(name, xOffset, yOffset, tensorElements, fadeIn) {
+        function placeTensor_2Elements(name, xOffset, yOffset, tensorElements, fadeIn, contentsChanged) {
 
             var container = d3.select("svg").append('svg')
                 .attr('x', xOffset)
                 .attr('y', yOffset)
+                .attr('id', name)
 
             var text = container.append('text')
                 .attr('x', xOffset + 10)
@@ -402,27 +441,17 @@
                 for (let item of [text, lb, rb, elements]) {
                     item.attr('opacity', 0)
                     .transition()
-                    .attr('opacity', 1)
+                    .attr('opacity', 1);
+                }
+            }
+            
+            if (contentsChanged === true) {
+                console.log("Black to red");
+                for (let item of [elements]) {
+                    item.style('fill', 'red')
                 }
             }
         }
-
-    //Draw U array
-    //placeRNNBlock(50,0)
-
-    // var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-    // placeTensor("U", 150, 135, U);
-
-    // var W = [[ 0.01579213,  0.00767435, -0.00469474],
-    //    [ 0.0054256 , -0.00463418, -0.0046573 ],
-    //    [ 0.00241962, -0.0191328 , -0.01724918]]
-    // placeTensor("W", 30, 30, W);
-
-    // var hidden_state = [[0.00, 0.00, 0.00]]
-    // placeTensor("h", 0, 70, hidden_state);
-
-    // var x = [[0, 0]]
-    // placeTensor_2Elements("x", 115, 175, x);
 
     </script>
 </body>
