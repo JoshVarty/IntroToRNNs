@@ -185,6 +185,14 @@
             let input_tensor = [[0.0, 1.0]];
             placeTensor_2Elements("x", 118, 200, input_tensor, fadeIn, contentsChanged);
         }
+        function goState12(doTransition) {
+            goState10(false);
+            let fadeIn = true;
+            let contentsChanged = false;
+
+            let hidden_state = [[ 0.0049671 ,  0.00647679, -0.00234153]]
+            placeTensor("", 118, 95, hidden_state, fadeIn, contentsChanged);
+        }
 
         function goState(state, doTransition) {
             //Clear the svg and but our arrowhead definitions
@@ -267,6 +275,11 @@
                 var activeLine = document.getElementById("line14")
                 activeLine.setAttribute('class', 'active-line')
                 return goState11(doTransition); 
+            }
+            else if (state == 12) {
+                var activeLine = document.getElementById("line16")
+                activeLine.setAttribute('class', 'active-line')
+                return goState12(doTransition); 
             }
         }
 
