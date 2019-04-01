@@ -48,8 +48,8 @@
         <pre>
 <span id="line0"><span class='comment'>#Initialize weights and biases</span></span>
 <span id="line1"><span class='input_weights_U'>input_weights_U</span> = np.random.randn(hidden_size, vocab_size) * 0.01</span>
-<span id="line2"><span class='input_weights_W'>hidden_weights_W</span> = np.random.randn(hidden_size, hidden_size) * 0.01</span>
-<span id="line3"><span class='hidden_bias'>hidden_bias</span>= np.zeros((hidden_size, 1)) # hidden bias</span>
+<span id="line2"><span class='hidden_weights_W'>hidden_weights_W</span> = np.random.randn(hidden_size, hidden_size) * 0.01</span>
+<span id="line3"><span class='hidden_bias'>hidden_bias</span> = np.zeros((hidden_size, 1)) # hidden bias</span>
 <span id="line4"><span class='output_weights_V'>output_weights_V</span> = np.random.randn(vocab_size, hidden_size) * 0.01    # hidden to output</span>
 <span id="line5"><span class='output_bias'>output_bias</span> = np.zeros((vocab_size, 1)) # output bias</span>
 <span id="line6"><span class='comment'>#Forward pass</span></span>
@@ -63,7 +63,7 @@
     <span id="line14"><span class='xs'>xs[t]</span>[character] = 1 </span>
     <span id="line15"><span class='target'>target</span> = targets[t]</span>
     <span id="line16"><span class="comment"># Compute hidden state </span></span>
-    <span id="line17"><span class='hidden_state'>hidden_states[t]</span> = np.tanh(<span class='input_weights_U'>input_weights_U</span> @ <span class='xs'>xs[t]</span> + <span class='hidden_weights_W'>hidden_weights_W</span> @ hidden_states[t-1] + <span class='hidden_bias'>hidden_bias</span>) </span>
+    <span id="line17"><span class='hidden_state'>hidden_states[t]</span> = np.tanh(<span class='input_weights_U'>input_weights_U</span> @ <span class='xs'>xs[t]</span> + <span class='hidden_weights_W'>hidden_weights_W</span> @ <span class='hidden_state_prev'>hidden_states[t-1]</span> + <span class='hidden_bias'>hidden_bias</span>) </span>
     <span id="line18"><span class="comment"># Compute output and probabilities</span></span>
     <span id="line19"><span class='outputs'>outputs[t]</span> = <span class='output_weights_v'>output_weights_V</span> @ <span class="hidden_state">hidden_states[t]</span> + <span class='output_bias'>output_bias</span></span>
     <span id="line20"><span class='probabilities'>probabilities[t]</span> = np.exp(<span class='outputs'>outputs[t]</span>) / np.sum(np.exp(<span class='outputs'>outputs[t]</span>))</span>
@@ -235,6 +235,12 @@
             let contentsChanged = false;
 
             placeRNNBlock(275, 100, fadeIn);
+            
+            d3.select("#o").remove();
+            d3.select("#p").remove();
+            d3.select("#x").remove();
+            d3.select("#h").remove();
+            d3.select('#hidden_state').attr('id', 'h');
 
             if (doTransition) {
                 d3.select('#W').transition().attr('x', 300).attr('y', 55);
@@ -249,12 +255,8 @@
                 d3.select('#U').attr('x', 375);
                 d3.select('#hidden_bias').attr('x', 380).attr('y', 25);
                 d3.select('#output_bias').attr('x', 445);
+                //d3.select('h').attr('id', 'hidden_state');
             }
-
-            d3.select("#o").remove();
-            d3.select("#p").remove();
-            d3.select("#x").remove();
-            d3.select("#h").remove();
         }
 
         function goState18(doTransition) {
@@ -335,6 +337,12 @@
 
             placeRNNBlock(500, 100, fadeIn);
 
+            d3.select("#o").remove();
+            d3.select("#p").remove();
+            d3.select("#x").remove();
+            d3.select("#h").remove();
+            d3.select('#hidden_state').attr('id', 'h');
+
             if (doTransition) {
                 d3.select('#W').transition().attr('x', 535).attr('y', 55);
                 d3.select('#V').transition().attr('x', 605);
@@ -350,10 +358,6 @@
                 d3.select('#output_bias').attr('x', 675);
             }
 
-            d3.select("#o").remove();
-            d3.select("#p").remove();
-            d3.select("#x").remove();
-            d3.select("#h").remove();
         }
 
         function goState27(doTransition) {
@@ -432,6 +436,12 @@
             let fadeIn = doTransition;
 
             placeRNNBlock(725, 100, fadeIn);
+            
+            d3.select("#o").remove();
+            d3.select("#p").remove();
+            d3.select("#x").remove();
+            d3.select("#h").remove();
+            d3.select('#hidden_state').attr('id', 'h');
 
             if (doTransition) {
                 d3.select('#W').transition().attr('x', 755).attr('y', 55);
@@ -447,11 +457,6 @@
                 d3.select('#hidden_bias').attr('x', 835).attr('y', 25);
                 d3.select('#output_bias').attr('x', 905);
             }
-
-            d3.select("#o").remove();
-            d3.select("#p").remove();
-            d3.select("#x").remove();
-            d3.select("#h").remove();
         }
 
         function goState36(doTransition) {
@@ -769,13 +774,109 @@
             }
 
             //Set up hover event listeners
+            d3.select('#U')
+                .on('mouseover', function() {
+                    d3.selectAll('.input_weights_U')
+                        .attr('style', 'background:green;');
+                })
+                .on('mouseleave', function() {
+                    d3.selectAll('.input_weights_U')
+                        .attr('style', '');
+                });
 
             d3.select('#W')
                 .on('mouseover', function() {
-                    
-                    console.log("");
+                    d3.selectAll('.hidden_weights_W')
+                        .attr('style', 'background:green;');
+                })
+                .on('mouseleave', function() {
+                    d3.selectAll('.hidden_weights_W')
+                        .attr('style', '');
                 });
+            
+            d3.select('#hidden_bias')
+                .on('mouseover', function() {
+                    d3.selectAll('.hidden_bias')
+                        .attr('style', 'background:green;');
+                })
+                .on('mouseleave', function() {
+                    d3.selectAll('.hidden_bias')
+                        .attr('style', '');
+                });
+            
+            d3.select('#V')
+                .on('mouseover', function() {
+                    d3.selectAll('.output_weights_V')
+                        .attr('style', 'background:green;');
+                })
+                .on('mouseleave', function() {
+                    d3.selectAll('.output_weights_V')
+                        .attr('style', '');
+                });
+            
+            d3.select('#output_bias')
+                .on('mouseover', function() {
+                    d3.selectAll('.output_bias')
+                        .attr('style', 'background:green;');
+                })
+                .on('mouseleave', function() {
+                    d3.selectAll('.output_bias')
+                        .attr('style', '');
+                });
+            
+            d3.select('#x')
+                .on('mouseover', function() {
+                    d3.selectAll('.xs')
+                        .attr('style', 'background:green;');
+                })
+                .on('mouseleave', function() {
+                    d3.selectAll('.xs')
+                        .attr('style', '');
+                });
+            
+            d3.select('#hidden_state')
+                .on('mouseover', function() {
+                    d3.selectAll('.hidden_state')
+                        .attr('style', 'background:green;');
+                })
+                .on('mouseleave', function() {
+                    d3.selectAll('.hidden_state')
+                        .attr('style', '');
+                });
+            
+            d3.select('#h')
+                .on('mouseover', function() {
+                    d3.selectAll('.hidden_state_prev')
+                        .attr('style', 'background:green;');
+                })
+                .on('mouseleave', function() {
+                    d3.selectAll('.hidden_state_prev')
+                        .attr('style', '');
+                });
+            
+            d3.select('#o')
+                .on('mouseover', function() {
+                    d3.selectAll('.outputs')
+                        .attr('style', 'background:green;');
+                })
+                .on('mouseleave', function() {
+                    d3.selectAll('.outputs')
+                        .attr('style', '');
+                });
+            
+            d3.select('#p')
+                .on('mouseover', function() {
+                    d3.selectAll('.probabilities')
+                        .attr('style', 'background:green;');
+                })
+                .on('mouseleave', function() {
+                    d3.selectAll('.probabilities')
+                        .attr('style', '');
+                });
+
+
         }
+
 
         function placeText(name, id, value, xOffset, yOffset, fadeIn, contentsChanged) {
             //TODO: Make it look better (font and size)
@@ -875,6 +976,15 @@
                 .attr('y', yOffset)
                 .attr('id', id)
 
+            var numberOfColumns = tensorElements.length;
+            var numberOfRows = tensorElements[0].length;
+            var rect = container.append('rect')
+                .attr('x', xOffset + 3)
+                .attr('y', yOffset)
+                .attr('width', (xOffset + (numberOfColumns * 40) + 50) - xOffset)
+                .attr('height', (numberOfRows * 20) )
+                .attr('fill', 'transparent')
+
             var text = container.append('text')
                 .attr('x', xOffset + 10)
                 .attr('y', yOffset + 45)
@@ -887,7 +997,6 @@
                 .attr('class', 'array-bracket')
                 .text('[')
 
-            var numberOfColumns = tensorElements.length;
             var rb = container.append('text')
                 .attr('x', xOffset + (numberOfColumns * 40) + 40)
                 .attr('y', yOffset + 52)
@@ -926,6 +1035,15 @@
                 .attr('x', xOffset)
                 .attr('y', yOffset)
                 .attr('id', id)
+            
+            var numberOfColumns = tensorElements.length;
+            var numberOfRows = 2;
+            var rect = container.append('rect')
+                .attr('x', xOffset + 23)
+                .attr('y', yOffset)
+                .attr('width', (xOffset + (numberOfColumns * 40) + 30) - xOffset)
+                .attr('height', (numberOfRows * 20) + 30 )
+                .attr('fill', 'transparent')
 
             var text = container.append('text')
                 .attr('x', xOffset + 10)
@@ -939,7 +1057,6 @@
                 .attr('class', 'array-bracket')
                 .text('[')
 
-            var numberOfColumns = tensorElements.length;
             var rb = container.append('text')
                 .attr('x', xOffset + (numberOfColumns * 40) + 40)
                 .attr('y', yOffset + 52)
@@ -965,7 +1082,6 @@
             }
 
             if (contentsChanged === true) {
-                console.log("Black to red");
                 for (let item of [elements]) {
                     item.style('fill', 'red')
                 }
