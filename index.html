@@ -97,7 +97,7 @@
             let fadeIn = doTransition
             placeRNNBlock(50, 100, fadeIn)
 
-            var U = [[ 0.04967142, 0.06476885,-0.02341534],  [-0.01382643, 0.15230299, -0.0234137 ]]
+            var U = [[0.04967142, 0.06476885, -0.02341534], [-0.01382643, 0.15230299, -0.0234137]]
             placeTensor("U", "U", 150, 185, U, fadeIn);
         }
 
@@ -105,9 +105,9 @@
             goState0(false);
             let fadeIn = doTransition
 
-            var W = [[ 0.15792128,  0.054256  ,  0.02419623],
-                     [ 0.07674347, -0.04634177, -0.19132802],
-                     [-0.04694744, -0.04657298, -0.17249178]]
+            var W = [[0.15792128, 0.054256, 0.02419623],
+            [0.07674347, -0.04634177, -0.19132802],
+            [-0.04694744, -0.04657298, -0.17249178]]
             placeTensor("W", "W", 35, 100, W, fadeIn);
         }
 
@@ -124,8 +124,8 @@
             let fadeIn = doTransition;
 
             var output_weights = [[-0.05622875, -0.09080241],
-                                  [-0.10128311, -0.14123037],
-                                  [ 0.03142473,  0.14656488]]
+            [-0.10128311, -0.14123037],
+            [0.03142473, 0.14656488]]
 
             placeTensor_2Elements("V", "V", 150, 60, output_weights, fadeIn);
         }
@@ -160,7 +160,7 @@
         function goState8(doTransition) {
             goState7(false);
         }
-        
+
         function goState9(doTransition) {
             goState8(false);
             let fadeIn = doTransition;
@@ -168,14 +168,14 @@
             let input_tensor = [[0.0, 0.0]];
             placeTensor_2Elements("x", "x", 118, 225, input_tensor, fadeIn);
         }
-        
+
         function goState10(doTransition) {
             goState9(false);
             let fadeIn = doTransition;
 
             placeText("character", "character_0", "1", 260, 535, fadeIn);
         }
-        
+
         function goState11(doTransition) {
             goState10(false);
             let fadeIn = false;
@@ -185,7 +185,7 @@
             let input_tensor = [[0.0, 1.0]];
             placeTensor_2Elements("x", "x", 118, 225, input_tensor, fadeIn, contentsChanged);
         }
-        
+
         function goState12(doTransition) {
             goState11(false);
             let fadeIn = doTransition;
@@ -198,10 +198,10 @@
             let fadeIn = doTransition;
             let contentsChanged = false;
 
-            let hidden_state = [[ 0.0496306 ,  0.06467844, -0.02341106]];
+            let hidden_state = [[0.0496306, 0.06467844, -0.02341106]];
             placeTensor("", "hidden_state", 118, 120, hidden_state, fadeIn, contentsChanged);
         }
-        
+
         function goState14(doTransition) {
             goState13(false);
             let fadeIn = doTransition;
@@ -210,7 +210,7 @@
             let outputs = [[-0.01007719, -0.01707238]];
             placeTensor_2Elements("o", "o", 95, 15, outputs, fadeIn, contentsChanged);
         }
-        
+
         function goState15(doTransition) {
             goState14(false);
             let fadeIn = doTransition;
@@ -219,7 +219,7 @@
             let probabilities = [[0.50174879, 0.49825121]]
             placeTensor_2Elements("p", "p", 145, 15, probabilities, fadeIn, contentsChanged);
         }
-        
+
         function goState16(doTransition) {
             goState15(false);
             let fadeIn = false;
@@ -228,7 +228,7 @@
             d3.select('#loss').remove();
             placeText("loss", "loss", "0.69665", 0, 20, fadeIn, contentsChanged);
         }
-        
+
         function goState17(doTransition) {
             goState16(false);
             let fadeIn = doTransition;
@@ -243,7 +243,7 @@
                 d3.select('#hidden_bias').transition().attr('x', 380).attr('y', 25);
                 d3.select('#output_bias').transition().attr('x', 445);
             }
-            else{
+            else {
                 d3.select('#W').attr('x', 300).attr('y', 55);
                 d3.select('#V').attr('x', 375);
                 d3.select('#U').attr('x', 375);
@@ -272,7 +272,7 @@
 
             placeText("character", "character_1", "0", 480, 535, fadeIn);
         }
-        
+
         function goState20(doTransition) {
             goState19(false);
             let fadeIn = false;
@@ -282,21 +282,21 @@
             let input_tensor = [[1.0, 0.0]];
             placeTensor_2Elements("x", "x", 230, 225, input_tensor, fadeIn, contentsChanged);
         }
-        
+
         function goState21(doTransition) {
             goState20(false);
             let fadeIn = doTransition;
 
             placeText("target", "target_1", "1", 480, 15, fadeIn);
         }
-        
+
         function goState22(doTransition) {
             goState21(false);
 
             let fadeIn = doTransition;
             let contentsChanged = false;
 
-            let hidden_state = [[ 7.40357596e-05,  1.51903922e-01, -3.05399045e-02]]
+            let hidden_state = [[7.40357596e-05, 1.51903922e-01, -3.05399045e-02]]
             placeTensor("", "hidden_state", 230, 120, hidden_state, fadeIn, contentsChanged);
         }
 
@@ -309,7 +309,7 @@
             let outputs = [[-0.01634917, -0.02593625]];
             placeTensor_2Elements("o", "o", 215, 10, outputs, fadeIn, contentsChanged);
         }
-        
+
         function goState24(doTransition) {
             goState23(false);
 
@@ -318,7 +318,7 @@
             let probabilities = [[0.50239675, 0.49760325]]
             placeTensor_2Elements("p", "p", 260, 10, probabilities, fadeIn, contentsChanged);
         }
-        
+
         function goState25(doTransition) {
             goState24(false);
             let fadeIn = false;
@@ -327,7 +327,7 @@
             d3.select('#loss').remove();
             placeText("loss", "loss", "1.38501", 0, 20, fadeIn, contentsChanged);
         }
-        
+
         function goState26(doTransition) {
             goState25(false);
 
@@ -342,7 +342,7 @@
                 d3.select('#hidden_bias').transition().attr('x', 615).attr('y', 25);
                 d3.select('#output_bias').transition().attr('x', 675);
             }
-            else{
+            else {
                 d3.select('#W').attr('x', 535).attr('y', 55);
                 d3.select('#V').attr('x', 605);
                 d3.select('#U').attr('x', 605);
@@ -355,7 +355,7 @@
             d3.select("#x").remove();
             d3.select("#h").remove();
         }
-        
+
         function goState27(doTransition) {
             goState26(false);
 
@@ -365,14 +365,14 @@
             let input_tensor = [[0.0, 0.0]];
             placeTensor_2Elements("x", "x", 343, 225, input_tensor, fadeIn);
         }
-        
+
         function goState28(doTransition) {
             goState27(false);
 
             let fadeIn = doTransition;
             placeText("character", "character_2", "1", 700, 535, fadeIn);
         }
-        
+
         function goState29(doTransition) {
             goState28(false);
             let fadeIn = false;
@@ -382,23 +382,23 @@
             let input_tensor = [[0.0, 1.0]];
             placeTensor_2Elements("x", "x", 343, 225, input_tensor, fadeIn, contentsChanged);
         }
-        
+
         function goState30(doTransition) {
             goState29(false);
             let fadeIn = doTransition;
 
             placeText("target", "target_2", "1", 700, 15, fadeIn);
         }
-        
+
         function goState31(doTransition) {
             goState30(false);
             let fadeIn = doTransition;
             let contentsChanged = false;
 
-            let hidden_state = [[ 0.06269218,  0.0590868 , -0.0471741 ]]
+            let hidden_state = [[0.06269218, 0.0590868, -0.0471741]]
             placeTensor("", "hidden_state", 343, 120, hidden_state, fadeIn, contentsChanged);
         }
-        
+
         function goState32(doTransition) {
             goState31(false);
 
@@ -426,7 +426,105 @@
             d3.select('#loss').remove();
             placeText("loss", "loss", "2.08315", 0, 20, fadeIn, contentsChanged);
         }
+
+        function goState35(doTransition) {
+            goState34(false);
+            let fadeIn = doTransition;
+
+            placeRNNBlock(725, 100, fadeIn);
+
+            if (doTransition) {
+                d3.select('#W').transition().attr('x', 755).attr('y', 55);
+                d3.select('#V').transition().attr('x', 835);
+                d3.select('#U').transition().attr('x', 835);
+                d3.select('#hidden_bias').transition().attr('x', 835).attr('y', 25);
+                d3.select('#output_bias').transition().attr('x', 905);
+            }
+            else {
+                d3.select('#W').attr('x', 755).attr('y', 55);
+                d3.select('#V').attr('x', 835);
+                d3.select('#U').attr('x', 835);
+                d3.select('#hidden_bias').attr('x', 835).attr('y', 25);
+                d3.select('#output_bias').attr('x', 905);
+            }
+
+            d3.select("#o").remove();
+            d3.select("#p").remove();
+            d3.select("#x").remove();
+            d3.select("#h").remove();
+        }
+
+        function goState36(doTransition) {
+            goState35(false);
+
+            let fadeIn = doTransition;
+            let input_tensor = [[0.0, 0.0]];
+            placeTensor_2Elements("x", "x", 455, 225, input_tensor, fadeIn);
+        }
         
+        function goState37(doTransition) {
+            goState36(false);
+            
+            let fadeIn = doTransition;
+            placeText("character", "character_2", "0", 935, 535, fadeIn);
+        }
+        
+        function goState38(doTransition) {
+            goState37(false);
+            let fadeIn = false;
+            let contentsChanged = doTransition;
+
+            d3.select('#x').remove();
+            let input_tensor = [[0.0, 1.0]];
+            placeTensor_2Elements("x", "x", 455, 225, input_tensor, fadeIn, contentsChanged);
+        }
+        
+        function goState39(doTransition) {
+            goState38(false);
+            let fadeIn = doTransition;
+            let contentsChanged = false;
+
+            placeText("target", "target_3", "0", 933, 15, fadeIn);
+        }
+        
+        function goState40(doTransition) {
+            goState39(false);
+
+            let fadeIn = doTransition;
+            let contentsChanged = false;
+
+            let hidden_state = [[ 0.06293721,  0.05884817, -0.04850882]]
+            placeTensor("", "hidden_state", 455, 120, hidden_state, fadeIn, contentsChanged);
+        }
+        
+        function goState41(doTransition) {
+            goState40(false);
+
+            let fadeIn = doTransition;
+            let contentsChanged = false;
+            let outputs = [[-0.01102358, -0.02113569]]
+            placeTensor_2Elements("o", "o", 440, 10, outputs, fadeIn, contentsChanged);
+        }
+
+        function goState42(doTransition) {
+            goState41(false);
+            let fadeIn = doTransition;
+            let contentsChanged = false;
+
+            let probabilities = [[0.502528, 0.497472]]
+            placeTensor_2Elements("p", "p", 485, 10, probabilities, fadeIn, contentsChanged);
+        }
+        
+        function goState43(doTransition) {
+            goState42(false);
+
+            let fadeIn = false;
+            let contentsChanged = doTransition;
+
+            d3.select('#loss').remove();
+            placeText("loss", "loss", "2.77402", 0, 20, fadeIn, contentsChanged);
+        }
+
         function goState(state, doTransition) {
             //Clear the svg and but our arrowhead definitions
             d3.select("svg").selectAll("*").remove()
@@ -502,117 +600,117 @@
             else if (state == 10) {
                 var activeLine = document.getElementById("line13")
                 activeLine.setAttribute('class', 'active-line')
-                return goState10(doTransition); 
+                return goState10(doTransition);
             }
             else if (state == 11) {
                 var activeLine = document.getElementById("line14")
                 activeLine.setAttribute('class', 'active-line')
-                return goState11(doTransition); 
+                return goState11(doTransition);
             }
             else if (state == 12) {
                 var activeLine = document.getElementById("line15")
                 activeLine.setAttribute('class', 'active-line')
-                return goState12(doTransition); 
+                return goState12(doTransition);
             }
             else if (state == 13) {
                 var activeLine = document.getElementById("line17")
                 activeLine.setAttribute('class', 'active-line')
-                return goState13(doTransition); 
+                return goState13(doTransition);
             }
             else if (state == 14) {
                 var activeLine = document.getElementById("line19")
                 activeLine.setAttribute('class', 'active-line')
-                return goState14(doTransition); 
+                return goState14(doTransition);
             }
             else if (state == 15) {
                 var activeLine = document.getElementById("line20")
                 activeLine.setAttribute('class', 'active-line')
-                return goState15(doTransition); 
+                return goState15(doTransition);
             }
             else if (state == 16) {
                 var activeLine = document.getElementById("line22")
                 activeLine.setAttribute('class', 'active-line')
-                return goState16(doTransition); 
+                return goState16(doTransition);
             }
             else if (state == 17) {
                 var activeLine = document.getElementById("line10")
                 activeLine.setAttribute('class', 'active-line')
-                return goState17(doTransition); 
+                return goState17(doTransition);
             }
             else if (state == 18) {
                 var activeLine = document.getElementById("line12")
                 activeLine.setAttribute('class', 'active-line')
-                return goState18(doTransition); 
+                return goState18(doTransition);
             }
             else if (state == 19) {
                 var activeLine = document.getElementById("line13")
                 activeLine.setAttribute('class', 'active-line')
-                return goState19(doTransition); 
+                return goState19(doTransition);
             }
             else if (state == 20) {
                 var activeLine = document.getElementById("line14")
                 activeLine.setAttribute('class', 'active-line')
-                return goState20(doTransition); 
+                return goState20(doTransition);
             }
             else if (state == 21) {
                 var activeLine = document.getElementById("line15")
                 activeLine.setAttribute('class', 'active-line')
-                return goState21(doTransition); 
+                return goState21(doTransition);
             }
             else if (state == 22) {
                 var activeLine = document.getElementById("line17")
                 activeLine.setAttribute('class', 'active-line')
-                return goState22(doTransition); 
+                return goState22(doTransition);
             }
             else if (state == 23) {
                 var activeLine = document.getElementById("line19")
                 activeLine.setAttribute('class', 'active-line')
-                return goState23(doTransition); 
+                return goState23(doTransition);
             }
             else if (state == 24) {
                 var activeLine = document.getElementById("line20")
                 activeLine.setAttribute('class', 'active-line')
-                return goState24(doTransition); 
+                return goState24(doTransition);
             }
             else if (state == 25) {
                 var activeLine = document.getElementById("line22")
                 activeLine.setAttribute('class', 'active-line')
-                return goState25(doTransition); 
+                return goState25(doTransition);
             }
             else if (state == 26) {
                 var activeLine = document.getElementById("line10")
                 activeLine.setAttribute('class', 'active-line')
-                return goState26(doTransition); 
+                return goState26(doTransition);
             }
             else if (state == 27) {
                 var activeLine = document.getElementById("line12")
                 activeLine.setAttribute('class', 'active-line')
-                return goState27(doTransition); 
+                return goState27(doTransition);
             }
             else if (state == 28) {
                 var activeLine = document.getElementById("line13")
                 activeLine.setAttribute('class', 'active-line')
-                return goState28(doTransition); 
+                return goState28(doTransition);
             }
             else if (state == 29) {
                 var activeLine = document.getElementById("line14")
                 activeLine.setAttribute('class', 'active-line')
-                return goState29(doTransition); 
+                return goState29(doTransition);
             }
             else if (state == 30) {
                 var activeLine = document.getElementById("line15")
                 activeLine.setAttribute('class', 'active-line')
-                return goState30(doTransition); 
+                return goState30(doTransition);
             }
             else if (state == 31) {
                 var activeLine = document.getElementById("line17")
                 activeLine.setAttribute('class', 'active-line')
-                return goState31(doTransition); 
+                return goState31(doTransition);
             }
             else if (state == 32) {
                 var activeLine = document.getElementById("line19")
                 activeLine.setAttribute('class', 'active-line')
-                return goState32(doTransition); 
+                return goState32(doTransition);
             }
             else if (state == 33) {
                 var activeLine = document.getElementById("line20");
@@ -623,6 +721,51 @@
                 var activeLine = document.getElementById("line22");
                 activeLine.setAttribute('class', 'active-line');
                 return goState34(doTransition);
+            }
+            else if (state == 35) {
+                var activeLine = document.getElementById("line10");
+                activeLine.setAttribute('class', 'active-line');
+                return goState35(doTransition);
+            }
+            else if (state == 36) {
+                var activeLine = document.getElementById("line12");
+                activeLine.setAttribute('class', 'active-line');
+                return goState36(doTransition);
+            }
+            else if (state == 37) {
+                var activeLine = document.getElementById("line13");
+                activeLine.setAttribute('class', 'active-line');
+                return goState37(doTransition);
+            }
+            else if (state == 38) {
+                var activeLine = document.getElementById("line14");
+                activeLine.setAttribute('class', 'active-line');
+                return goState38(doTransition);
+            }
+            else if (state == 39) {
+                var activeLine = document.getElementById("line15");
+                activeLine.setAttribute('class', 'active-line');
+                return goState39(doTransition);
+            }
+            else if (state == 40) {
+                var activeLine = document.getElementById("line17");
+                activeLine.setAttribute('class', 'active-line');
+                return goState40(doTransition);
+            }
+            else if (state == 41) {
+                var activeLine = document.getElementById("line19");
+                activeLine.setAttribute('class', 'active-line');
+                return goState41(doTransition);
+            }
+            else if (state == 42) {
+                var activeLine = document.getElementById("line20");
+                activeLine.setAttribute('class', 'active-line');
+                return goState42(doTransition);
+            }
+            else if (state == 43) {
+                var activeLine = document.getElementById("line22");
+                activeLine.setAttribute('class', 'active-line');
+                return goState43(doTransition);
             }
         }
 
@@ -652,18 +795,18 @@
             if (fadeIn) {
                 for (let item of [label, equals, value]) {
                     item.attr('opacity', 0)
-                    .transition()
-                    .attr('opacity', 1)
+                        .transition()
+                        .attr('opacity', 1)
                 }
             }
-            
+
             if (contentsChanged === true) {
                 console.log("Black to red");
                 for (let item of [value]) {
                     item.style('fill', 'red')
                 }
             }
-            
+
         }
 
         function placeRNNBlock(xOffset, yOffset, fadeIn) {
@@ -707,12 +850,12 @@
                 .attr("stroke", "black")
                 .attr("stroke-width", "3")
                 .attr("marker-end", "url(#arrow)")
-            
+
             if (fadeIn) {
                 for (let item of [rect, line, leftArrow, topArrow]) {
                     item.attr('opacity', 0)
-                    .transition()
-                    .attr('opacity', 1)
+                        .transition()
+                        .attr('opacity', 1)
                 }
             }
         }
@@ -756,11 +899,11 @@
             if (fadeIn === true) {
                 for (let item of [text, lb, rb, elements]) {
                     item.attr('opacity', 0)
-                    .transition()
-                    .attr('opacity', 1)
+                        .transition()
+                        .attr('opacity', 1)
                 }
             }
-            
+
             if (contentsChanged === true) {
                 console.log("Black to red");
                 for (let item of [elements]) {
@@ -808,11 +951,11 @@
             if (fadeIn === true) {
                 for (let item of [text, lb, rb, elements]) {
                     item.attr('opacity', 0)
-                    .transition()
-                    .attr('opacity', 1);
+                        .transition()
+                        .attr('opacity', 1);
                 }
             }
-            
+
             if (contentsChanged === true) {
                 console.log("Black to red");
                 for (let item of [elements]) {
