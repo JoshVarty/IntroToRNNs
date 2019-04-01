@@ -44,7 +44,6 @@
 <body>
 
 
-    <p>test</p>
     <p>
         <pre>
 <span id="line0"><span class='comment'>#Initialize weights and biases</span></span>
@@ -201,8 +200,36 @@
             let fadeIn = doTransition;
             let contentsChanged = false;
 
-            let hidden_state = [[ 0.0496306 ,  0.06467844, -0.02341106]]
+            let hidden_state = [[ 0.0496306 ,  0.06467844, -0.02341106]];
             placeTensor("", 118, 120, hidden_state, fadeIn, contentsChanged);
+        }
+        
+        function goState14(doTransition) {
+            goState13(false);
+            let fadeIn = doTransition;
+            let contentsChanged = false;
+
+            let outputs = [[-0.01007719, -0.01707238]];
+            placeTensor_2Elements("o", 95, 15, outputs, fadeIn, contentsChanged);
+        }
+        
+        function goState15(doTransition) {
+            goState14(false);
+            let fadeIn = doTransition;
+            let contentsChanged = false;
+
+            let probabilities = [[0.50174879, 0.49825121]]
+            placeTensor_2Elements("p", 145, 15, probabilities, fadeIn, contentsChanged);
+        }
+        
+        function goState16(doTransition) {
+            goState15(false);
+            let fadeIn = false;
+            let contentsChanged = doTransition;
+
+            d3.select('#loss').remove();
+
+            placeText("loss", "0.69665", 0, 20, fadeIn, contentsChanged);
         }
 
         function goState(state, doTransition) {
@@ -297,11 +324,27 @@
                 activeLine.setAttribute('class', 'active-line')
                 return goState13(doTransition); 
             }
+            else if (state == 14) {
+                var activeLine = document.getElementById("line19")
+                activeLine.setAttribute('class', 'active-line')
+                return goState14(doTransition); 
+            }
+            else if (state == 15) {
+                var activeLine = document.getElementById("line20")
+                activeLine.setAttribute('class', 'active-line')
+                return goState15(doTransition); 
+            }
+            else if (state == 16) {
+                var activeLine = document.getElementById("line22")
+                activeLine.setAttribute('class', 'active-line')
+                return goState16(doTransition); 
+            }
         }
 
-        function placeText(name, value, xOffset, yOffset, fadeIn) {
+        function placeText(name, value, xOffset, yOffset, fadeIn, contentsChanged) {
             //TODO: Make it look better (font and size)
-            var container = d3.select("svg").append("svg");
+            var container = d3.select("svg").append("svg")
+                .attr('id', name);
             var label = container.append("text")
                 .text(name)
                 .attr('x', xOffset)
@@ -326,6 +369,13 @@
                     item.attr('opacity', 0)
                     .transition()
                     .attr('opacity', 1)
+                }
+            }
+            
+            if (contentsChanged === true) {
+                console.log("Black to red");
+                for (let item of [value]) {
+                    item.style('fill', 'red')
                 }
             }
             
