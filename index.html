@@ -62,21 +62,21 @@
     <span id="line12">xs[t] = np.zeros((vocab_size,1))  </span>
     <span id="line13">character = inputs[t]</span>
     <span id="line14">xs[t][character] = 1 </span>
-    <span id="line15"><span class="comment"># Compute hidden state </span></span>
-    <span id="line16">hidden_states[t] = np.tanh(input_weights_U @ xs[t] + hidden_weights_W @ hidden_states[t-1] + hidden_bias) </span>
-    <span id="line17"><span class="comment"># Compute output and probabilities</span></span>
-    <span id="line18">outputs[t] = output_weights_V @ hidden_states[t] + output_bias</span>
-    <span id="line19">probabilities[t] = np.exp(outputs[t]) / np.sum(np.exp(outputs[t]))</span>
-    <span id="line20"><span class="comment">#Compute cross-entropy loss</span></span>
-    <span id="line21">loss += -np.log(probabilities[t][targets[t],0]) </span>
-       </pre>
+    <span id="line15">target = targets[t]</span>
+    <span id="line16"><span class="comment"># Compute hidden state </span></span>
+    <span id="line17">hidden_states[t] = np.tanh(input_weights_U @ xs[t] + hidden_weights_W @ hidden_states[t-1] + hidden_bias) </span>
+    <span id="line18"><span class="comment"># Compute output and probabilities</span></span>
+    <span id="line19">outputs[t] = output_weights_V @ hidden_states[t] + output_bias</span>
+    <span id="line20">probabilities[t] = np.exp(outputs[t]) / np.sum(np.exp(outputs[t]))</span>
+    <span id="line21"><span class="comment">#Compute cross-entropy loss</span></span>
+    <span id="line22">loss += -np.log(probabilities[t][target,0]) </span></pre>
     </p>
 
     <button onclick="goBack()">Back</button>
     <button onclick="goFoward()">Forward</button>
     <br />
 
-    <svg width=900 height=500>
+    <svg width=900 height=600>
     </svg>
 
 
@@ -96,10 +96,10 @@
 
         function goState0(doTransition) {
             let fadeIn = doTransition
-            placeRNNBlock(50, 50, fadeIn)
+            placeRNNBlock(50, 100, fadeIn)
 
             var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
-            placeTensor("U", 150, 155, U, fadeIn);
+            placeTensor("U", 150, 185, U, fadeIn);
         }
 
         function goState1(doTransition) {
@@ -109,7 +109,7 @@
             var W = [[0.01579213, 0.00767435, -0.00469474],
             [0.0054256, -0.00463418, -0.0046573],
             [0.00241962, -0.0191328, -0.01724918]]
-            placeTensor("W", 30, 70, W, fadeIn);
+            placeTensor("W", 35, 100, W, fadeIn);
         }
 
         function goState2(doTransition) {
@@ -117,7 +117,7 @@
             let fadeIn = doTransition;
 
             var hidden_bias = [[0.00, 0.00, 0.00]]
-            placeTensor("", 30, 30, hidden_bias, fadeIn);
+            placeTensor("", 35, 65, hidden_bias, fadeIn);
         }
 
         function goState3(doTransition) {
@@ -126,7 +126,7 @@
 
             var output_weights = [[-0.00562288, -0.01012831, 0.00314247],
             [-0.00908024, -0.01412304, 0.01465649]]
-            placeTensor("V", 160, 30, output_weights, fadeIn);
+            placeTensor("V", 160, 60, output_weights, fadeIn);
         }
 
         function goState4(doTransition) {
@@ -134,7 +134,7 @@
             let fadeIn = doTransition
 
             var output_bias = [[0, 0]]
-            placeTensor_2Elements("", 215, 30, output_bias, fadeIn);
+            placeTensor_2Elements("", 215, 60, output_bias, fadeIn);
         }
 
         function goState5(doTransition) {
@@ -153,7 +153,7 @@
             let fadeIn = doTransition;
 
             var hidden_state_prev = [[0.0, 0.0, 0.0]]
-            placeTensor("h", 0, 105, hidden_state_prev, fadeIn);
+            placeTensor("h", 0, 125, hidden_state_prev, fadeIn);
         }
 
         function goState8(doTransition) {
@@ -165,7 +165,7 @@
             let fadeIn = doTransition;
 
             let input_tensor = [[0.0, 0.0]];
-            placeTensor_2Elements("x", 118, 200, input_tensor, fadeIn);
+            placeTensor_2Elements("x", 118, 225, input_tensor, fadeIn);
         }
         
         function goState10(doTransition) {
@@ -173,25 +173,34 @@
             let fadeIn = doTransition;
 
             let input_tensor = [[0.0, 0.0]];
-            placeText("char", "1", 270, 495, fadeIn);
+            placeText("character", "1", 260, 535, fadeIn);
         }
-
+        
         function goState11(doTransition) {
             goState10(false);
             let fadeIn = false;
-            let contentsChanged = true;
+            let contentsChanged = doTransition;
 
             d3.select('#x').remove();
             let input_tensor = [[0.0, 1.0]];
-            placeTensor_2Elements("x", 118, 200, input_tensor, fadeIn, contentsChanged);
+            placeTensor_2Elements("x", 118, 225, input_tensor, fadeIn, contentsChanged);
         }
+        
         function goState12(doTransition) {
-            goState10(false);
-            let fadeIn = true;
+            goState11(false);
+            let fadeIn = doTransition;
+
+            let input_tensor = [[0.0, 0.0]];
+            placeText("target", "0", 270, 15, fadeIn);
+        }
+
+        function goState13(doTransition) {
+            goState12(false);
+            let fadeIn = doTransition;
             let contentsChanged = false;
 
             let hidden_state = [[ 0.0049671 ,  0.00647679, -0.00234153]]
-            placeTensor("", 118, 95, hidden_state, fadeIn, contentsChanged);
+            placeTensor("", 118, 120, hidden_state, fadeIn, contentsChanged);
         }
 
         function goState(state, doTransition) {
@@ -277,9 +286,14 @@
                 return goState11(doTransition); 
             }
             else if (state == 12) {
-                var activeLine = document.getElementById("line16")
+                var activeLine = document.getElementById("line15")
                 activeLine.setAttribute('class', 'active-line')
                 return goState12(doTransition); 
+            }
+            else if (state == 13) {
+                var activeLine = document.getElementById("line17")
+                activeLine.setAttribute('class', 'active-line')
+                return goState13(doTransition); 
             }
         }
 
@@ -291,14 +305,18 @@
                 .attr('x', xOffset)
                 .attr('y', yOffset);
 
+            //We have to account for the number of characters in our "name" label
+            let numberOfCharactersInName = name.length;
+            let nameOffset = numberOfCharactersInName * 7;
+
             var equals = container.append("text")
                 .text('=')
-                .attr('x', xOffset + 27)
+                .attr('x', xOffset + nameOffset)
                 .attr('y', yOffset);
 
             var value = container.append("text")
                 .text(value)
-                .attr('x', xOffset + 40)
+                .attr('x', xOffset + nameOffset + 12)
                 .attr('y', yOffset);
 
             if (fadeIn) {
