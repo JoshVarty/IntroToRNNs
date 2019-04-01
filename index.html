@@ -98,7 +98,7 @@
             let fadeIn = doTransition
             placeRNNBlock(50, 100, fadeIn)
 
-            var U = [[0.01, 0.02, 0.03], [0.04, 0.03, 0.05]]
+            var U = [[ 0.04967142, 0.06476885,-0.02341534],  [-0.01382643, 0.15230299, -0.0234137 ]]
             placeTensor("U", 150, 185, U, fadeIn);
         }
 
@@ -106,9 +106,9 @@
             goState0(false);
             let fadeIn = doTransition
 
-            var W = [[0.01579213, 0.00767435, -0.00469474],
-            [0.0054256, -0.00463418, -0.0046573],
-            [0.00241962, -0.0191328, -0.01724918]]
+            var W = [[ 0.15792128,  0.054256  ,  0.02419623],
+                     [ 0.07674347, -0.04634177, -0.19132802],
+                     [-0.04694744, -0.04657298, -0.17249178]]
             placeTensor("W", 35, 100, W, fadeIn);
         }
 
@@ -124,9 +124,11 @@
             goState2(false);
             let fadeIn = doTransition;
 
-            var output_weights = [[-0.00562288, -0.01012831, 0.00314247],
-            [-0.00908024, -0.01412304, 0.01465649]]
-            placeTensor("V", 160, 60, output_weights, fadeIn);
+            var output_weights = [[-0.05622875, -0.09080241],
+                                  [-0.10128311, -0.14123037],
+                                  [ 0.03142473,  0.14656488]]
+
+            placeTensor_2Elements("V", 150, 60, output_weights, fadeIn);
         }
 
         function goState4(doTransition) {
@@ -134,7 +136,7 @@
             let fadeIn = doTransition
 
             var output_bias = [[0, 0]]
-            placeTensor_2Elements("", 215, 60, output_bias, fadeIn);
+            placeTensor_2Elements("", 220, 60, output_bias, fadeIn);
         }
 
         function goState5(doTransition) {
@@ -199,7 +201,7 @@
             let fadeIn = doTransition;
             let contentsChanged = false;
 
-            let hidden_state = [[ 0.0049671 ,  0.00647679, -0.00234153]]
+            let hidden_state = [[ 0.0496306 ,  0.06467844, -0.02341106]]
             placeTensor("", 118, 120, hidden_state, fadeIn, contentsChanged);
         }
 

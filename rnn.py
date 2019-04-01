@@ -20,11 +20,11 @@ seq_length = 4  # number of steps to unroll the RNN for
 learning_rate = 1e-1
 
 # model parameters
-input_weights_U = np.random.randn(hidden_size, vocab_size) * 0.01     # input to hidden
-hidden_weights_W = np.random.randn(hidden_size, hidden_size) * 0.01   # hidden to hidden
+input_weights_U = np.random.randn(hidden_size, vocab_size) * 0.1     # input to hidden
+hidden_weights_W = np.random.randn(hidden_size, hidden_size) * 0.1   # hidden to hidden
 hidden_bias = np.zeros((hidden_size, 1)) # hidden bias
 
-output_weights_V = np.random.randn(vocab_size, hidden_size) * 0.01    # hidden to output
+output_weights_V = np.random.randn(vocab_size, hidden_size) * 0.1    # hidden to output
 output_bias = np.zeros((vocab_size, 1)) # output bias
 
 def step(inputs, targets, hidden_state_prev):
@@ -37,6 +37,7 @@ def step(inputs, targets, hidden_state_prev):
     # one-hot-encoding the input character
     xs[t] = np.zeros((vocab_size,1)) 
     character = inputs[t]
+    target = targets[t]
     xs[t][character] = 1
     # Compute hidden state
     hidden_states[t] = np.tanh(input_weights_U @ xs[t] + hidden_weights_W @ hidden_states[t-1] + hidden_bias) 
@@ -44,7 +45,7 @@ def step(inputs, targets, hidden_state_prev):
     outputs[t] = output_weights_V @ hidden_states[t] + output_bias
     probabilities[t] = np.exp(outputs[t]) / np.sum(np.exp(outputs[t]))
     #Compute cross-entropy loss
-    loss += -np.log(probabilities[t][targets[t],0]) # softmax (cross-entropy loss)
+    loss += -np.log(probabilities[t][target,0]) # softmax (cross-entropy loss)
 
   # backward pass: compute gradients going backwards
   input_weights_U_grad = np.zeros_like(input_weights_U)
