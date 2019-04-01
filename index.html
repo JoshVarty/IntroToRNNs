@@ -146,7 +146,7 @@
             goState5(false);
             let fadeIn = doTransition;
 
-            placeText("loss", "0", 0, 20, fadeIn);
+            placeText("loss", "loss", "0", 0, 20, fadeIn);
         }
 
         function goState7(doTransition) {
@@ -173,8 +173,7 @@
             goState9(false);
             let fadeIn = doTransition;
 
-            let input_tensor = [[0.0, 0.0]];
-            placeText("character", "1", 260, 535, fadeIn);
+            placeText("character", "character_0", "1", 260, 535, fadeIn);
         }
         
         function goState11(doTransition) {
@@ -191,8 +190,7 @@
             goState11(false);
             let fadeIn = doTransition;
 
-            let input_tensor = [[0.0, 0.0]];
-            placeText("target", "0", 270, 15, fadeIn);
+            placeText("target", "target_0", "0", 270, 15, fadeIn);
         }
 
         function goState13(doTransition) {
@@ -228,7 +226,7 @@
             let contentsChanged = doTransition;
 
             d3.select('#loss').remove();
-            placeText("loss", "0.69665", 0, 20, fadeIn, contentsChanged);
+            placeText("loss", "loss", "0.69665", 0, 20, fadeIn, contentsChanged);
         }
         
         function goState17(doTransition) {
@@ -238,16 +236,60 @@
 
             placeRNNBlock(275, 100, fadeIn);
 
-            d3.select('#W').transition().attr('x', 300).attr('y', 55);
-            d3.select('#V').transition().attr('x', 375);
-            d3.select('#U').transition().attr('x', 375);
-            d3.select('#hidden_bias').transition().attr('x', 380).attr('y', 25);
-            d3.select('#output_bias').transition().attr('x', 445);
+            if (doTransition) {
+                d3.select('#W').transition().attr('x', 300).attr('y', 55);
+                d3.select('#V').transition().attr('x', 375);
+                d3.select('#U').transition().attr('x', 375);
+                d3.select('#hidden_bias').transition().attr('x', 380).attr('y', 25);
+                d3.select('#output_bias').transition().attr('x', 445);
+            }
+            else{
+                d3.select('#W').attr('x', 300).attr('y', 55);
+                d3.select('#V').attr('x', 375);
+                d3.select('#U').attr('x', 375);
+                d3.select('#hidden_bias').attr('x', 380).attr('y', 25);
+                d3.select('#output_bias').attr('x', 445);
+            }
+
             d3.select("#o").remove();
             d3.select("#p").remove();
             d3.select("#x").remove();
             d3.select("#h").remove();
         }
+
+        function goState18(doTransition) {
+            goState17(false);
+            let fadeIn = doTransition;
+            let contentsChanged = false;
+
+            let input_tensor = [[0.0, 0.0]];
+            placeTensor_2Elements("x", "x", 230, 225, input_tensor, fadeIn);
+        }
+
+        function goState19(doTransition) {
+            goState18(false);
+            let fadeIn = doTransition;
+
+            placeText("character", "character_1", "0", 480, 535, fadeIn);
+        }
+        
+        function goState20(doTransition) {
+            goState19(false);
+            let fadeIn = false;
+            let contentsChanged = doTransition;
+
+            d3.select('#x').remove();
+            let input_tensor = [[1.0, 0.0]];
+            placeTensor_2Elements("x", "x", 230, 225, input_tensor, fadeIn, contentsChanged);
+        }
+        
+        function goState21(doTransition) {
+            goState20(false);
+            let fadeIn = doTransition;
+
+            placeText("target", "target_1", "1", 480, 15, fadeIn);
+        }
+        
 
         function goState(state, doTransition) {
             //Clear the svg and but our arrowhead definitions
@@ -361,12 +403,32 @@
                 activeLine.setAttribute('class', 'active-line')
                 return goState17(doTransition); 
             }
+            else if (state == 18) {
+                var activeLine = document.getElementById("line12")
+                activeLine.setAttribute('class', 'active-line')
+                return goState18(doTransition); 
+            }
+            else if (state == 19) {
+                var activeLine = document.getElementById("line13")
+                activeLine.setAttribute('class', 'active-line')
+                return goState19(doTransition); 
+            }
+            else if (state == 20) {
+                var activeLine = document.getElementById("line14")
+                activeLine.setAttribute('class', 'active-line')
+                return goState20(doTransition); 
+            }
+            else if (state == 21) {
+                var activeLine = document.getElementById("line15")
+                activeLine.setAttribute('class', 'active-line')
+                return goState21(doTransition); 
+            }
         }
 
-        function placeText(name, value, xOffset, yOffset, fadeIn, contentsChanged) {
+        function placeText(name, id, value, xOffset, yOffset, fadeIn, contentsChanged) {
             //TODO: Make it look better (font and size)
             var container = d3.select("svg").append("svg")
-                .attr('id', name);
+                .attr('id', id);
             var label = container.append("text")
                 .text(name)
                 .attr('x', xOffset)
