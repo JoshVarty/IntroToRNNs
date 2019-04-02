@@ -873,8 +873,6 @@
                     d3.selectAll('.probabilities')
                         .attr('style', '');
                 });
-
-
         }
 
 
@@ -975,6 +973,7 @@
                 .attr('x', xOffset)
                 .attr('y', yOffset)
                 .attr('id', id)
+                .append('g')
 
             var numberOfColumns = tensorElements.length;
             var numberOfRows = tensorElements[0].length;
@@ -1014,11 +1013,11 @@
                 })
 
             if (fadeIn === true) {
-                for (let item of [text, lb, rb, elements]) {
-                    item.attr('opacity', 0)
-                        .transition()
-                        .attr('opacity', 1)
-                }
+                container
+                .attr('transform','scale(0.95) translate(20)')
+                .attr('opacity', 0)
+                .transition().attr('transform','scale(1.05) translate(-20)').attr('opacity','1')
+                .transition().attr('transform', 'scale(1)')
             }
 
             if (contentsChanged === true) {
@@ -1035,6 +1034,7 @@
                 .attr('x', xOffset)
                 .attr('y', yOffset)
                 .attr('id', id)
+                .append('g')
             
             var numberOfColumns = tensorElements.length;
             var numberOfRows = 2;
@@ -1074,11 +1074,11 @@
                 })
 
             if (fadeIn === true) {
-                for (let item of [text, lb, rb, elements]) {
-                    item.attr('opacity', 0)
-                        .transition()
-                        .attr('opacity', 1);
-                }
+                container
+                .attr('transform','scale(0.95) translate(20)')
+                .attr('opacity', 0)
+                .transition().attr('transform','scale(1.05) translate(-20)').attr('opacity','1')
+                .transition().attr('transform', 'scale(1)')
             }
 
             if (contentsChanged === true) {
