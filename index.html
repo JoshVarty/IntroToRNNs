@@ -98,7 +98,7 @@
             placeRNNBlock(50, 100, fadeIn)
 
             var U = [[0.04967142, 0.06476885, -0.02341534], [-0.01382643, 0.15230299, -0.0234137]]
-            placeTensor("U", "U", 150, 185, U, fadeIn);
+            placeTensor("U", "U", 300, 370, U, fadeIn);
         }
 
         function goState1(doTransition) {
@@ -108,7 +108,7 @@
             var W = [[0.15792128, 0.054256, 0.02419623],
             [0.07674347, -0.04634177, -0.19132802],
             [-0.04694744, -0.04657298, -0.17249178]]
-            placeTensor("W", "W", 35, 100, W, fadeIn);
+            placeTensor("W", "W", 65, 195, W, fadeIn);
         }
 
         function goState2(doTransition) {
@@ -116,7 +116,7 @@
             let fadeIn = doTransition;
 
             var hidden_bias = [[0.00, 0.00, 0.00]]
-            placeTensor("", "hidden_bias", 35, 65, hidden_bias, fadeIn);
+            placeTensor("", "hidden_bias", 145, 130, hidden_bias, fadeIn);
         }
 
         function goState3(doTransition) {
@@ -127,7 +127,7 @@
             [-0.10128311, -0.14123037],
             [0.03142473, 0.14656488]]
 
-            placeTensor_2Elements("V", "V", 150, 60, output_weights, fadeIn);
+            placeTensor_2Elements("V", "V", 300, 120, output_weights, fadeIn);
         }
 
         function goState4(doTransition) {
@@ -135,7 +135,7 @@
             let fadeIn = doTransition
 
             var output_bias = [[0, 0]]
-            placeTensor_2Elements("", "output_bias", 220, 60, output_bias, fadeIn);
+            placeTensor_2Elements("", "output_bias", 440, 120, output_bias, fadeIn);
         }
 
         function goState5(doTransition) {
@@ -154,7 +154,7 @@
             let fadeIn = doTransition;
 
             var hidden_state_prev = [[0.0, 0.0, 0.0]]
-            placeTensor("", "h", 0, 125, hidden_state_prev, fadeIn);
+            placeTensor("", "h", 0, 250, hidden_state_prev, fadeIn);
         }
 
         function goState8(doTransition) {
@@ -166,7 +166,7 @@
             let fadeIn = doTransition;
 
             let input_tensor = [[0.0, 0.0]];
-            placeTensor_2Elements("x", "x", 118, 225, input_tensor, fadeIn);
+            placeTensor_2Elements("x", "x", 238, 450, input_tensor, fadeIn);
         }
 
         function goState10(doTransition) {
@@ -183,7 +183,7 @@
 
             d3.select('#x').remove();
             let input_tensor = [[0.0, 1.0]];
-            placeTensor_2Elements("x", "x", 118, 225, input_tensor, fadeIn, contentsChanged);
+            placeTensor_2Elements("x", "x", 238, 450, input_tensor, fadeIn, contentsChanged);
         }
 
         function goState12(doTransition) {
@@ -199,7 +199,7 @@
             let contentsChanged = false;
 
             let hidden_state = [[0.0496306, 0.06467844, -0.02341106]];
-            placeTensor("", "hidden_state", 118, 120, hidden_state, fadeIn, contentsChanged);
+            placeTensor("", "hidden_state", 238, 240, hidden_state, fadeIn, contentsChanged);
         }
 
         function goState14(doTransition) {
@@ -208,7 +208,7 @@
             let contentsChanged = false;
 
             let outputs = [[-0.01007719, -0.01707238]];
-            placeTensor_2Elements("o", "o", 95, 15, outputs, fadeIn, contentsChanged);
+            placeTensor_2Elements("o", "o", 190, 30, outputs, fadeIn, contentsChanged);
         }
 
         function goState15(doTransition) {
@@ -217,7 +217,7 @@
             let contentsChanged = false;
 
             let probabilities = [[0.50174879, 0.49825121]]
-            placeTensor_2Elements("p", "p", 145, 15, probabilities, fadeIn, contentsChanged);
+            placeTensor_2Elements("p", "p", 280, 30, probabilities, fadeIn, contentsChanged);
         }
 
         function goState16(doTransition) {
@@ -243,19 +243,18 @@
             d3.select('#hidden_state').attr('id', 'h');
 
             if (doTransition) {
-                d3.select('#W').transition().attr('x', 300).attr('y', 55);
-                d3.select('#V').transition().attr('x', 375);
-                d3.select('#U').transition().attr('x', 375);
-                d3.select('#hidden_bias').transition().attr('x', 380).attr('y', 25);
-                d3.select('#output_bias').transition().attr('x', 445);
+                d3.select('#W').transition().attr('x', 320).attr('y', 155);
+                d3.select('#V').transition().attr('x', 525).attr('y', 155);
+                d3.select('#U').transition().attr('x', 525)
+                d3.select('#hidden_bias').transition().attr('x', 400).attr('y', 90);
+                d3.select('#output_bias').transition().attr('x', 665).attr('y', 155)
             }
             else {
-                d3.select('#W').attr('x', 300).attr('y', 55);
-                d3.select('#V').attr('x', 375);
-                d3.select('#U').attr('x', 375);
-                d3.select('#hidden_bias').attr('x', 380).attr('y', 25);
-                d3.select('#output_bias').attr('x', 445);
-                //d3.select('h').attr('id', 'hidden_state');
+                d3.select('#W').attr('x', 320).attr('y', 155);
+                d3.select('#V').attr('x', 525).attr('y', 155);
+                d3.select('#U').attr('x', 525)
+                d3.select('#hidden_bias').attr('x', 400).attr('y', 90);
+                d3.select('#output_bias').attr('x', 665).attr('y', 155)
             }
         }
 
@@ -265,7 +264,7 @@
             let contentsChanged = false;
 
             let input_tensor = [[0.0, 0.0]];
-            placeTensor_2Elements("x", "x", 230, 225, input_tensor, fadeIn);
+            placeTensor_2Elements("x", "x", 460, 450, input_tensor, fadeIn);
         }
 
         function goState19(doTransition) {
@@ -282,7 +281,7 @@
 
             d3.select('#x').remove();
             let input_tensor = [[1.0, 0.0]];
-            placeTensor_2Elements("x", "x", 230, 225, input_tensor, fadeIn, contentsChanged);
+            placeTensor_2Elements("x", "x", 460, 450, input_tensor, fadeIn, contentsChanged);
         }
 
         function goState21(doTransition) {
@@ -299,7 +298,7 @@
             let contentsChanged = false;
 
             let hidden_state = [[7.40357596e-05, 1.51903922e-01, -3.05399045e-02]]
-            placeTensor("", "hidden_state", 230, 120, hidden_state, fadeIn, contentsChanged);
+            placeTensor("", "hidden_state", 460, 240, hidden_state, fadeIn, contentsChanged);
         }
 
         function goState23(doTransition) {
@@ -309,7 +308,7 @@
             let contentsChanged = false;
 
             let outputs = [[-0.01634917, -0.02593625]];
-            placeTensor_2Elements("o", "o", 215, 10, outputs, fadeIn, contentsChanged);
+            placeTensor_2Elements("o", "o", 430, 20, outputs, fadeIn, contentsChanged);
         }
 
         function goState24(doTransition) {
@@ -318,7 +317,7 @@
             let fadeIn = doTransition;
             let contentsChanged = false;
             let probabilities = [[0.50239675, 0.49760325]]
-            placeTensor_2Elements("p", "p", 260, 10, probabilities, fadeIn, contentsChanged);
+            placeTensor_2Elements("p", "p", 520, 20, probabilities, fadeIn, contentsChanged);
         }
 
         function goState25(doTransition) {
@@ -344,18 +343,18 @@
             d3.select('#hidden_state').attr('id', 'h');
 
             if (doTransition) {
-                d3.select('#W').transition().attr('x', 535).attr('y', 55);
-                d3.select('#V').transition().attr('x', 605);
-                d3.select('#U').transition().attr('x', 605);
-                d3.select('#hidden_bias').transition().attr('x', 615).attr('y', 25);
-                d3.select('#output_bias').transition().attr('x', 675);
+                d3.select('#W').transition().attr('x', 545)
+                d3.select('#V').transition().attr('x', 750);
+                d3.select('#U').transition().attr('x', 750);
+                d3.select('#hidden_bias').transition().attr('x', 625)
+                d3.select('#output_bias').transition().attr('x', 890);
             }
             else {
-                d3.select('#W').attr('x', 535).attr('y', 55);
-                d3.select('#V').attr('x', 605);
-                d3.select('#U').attr('x', 605);
-                d3.select('#hidden_bias').attr('x', 615).attr('y', 25);
-                d3.select('#output_bias').attr('x', 675);
+                d3.select('#W').attr('x', 545)
+                d3.select('#V').attr('x', 750);
+                d3.select('#U').attr('x', 750);
+                d3.select('#hidden_bias').attr('x', 625)
+                d3.select('#output_bias').attr('x', 890);
             }
 
         }
@@ -367,7 +366,7 @@
             let contentsChanged = false;
 
             let input_tensor = [[0.0, 0.0]];
-            placeTensor_2Elements("x", "x", 343, 225, input_tensor, fadeIn);
+            placeTensor_2Elements("x", "x", 686, 450 , input_tensor, fadeIn);
         }
 
         function goState28(doTransition) {
@@ -384,7 +383,7 @@
 
             d3.select('#x').remove();
             let input_tensor = [[0.0, 1.0]];
-            placeTensor_2Elements("x", "x", 343, 225, input_tensor, fadeIn, contentsChanged);
+            placeTensor_2Elements("x", "x", 686, 450, input_tensor, fadeIn, contentsChanged);
         }
 
         function goState30(doTransition) {
@@ -400,7 +399,7 @@
             let contentsChanged = false;
 
             let hidden_state = [[0.06269218, 0.0590868, -0.0471741]]
-            placeTensor("", "hidden_state", 343, 120, hidden_state, fadeIn, contentsChanged);
+            placeTensor("", "hidden_state", 686, 240, hidden_state, fadeIn, contentsChanged);
         }
 
         function goState32(doTransition) {
@@ -410,7 +409,7 @@
             let contentsChanged = false;
 
             let outputs = [[-0.01099203, -0.02095152]]
-            placeTensor_2Elements("o", "o", 330, 10, outputs, fadeIn, contentsChanged);
+            placeTensor_2Elements("o", "o", 660, 20, outputs, fadeIn, contentsChanged);
         }
 
         function goState33(doTransition) {
@@ -419,7 +418,7 @@
             let fadeIn = doTransition;
             let contentsChanged = false;
             let probabilities = [[0.50248985, 0.49751015]];
-            placeTensor_2Elements("p", "p", 375, 10, probabilities, fadeIn, contentsChanged);
+            placeTensor_2Elements("p", "p", 750, 20, probabilities, fadeIn, contentsChanged);
         }
 
         function goState34(doTransition) {
@@ -444,18 +443,18 @@
             d3.select('#hidden_state').attr('id', 'h');
 
             if (doTransition) {
-                d3.select('#W').transition().attr('x', 755).attr('y', 55);
-                d3.select('#V').transition().attr('x', 835);
-                d3.select('#U').transition().attr('x', 835);
-                d3.select('#hidden_bias').transition().attr('x', 835).attr('y', 25);
-                d3.select('#output_bias').transition().attr('x', 905);
+                d3.select('#W').transition().attr('x', 755)
+                d3.select('#V').transition().attr('x', 975);
+                d3.select('#U').transition().attr('x', 975);
+                d3.select('#hidden_bias').transition().attr('x', 835)
+                d3.select('#output_bias').transition().attr('x', 1115);
             }
             else {
-                d3.select('#W').attr('x', 755).attr('y', 55);
-                d3.select('#V').attr('x', 835);
-                d3.select('#U').attr('x', 835);
-                d3.select('#hidden_bias').attr('x', 835).attr('y', 25);
-                d3.select('#output_bias').attr('x', 905);
+                d3.select('#W').attr('x', 755)
+                d3.select('#V').attr('x', 975);
+                d3.select('#U').attr('x', 975);
+                d3.select('#hidden_bias').attr('x', 835)
+                d3.select('#output_bias').attr('x', 1115);
             }
         }
 
@@ -464,7 +463,7 @@
 
             let fadeIn = doTransition;
             let input_tensor = [[0.0, 0.0]];
-            placeTensor_2Elements("x", "x", 455, 225, input_tensor, fadeIn);
+            placeTensor_2Elements("x", "x", 910, 450, input_tensor, fadeIn);
         }
         
         function goState37(doTransition) {
@@ -481,7 +480,7 @@
 
             d3.select('#x').remove();
             let input_tensor = [[1.0, 0.0]];
-            placeTensor_2Elements("x", "x", 455, 225, input_tensor, fadeIn, contentsChanged);
+            placeTensor_2Elements("x", "x", 910, 450, input_tensor, fadeIn, contentsChanged);
         }
         
         function goState39(doTransition) {
@@ -498,8 +497,8 @@
             let fadeIn = doTransition;
             let contentsChanged = false;
 
-            let hidden_state = [[ 0.06293721,  0.05884817, -0.04850882]]
-            placeTensor("", "hidden_state", 455, 120, hidden_state, fadeIn, contentsChanged);
+            let hidden_state = [[ 0.00282322,  0.15392992, -0.02505935]]
+            placeTensor("", "hidden_state", 910, 240, hidden_state, fadeIn, contentsChanged);
         }
         
         function goState41(doTransition) {
@@ -508,7 +507,7 @@
             let fadeIn = doTransition;
             let contentsChanged = false;
             let outputs = [[-0.01102358, -0.02113569]]
-            placeTensor_2Elements("o", "o", 440, 10, outputs, fadeIn, contentsChanged);
+            placeTensor_2Elements("o", "o", 880, 20, outputs, fadeIn, contentsChanged);
         }
 
         function goState42(doTransition) {
@@ -517,7 +516,7 @@
             let contentsChanged = false;
 
             let probabilities = [[0.502528, 0.497472]]
-            placeTensor_2Elements("p", "p", 485, 10, probabilities, fadeIn, contentsChanged);
+            placeTensor_2Elements("p", "p", 970, 20, probabilities, fadeIn, contentsChanged);
         }
         
         function goState43(doTransition) {
@@ -773,108 +772,54 @@
                 goState43(doTransition);
             }
 
+            function hoverElement(selectId, selectClass) {
+                d3.selectAll(selectClass)
+                    .attr('style', 'background:green;');
+                d3.select(selectId)
+                    .transition()
+                        .attr('style', 'fill:green;')
+            }
+
+            function leaveElement(selectId, selectClass) {
+                d3.selectAll(selectClass)
+                    .attr('style', '');
+                d3.select(selectId)
+                    .transition()
+                        .attr('style', '')
+            }
+
+            function setupHoverHandlers(selectId, selectClass) {
+                //When hovering over the element on the diagram
+                d3.select(selectId)
+                    .on('mouseover', function() {
+                        hoverElement(selectId, selectClass);
+                    })
+                    .on('mouseleave', function() {
+                        leaveElement(selectId, selectClass);
+                    });
+
+                //When hovering over the element in code
+                d3.selectAll(selectClass) 
+                    .on('mouseover', function() {
+                        hoverElement(selectId, selectClass);
+                    })
+                    .on('mouseleave', function() {
+                        leaveElement(selectId, selectClass);
+                    });
+            }
+
             //Set up hover event listeners
-            d3.select('#U')
-                .on('mouseover', function() {
-                    d3.selectAll('.input_weights_U')
-                        .attr('style', 'background:green;');
-                })
-                .on('mouseleave', function() {
-                    d3.selectAll('.input_weights_U')
-                        .attr('style', '');
-                });
-
-            d3.select('#W')
-                .on('mouseover', function() {
-                    d3.selectAll('.hidden_weights_W')
-                        .attr('style', 'background:green;');
-                })
-                .on('mouseleave', function() {
-                    d3.selectAll('.hidden_weights_W')
-                        .attr('style', '');
-                });
-            
-            d3.select('#hidden_bias')
-                .on('mouseover', function() {
-                    d3.selectAll('.hidden_bias')
-                        .attr('style', 'background:green;');
-                })
-                .on('mouseleave', function() {
-                    d3.selectAll('.hidden_bias')
-                        .attr('style', '');
-                });
-            
-            d3.select('#V')
-                .on('mouseover', function() {
-                    d3.selectAll('.output_weights_V')
-                        .attr('style', 'background:green;');
-                })
-                .on('mouseleave', function() {
-                    d3.selectAll('.output_weights_V')
-                        .attr('style', '');
-                });
-            
-            d3.select('#output_bias')
-                .on('mouseover', function() {
-                    d3.selectAll('.output_bias')
-                        .attr('style', 'background:green;');
-                })
-                .on('mouseleave', function() {
-                    d3.selectAll('.output_bias')
-                        .attr('style', '');
-                });
-            
-            d3.select('#x')
-                .on('mouseover', function() {
-                    d3.selectAll('.xs')
-                        .attr('style', 'background:green;');
-                })
-                .on('mouseleave', function() {
-                    d3.selectAll('.xs')
-                        .attr('style', '');
-                });
-            
-            d3.select('#hidden_state')
-                .on('mouseover', function() {
-                    d3.selectAll('.hidden_state')
-                        .attr('style', 'background:green;');
-                })
-                .on('mouseleave', function() {
-                    d3.selectAll('.hidden_state')
-                        .attr('style', '');
-                });
-            
-            d3.select('#h')
-                .on('mouseover', function() {
-                    d3.selectAll('.hidden_state_prev')
-                        .attr('style', 'background:green;');
-                })
-                .on('mouseleave', function() {
-                    d3.selectAll('.hidden_state_prev')
-                        .attr('style', '');
-                });
-            
-            d3.select('#o')
-                .on('mouseover', function() {
-                    d3.selectAll('.outputs')
-                        .attr('style', 'background:green;');
-                })
-                .on('mouseleave', function() {
-                    d3.selectAll('.outputs')
-                        .attr('style', '');
-                });
-            
-            d3.select('#p')
-                .on('mouseover', function() {
-                    d3.selectAll('.probabilities')
-                        .attr('style', 'background:green;');
-                })
-                .on('mouseleave', function() {
-                    d3.selectAll('.probabilities')
-                        .attr('style', '');
-                });
+            setupHoverHandlers("#U", ".input_weights_U");
+            setupHoverHandlers("#W", ".hidden_weights_W");
+            setupHoverHandlers("#hidden_bias", ".hidden_bias");
+            setupHoverHandlers("#V", ".output_weights_V");
+            setupHoverHandlers("#output_bias", '.output_bias');
+            setupHoverHandlers("#x", ".xs");
+            setupHoverHandlers("#hidden_state", ".hidden_state");
+            setupHoverHandlers("#h", ".hidden_state_prev");
+            setupHoverHandlers("#o", ".outputs");
+            setupHoverHandlers("#p", ".probabilities");
         }
-
 
         function placeText(name, id, value, xOffset, yOffset, fadeIn, contentsChanged) {
             //TODO: Make it look better (font and size)
@@ -978,45 +923,50 @@
             var numberOfColumns = tensorElements.length;
             var numberOfRows = tensorElements[0].length;
             var rect = container.append('rect')
-                .attr('x', xOffset + 3)
-                .attr('y', yOffset)
-                .attr('width', (xOffset + (numberOfColumns * 40) + 50) - xOffset)
+                .attr('x', 0)
+                .attr('y', 0)
+                .attr('width', ((numberOfColumns * 40) + 50))
                 .attr('height', (numberOfRows * 20) )
                 .attr('fill', 'transparent')
 
             var text = container.append('text')
-                .attr('x', xOffset + 10)
-                .attr('y', yOffset + 45)
+                .attr('x', 10)
+                .attr('y', 45)
                 .attr('class', 'array-name')
                 .text(name)
 
             var lb = container.append('text')
-                .attr('x', xOffset + 30)
-                .attr('y', yOffset + 52)
+                .attr('x', 30)
+                .attr('y', 52)
                 .attr('class', 'array-bracket')
                 .text('[')
 
             var rb = container.append('text')
-                .attr('x', xOffset + (numberOfColumns * 40) + 40)
-                .attr('y', yOffset + 52)
+                .attr('x', (numberOfColumns * 40) + 40)
+                .attr('y', 52)
                 .attr('class', 'array-bracket')
                 .text(']')
 
             var elements = container.selectAll('svg').data(tensorElements).enter().append("svg")
                 .attr("class", 'array')
-                .attr("x", function (d, i, j) { return (i * 40) + 50 + xOffset; })
+                .attr("x", function (d, i, j) { return (i * 40) + 50; })
                 .selectAll('text')
                 .data(function (d, i, j) { return d; }).enter().append('text')
                 .text(function (d, i, j) { return d.toFixed(2); })
                 .attr("y", function (d, i, j) {
-                    return (i * 20) + 20 + yOffset;
+                    return (i * 20) + 20;
                 })
 
             if (fadeIn === true) {
+                var offset = 5;
+                if (numberOfColumns == 1) {
+                    offset = 3;
+                }
+
                 container
-                .attr('transform','scale(0.95) translate(20)')
+                .attr('transform','scale(0.95) translate(' + offset +  ')')
                 .attr('opacity', 0)
-                .transition().attr('transform','scale(1.05) translate(-20)').attr('opacity','1')
+                .transition().attr('transform','scale(1.05) translate(-' + offset + ')').attr('opacity','1')
                 .transition().attr('transform', 'scale(1)')
             }
 
@@ -1039,45 +989,50 @@
             var numberOfColumns = tensorElements.length;
             var numberOfRows = 2;
             var rect = container.append('rect')
-                .attr('x', xOffset + 23)
-                .attr('y', yOffset)
-                .attr('width', (xOffset + (numberOfColumns * 40) + 30) - xOffset)
+                .attr('x', 23)
+                .attr('y', 0)
+                .attr('width', (numberOfColumns * 40) + 30)
                 .attr('height', (numberOfRows * 20) + 30 )
                 .attr('fill', 'transparent')
 
             var text = container.append('text')
-                .attr('x', xOffset + 10)
-                .attr('y', yOffset + 45)
+                .attr('x', 10)
+                .attr('y', 45)
                 .attr('class', 'array-name')
                 .text(name)
 
             var lb = container.append('text')
-                .attr('x', xOffset + 30)
-                .attr('y', yOffset + 52)
+                .attr('x', 30)
+                .attr('y', 52)
                 .attr('class', 'array-bracket')
                 .text('[')
 
             var rb = container.append('text')
-                .attr('x', xOffset + (numberOfColumns * 40) + 40)
-                .attr('y', yOffset + 52)
+                .attr('x', (numberOfColumns * 40) + 40)
+                .attr('y', 52)
                 .attr('class', 'array-bracket')
                 .text(']')
 
             var elements = container.selectAll('svg').data(tensorElements).enter().append("svg")
                 .attr("class", 'array')
-                .attr("x", function (d, i, j) { return (i * 40) + 50 + xOffset; })
+                .attr("x", function (d, i, j) { return (i * 40) + 50; })
                 .selectAll('text')
                 .data(function (d, i, j) { return d; }).enter().append('text')
                 .text(function (d, i, j) { return d.toFixed(2); })
                 .attr("y", function (d, i, j) {
-                    return (i * 20) + 30 + yOffset;
+                    return (i * 20) + 30;
                 })
 
             if (fadeIn === true) {
+                var offset = 5;
+                if (numberOfColumns == 1) {
+                    offset = 3;
+                }
+
                 container
-                .attr('transform','scale(0.95) translate(20)')
+                .attr('transform','scale(0.95) translate(' + offset +  ')')
                 .attr('opacity', 0)
-                .transition().attr('transform','scale(1.05) translate(-20)').attr('opacity','1')
+                .transition().attr('transform','scale(1.05) translate(-' + offset + ')').attr('opacity','1')
                 .transition().attr('transform', 'scale(1)')
             }
 
