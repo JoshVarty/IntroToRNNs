@@ -41,7 +41,7 @@
     </style>
 </head>
 
-<body>
+<body style="margin-left:0px; margin-right:0px;">
 
 
     <p>
@@ -72,6 +72,8 @@
     </p>
 
     <button onclick="goBack()">Back</button>
+    <button onclick="pause()">Pause</button>
+    <button onclick="play()">Play</button>
     <button onclick="goFoward()">Forward</button>
     <br />
 
@@ -83,14 +85,35 @@
     <script type="text/javascript">
 
         var state = -1
+        var runningInterval = null;
+
         function goBack() {
+            if (runningInterval !== null) {
+                clearInterval(runningInterval);
+            }
             state = state - 1;
             goState(state, false)
         }
 
         function goFoward() {
+            if (runningInterval !== null) {
+                clearInterval(runningInterval);
+            }
             state = state + 1;
             goState(state, true)
+        }
+        
+        function pause() {
+            if (runningInterval !== null) {
+                clearInterval(runningInterval);
+            }
+        }
+
+        function play() {
+            runningInterval =  setInterval(function () {
+                state = state + 1;
+                goState(state, true)
+            }, 1000);
         }
 
         function goState0(doTransition) {
@@ -774,18 +797,27 @@
 
             function hoverElement(selectId, selectClass) {
                 d3.selectAll(selectClass)
-                    .attr('style', 'background:green;');
-                d3.select(selectId)
+                    .attr('style', 'background:red;');
+
+                var offset = 5;
+                d3.select(selectId + " g")
                     .transition()
-                        .attr('style', 'fill:green;')
+                        .attr('style', 'fill:red;')
+                        .attr('transform','scale(1.05) translate(-' + offset + ')')
+                        .duration(100)
+                    .transition()
+                        .attr('transform', 'scale(1)')
+                        .duration(100)
+
             }
 
             function leaveElement(selectId, selectClass) {
                 d3.selectAll(selectClass)
                     .attr('style', '');
-                d3.select(selectId)
+                d3.select(selectId + " g")
                     .transition()
                         .attr('style', '')
+                        .attr('transform', '')
             }
 
             function setupHoverHandlers(selectId, selectClass) {
@@ -872,7 +904,6 @@
                 .attr("width", 100).attr("height", 0)
                 .attr("height", 100)
 
-
             //bottom arrow
             var line = diagramContainer.append("line")
                 .attr("x1", xOffset + 250)
@@ -922,12 +953,6 @@
 
             var numberOfColumns = tensorElements.length;
             var numberOfRows = tensorElements[0].length;
-            var rect = container.append('rect')
-                .attr('x', 0)
-                .attr('y', 0)
-                .attr('width', ((numberOfColumns * 40) + 50))
-                .attr('height', (numberOfRows * 20) )
-                .attr('fill', 'transparent')
 
             var text = container.append('text')
                 .attr('x', 10)
@@ -956,6 +981,13 @@
                 .attr("y", function (d, i, j) {
                     return (i * 20) + 20;
                 })
+            
+            var rect = container.append('rect')
+                .attr('x', 0)
+                .attr('y', 0)
+                .attr('width', ((numberOfColumns * 40) + 50))
+                .attr('height', (numberOfRows * 20) )
+                .attr('fill', 'transparent')
 
             if (fadeIn === true) {
                 var offset = 5;
@@ -988,12 +1020,6 @@
             
             var numberOfColumns = tensorElements.length;
             var numberOfRows = 2;
-            var rect = container.append('rect')
-                .attr('x', 23)
-                .attr('y', 0)
-                .attr('width', (numberOfColumns * 40) + 30)
-                .attr('height', (numberOfRows * 20) + 30 )
-                .attr('fill', 'transparent')
 
             var text = container.append('text')
                 .attr('x', 10)
@@ -1022,6 +1048,13 @@
                 .attr("y", function (d, i, j) {
                     return (i * 20) + 30;
                 })
+            
+            var rect = container.append('rect')
+                .attr('x', 23)
+                .attr('y', 0)
+                .attr('width', (numberOfColumns * 40) + 30)
+                .attr('height', (numberOfRows * 20) + 30 )
+                .attr('fill', 'transparent')
 
             if (fadeIn === true) {
                 var offset = 5;
