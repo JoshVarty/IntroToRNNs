@@ -102,6 +102,10 @@
         .controls-container .play {
             background-size: 20px;
             background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PGRlZnM+PHN0eWxlPi5pY29uLWNhbnZhcy10cmFuc3BhcmVudCwuaWNvbi12cy1vdXR7ZmlsbDojZjZmNmY2O30uaWNvbi1jYW52YXMtdHJhbnNwYXJlbnR7b3BhY2l0eTowO30uaWNvbi12cy1hY3Rpb24tZ3JlZW57ZmlsbDojMzg4YTM0O308L3N0eWxlPjwvZGVmcz48dGl0bGU+Y29udGludWU8L3RpdGxlPjxnIGlkPSJjYW52YXMiPjxwYXRoIGNsYXNzPSJpY29uLWNhbnZhcy10cmFuc3BhcmVudCIgZD0iTTE2LDBWMTZIMFYwWiIvPjwvZz48ZyBpZD0ib3V0bGluZSIgc3R5bGU9ImRpc3BsYXk6IG5vbmU7Ij48cGF0aCBjbGFzcz0iaWNvbi12cy1vdXQiIGQ9Ik0xNC4zMzQsOCwzLjY2NywxNkgzVjBoLjY2N1oiLz48L2c+PGcgaWQ9Imljb25CZyI+PHBhdGggY2xhc3M9Imljb24tdnMtYWN0aW9uLWdyZWVuIiBkPSJNNCwxLjV2MTNMMTIuNjY3LDgsNCwxLjVaIi8+PC9nPjwvc3ZnPg==');
+            border: 1px solid transparent;
+            -webkit-transition: border 0.1s linear, box-shadow 0.1s linear;
+            -moz-transition: border 0.1s linear, box-shadow 0.1s linear;
+            transition: border 0.1s linear, box-shadow 0.1s linear;
         }
 
         .controls-container .back {
@@ -119,14 +123,8 @@
             transform: scaleX(-1);
         }
 
-        #myGlower {
-            border: 1px solid transparent;
-            -webkit-transition: border 0.1s linear, box-shadow 0.1s linear;
-            -moz-transition: border 0.1s linear, box-shadow 0.1s linear;
-            transition: border 0.1s linear, box-shadow 0.1s linear;
-        }
 
-        #myGlower.active {
+        .controls-container .play.active {
             border-color: #DAA520;
             -webkit-box-shadow: 0 0 5px #DAA520;
             -moz-box-shadow: 0 0 5px #DAA520;
@@ -230,7 +228,7 @@
     <span id="untrained-line22"><span class='loss'>loss</span> += -np.log(<span class='probabilities'>probabilities[t]</span>[<span class='target'>target</span>,0]) </span></pre>
     <div class="controls-container">
         <button class="back" onclick="goBack('untrained')" title="Back"></button>
-        <button id="myGlower" class="play" onclick="play('untrained')" title="Play"></button>
+        <button class="play" onclick="play('untrained')" title="Play"></button>
         <button class="stop" onclick="pause('untrained')" title="Stop"></button>
         <button class="forward" onclick="goFoward('untrained')" title="Next"></button>
     </div>
@@ -240,11 +238,10 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
 
-
-        var glower = d3.select('#myGlower');
+        var glowingPlayButton = d3.select('.play');
 
         var glowInterval = window.setInterval(function () {
-            glower.classed("active", !glower.classed("active"))
+            glowingPlayButton.classed("active", !glowingPlayButton.classed("active"))
         }, 1000);
 
         let MAX_STATE_NUMBER = 44;
