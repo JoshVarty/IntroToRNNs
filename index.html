@@ -235,7 +235,7 @@
         <button class="forward" onclick="goFoward('untrained')" title="Next"></button>
     </div>
 
-    <svg width=1500 height=600></svg>
+    <svg id="untrained-diagram" width=1500 height=600></svg>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
@@ -251,22 +251,25 @@
         var state = -1
         var runningInterval = null;
 
-        function goBack() {
+        function goBack(linePrefix) {
+            var containerId = '#untrained-diagram';
             clearInterval(runningInterval);
             state = Math.max(state - 1, 0);
-            goState(state, linePrefix, false)
+            goState(state, containerId, linePrefix, false)
         }
 
         function goFoward(linePrefix) {
+            var containerId = '#untrained-diagram';
             if (runningInterval !== null) {
                 clearInterval(runningInterval);
             }
 
             state = (state + 1) % MAX_STATE_NUMBER;
-            goState(state, linePrefix, true)
+            goState(state, containerId, linePrefix, true)
         }
 
         function pause() {
+            var containerId = '#untrained-diagram';
             clearInterval(runningInterval);
         }
 
@@ -276,153 +279,154 @@
             clearInterval(runningInterval);
 
             runningInterval = setInterval(function () {
+                var containerId = '#untrained-diagram';
                 state = (state + 1) % MAX_STATE_NUMBER;
-                goState(state, linePrefix, true)
+                goState(state, containerId, linePrefix, true)
             }, 1000);
         }
 
-        function goState0(doTransition) {
+        function goState0(containerId, doTransition) {
             let fadeIn = doTransition
-            placeRNNBlock(50, 100, fadeIn)
+            placeRNNBlock(containerId, 50, 100, fadeIn)
 
             var U = [[0.04967142, 0.06476885, -0.02341534], [-0.01382643, 0.15230299, -0.0234137]]
-            placeTensor("U", "U", 300, 370, U, fadeIn);
+            placeTensor(containerId, "U", "U", 300, 370, U, fadeIn);
         }
 
-        function goState1(doTransition) {
-            goState0(false);
+        function goState1(containerId, doTransition) {
+            goState0(containerId, false);
             let fadeIn = doTransition
 
             var W = [[0.15792128, 0.054256, 0.02419623],
             [0.07674347, -0.04634177, -0.19132802],
             [-0.04694744, -0.04657298, -0.17249178]]
-            placeTensor("W", "W", 65, 195, W, fadeIn);
+            placeTensor(containerId, "W", "W", 65, 195, W, fadeIn);
         }
 
-        function goState2(doTransition) {
-            goState1(false);
+        function goState2(containerId, doTransition) {
+            goState1(containerId, false);
             let fadeIn = doTransition;
 
             var hidden_bias = [[0.00, 0.00, 0.00]]
-            placeTensor("", "hidden_bias", 145, 130, hidden_bias, fadeIn);
+            placeTensor(containerId, "", "hidden_bias", 145, 130, hidden_bias, fadeIn);
         }
 
-        function goState3(doTransition) {
-            goState2(false);
+        function goState3(containerId, doTransition) {
+            goState2(containerId, false);
             let fadeIn = doTransition;
 
             var output_weights = [[-0.05622875, -0.09080241],
             [-0.10128311, -0.14123037],
             [0.03142473, 0.14656488]]
 
-            placeTensor_2Elements("V", "V", 300, 120, output_weights, fadeIn);
+            placeTensor_2Elements(containerId, "V", "V", 300, 120, output_weights, fadeIn);
         }
 
-        function goState4(doTransition) {
-            goState3(false);
+        function goState4(containerId, doTransition) {
+            goState3(containerId, false);
             let fadeIn = doTransition
 
             var output_bias = [[0, 0]]
-            placeTensor_2Elements("", "output_bias", 440, 120, output_bias, fadeIn);
+            placeTensor_2Elements(containerId, "", "output_bias", 440, 120, output_bias, fadeIn);
         }
 
-        function goState5(doTransition) {
-            goState4(false);
+        function goState5(containerId, doTransition) {
+            goState4(containerId, false);
         }
 
-        function goState6(doTransition) {
-            goState5(false);
+        function goState6(containerId, doTransition) {
+            goState5(containerId, false);
             let fadeIn = doTransition;
 
-            placeText_Big("loss", "loss", "0", 0, 25, fadeIn);
+            placeText_Big(containerId, "loss", "loss", "0", 0, 25, fadeIn);
         }
 
-        function goState7(doTransition) {
-            goState6(false);
+        function goState7(containerId, doTransition) {
+            goState6(containerId, false);
             let fadeIn = doTransition;
 
             var hidden_state_prev = [[0.0, 0.0, 0.0]]
-            placeTensor("", "h", 0, 250, hidden_state_prev, fadeIn);
+            placeTensor(containerId, "", "h", 0, 250, hidden_state_prev, fadeIn);
         }
 
-        function goState8(doTransition) {
-            goState7(false);
+        function goState8(containerId, doTransition) {
+            goState7(containerId, false);
         }
 
-        function goState9(doTransition) {
-            goState8(false);
+        function goState9(containerId, doTransition) {
+            goState8(containerId, false);
             let fadeIn = doTransition;
 
             let input_tensor = [[0.0, 0.0]];
-            placeTensor_2Elements("x", "x", 238, 450, input_tensor, fadeIn);
+            placeTensor_2Elements(containerId, "x", "x", 238, 450, input_tensor, fadeIn);
         }
 
-        function goState10(doTransition) {
-            goState9(false);
+        function goState10(containerId, doTransition) {
+            goState9(containerId, false);
             let fadeIn = doTransition;
 
-            placeText("character", "character_0", "1", 260, 535, fadeIn);
+            placeText(containerId, "character", "character_0", "1", 260, 535, fadeIn);
         }
 
-        function goState11(doTransition) {
-            goState10(false);
+        function goState11(containerId, doTransition) {
+            goState10(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
 
             d3.select('#x').remove();
             let input_tensor = [[0.0, 1.0]];
-            placeTensor_2Elements("x", "x", 238, 450, input_tensor, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "x", "x", 238, 450, input_tensor, fadeIn, contentsChanged);
         }
 
-        function goState12(doTransition) {
-            goState11(false);
+        function goState12(containerId, doTransition) {
+            goState11(containerId, false);
             let fadeIn = doTransition;
 
-            placeText("target", "target_0", "0", 270, 15, fadeIn);
+            placeText(containerId, "target", "target_0", "0", 270, 15, fadeIn);
         }
 
-        function goState13(doTransition) {
-            goState12(false);
+        function goState13(containerId, doTransition) {
+            goState12(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
 
             let hidden_state = [[0.0496306, 0.06467844, -0.02341106]];
-            placeTensor("", "hidden_state", 238, 240, hidden_state, fadeIn, contentsChanged);
+            placeTensor(containerId, "", "hidden_state", 238, 240, hidden_state, fadeIn, contentsChanged);
         }
 
-        function goState14(doTransition) {
-            goState13(false);
+        function goState14(containerId, doTransition) {
+            goState13(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
 
             let outputs = [[-0.01007719, -0.01707238]];
-            placeTensor_2Elements("o", "o", 190, 30, outputs, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "o", "o", 190, 30, outputs, fadeIn, contentsChanged);
         }
 
-        function goState15(doTransition) {
-            goState14(false);
+        function goState15(containerId, doTransition) {
+            goState14(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
 
             let probabilities = [[0.50174879, 0.49825121]]
-            placeTensor_2Elements("p", "p", 280, 30, probabilities, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "p", "p", 280, 30, probabilities, fadeIn, contentsChanged);
         }
 
-        function goState16(doTransition) {
-            goState15(false);
+        function goState16(containerId, doTransition) {
+            goState15(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
 
             d3.select('#loss').remove();
-            placeText_Big("loss", "loss", "0.69665", 0, 25, fadeIn, contentsChanged);
+            placeText_Big(containerId, "loss", "loss", "0.69665", 0, 25, fadeIn, contentsChanged);
         }
 
-        function goState17(doTransition) {
-            goState16(false);
+        function goState17(containerId, doTransition) {
+            goState16(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
 
-            placeRNNBlock(275, 100, fadeIn);
+            placeRNNBlock(containerId, 275, 100, fadeIn);
 
             d3.select("#o").remove();
             d3.select("#p").remove();
@@ -446,83 +450,83 @@
             }
         }
 
-        function goState18(doTransition) {
-            goState17(false);
+        function goState18(containerId, doTransition) {
+            goState17(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
 
             let input_tensor = [[0.0, 0.0]];
-            placeTensor_2Elements("x", "x", 460, 450, input_tensor, fadeIn);
+            placeTensor_2Elements(containerId, "x", "x", 460, 450, input_tensor, fadeIn);
         }
 
-        function goState19(doTransition) {
-            goState18(false);
+        function goState19(containerId, doTransition) {
+            goState18(containerId, false);
             let fadeIn = doTransition;
 
-            placeText("character", "character_1", "0", 480, 535, fadeIn);
+            placeText(containerId, "character", "character_1", "0", 480, 535, fadeIn);
         }
 
-        function goState20(doTransition) {
-            goState19(false);
+        function goState20(containerId, doTransition) {
+            goState19(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
 
             d3.select('#x').remove();
             let input_tensor = [[1.0, 0.0]];
-            placeTensor_2Elements("x", "x", 460, 450, input_tensor, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "x", "x", 460, 450, input_tensor, fadeIn, contentsChanged);
         }
 
-        function goState21(doTransition) {
-            goState20(false);
+        function goState21(containerId, doTransition) {
+            goState20(containerId, false);
             let fadeIn = doTransition;
 
-            placeText("target", "target_1", "1", 480, 15, fadeIn);
+            placeText(containerId, "target", "target_1", "1", 480, 15, fadeIn);
         }
 
-        function goState22(doTransition) {
-            goState21(false);
+        function goState22(containerId, doTransition) {
+            goState21(containerId, false);
 
             let fadeIn = doTransition;
             let contentsChanged = false;
 
             let hidden_state = [[7.40357596e-05, 1.51903922e-01, -3.05399045e-02]]
-            placeTensor("", "hidden_state", 460, 240, hidden_state, fadeIn, contentsChanged);
+            placeTensor(containerId, "", "hidden_state", 460, 240, hidden_state, fadeIn, contentsChanged);
         }
 
-        function goState23(doTransition) {
-            goState22(false);
+        function goState23(containerId, doTransition) {
+            goState22(containerId, false);
 
             let fadeIn = doTransition;
             let contentsChanged = false;
 
             let outputs = [[-0.01634917, -0.02593625]];
-            placeTensor_2Elements("o", "o", 430, 20, outputs, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "o", "o", 430, 20, outputs, fadeIn, contentsChanged);
         }
 
-        function goState24(doTransition) {
-            goState23(false);
+        function goState24(containerId, doTransition) {
+            goState23(containerId, false);
 
             let fadeIn = doTransition;
             let contentsChanged = false;
             let probabilities = [[0.50239675, 0.49760325]]
-            placeTensor_2Elements("p", "p", 520, 20, probabilities, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "p", "p", 520, 20, probabilities, fadeIn, contentsChanged);
         }
 
-        function goState25(doTransition) {
-            goState24(false);
+        function goState25(containerId, doTransition) {
+            goState24(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
 
             d3.select('#loss').remove();
-            placeText_Big("loss", "loss", "1.38501", 0, 25, fadeIn, contentsChanged);
+            placeText_Big(containerId, "loss", "loss", "1.38501", 0, 25, fadeIn, contentsChanged);
         }
 
-        function goState26(doTransition) {
-            goState25(false);
+        function goState26(containerId, doTransition) {
+            goState25(containerId, false);
 
             let fadeIn = doTransition;
 
-            placeRNNBlock(500, 100, fadeIn);
+            placeRNNBlock(containerId, 500, 100, fadeIn);
 
             d3.select("#o").remove();
             d3.select("#p").remove();
@@ -547,82 +551,82 @@
 
         }
 
-        function goState27(doTransition) {
-            goState26(false);
+        function goState27(containerId, doTransition) {
+            goState26(containerId, false);
 
             let fadeIn = doTransition;
             let contentsChanged = false;
 
             let input_tensor = [[0.0, 0.0]];
-            placeTensor_2Elements("x", "x", 686, 450, input_tensor, fadeIn);
+            placeTensor_2Elements(containerId, "x", "x", 686, 450, input_tensor, fadeIn);
         }
 
-        function goState28(doTransition) {
-            goState27(false);
+        function goState28(containerId, doTransition) {
+            goState27(containerId, false);
 
             let fadeIn = doTransition;
-            placeText("character", "character_2", "1", 700, 535, fadeIn);
+            placeText(containerId, "character", "character_2", "1", 700, 535, fadeIn);
         }
 
-        function goState29(doTransition) {
-            goState28(false);
+        function goState29(containerId, doTransition) {
+            goState28(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
 
             d3.select('#x').remove();
             let input_tensor = [[0.0, 1.0]];
-            placeTensor_2Elements("x", "x", 686, 450, input_tensor, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "x", "x", 686, 450, input_tensor, fadeIn, contentsChanged);
         }
 
-        function goState30(doTransition) {
-            goState29(false);
+        function goState30(containerId, doTransition) {
+            goState29(containerId, false);
             let fadeIn = doTransition;
 
-            placeText("target", "target_2", "0", 700, 15, fadeIn);
+            placeText(containerId, "target", "target_2", "0", 700, 15, fadeIn);
         }
 
-        function goState31(doTransition) {
-            goState30(false);
+        function goState31(containerId, doTransition) {
+            goState30(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
 
             let hidden_state = [[0.06269218, 0.0590868, -0.0471741]]
-            placeTensor("", "hidden_state", 686, 240, hidden_state, fadeIn, contentsChanged);
+            placeTensor(containerId, "", "hidden_state", 686, 240, hidden_state, fadeIn, contentsChanged);
         }
 
-        function goState32(doTransition) {
-            goState31(false);
+        function goState32(containerId, doTransition) {
+            goState31(containerId, false);
 
             let fadeIn = doTransition;
             let contentsChanged = false;
 
             let outputs = [[-0.01099203, -0.02095152]]
-            placeTensor_2Elements("o", "o", 660, 20, outputs, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "o", "o", 660, 20, outputs, fadeIn, contentsChanged);
         }
 
-        function goState33(doTransition) {
-            goState32(false);
+        function goState33(containerId, doTransition) {
+            goState32(containerId, false);
 
             let fadeIn = doTransition;
             let contentsChanged = false;
             let probabilities = [[0.50248985, 0.49751015]];
-            placeTensor_2Elements("p", "p", 750, 20, probabilities, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "p", "p", 750, 20, probabilities, fadeIn, contentsChanged);
         }
 
-        function goState34(doTransition) {
-            goState33(false);
+        function goState34(containerId, doTransition) {
+            goState33(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
 
             d3.select('#loss').remove();
-            placeText_Big("loss", "loss", "2.08315", 0, 25, fadeIn, contentsChanged);
+            placeText_Big(containerId, "loss", "loss", "2.08315", 0, 25, fadeIn, contentsChanged);
         }
 
-        function goState35(doTransition) {
-            goState34(false);
+        function goState35(containerId, doTransition) {
+            goState34(containerId, false);
             let fadeIn = doTransition;
 
-            placeRNNBlock(725, 100, fadeIn);
+            placeRNNBlock(containerId, 725, 100, fadeIn);
 
             d3.select("#o").remove();
             d3.select("#p").remove();
@@ -646,81 +650,82 @@
             }
         }
 
-        function goState36(doTransition) {
-            goState35(false);
+        function goState36(containerId, doTransition) {
+            goState35(containerId, false);
 
             let fadeIn = doTransition;
             let input_tensor = [[0.0, 0.0]];
-            placeTensor_2Elements("x", "x", 910, 450, input_tensor, fadeIn);
+            placeTensor_2Elements(containerId, "x", "x", 910, 450, input_tensor, fadeIn);
         }
 
-        function goState37(doTransition) {
-            goState36(false);
+        function goState37(containerId, doTransition) {
+            goState36(containerId, false);
 
             let fadeIn = doTransition;
-            placeText("character", "character_2", "0", 935, 535, fadeIn);
+            placeText(containerId, "character", "character_2", "0", 935, 535, fadeIn);
         }
 
-        function goState38(doTransition) {
-            goState37(false);
+        function goState38(containerId, doTransition) {
+            goState37(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
 
             d3.select('#x').remove();
             let input_tensor = [[1.0, 0.0]];
-            placeTensor_2Elements("x", "x", 910, 450, input_tensor, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "x", "x", 910, 450, input_tensor, fadeIn, contentsChanged);
         }
 
-        function goState39(doTransition) {
-            goState38(false);
+        function goState39(containerId, doTransition) {
+            goState38(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
 
-            placeText("target", "target_3", "0", 933, 15, fadeIn);
+            placeText(containerId, "target", "target_3", "0", 933, 15, fadeIn);
         }
 
-        function goState40(doTransition) {
-            goState39(false);
+        function goState40(containerId, doTransition) {
+            goState39(containerId, false);
 
             let fadeIn = doTransition;
             let contentsChanged = false;
 
             let hidden_state = [[0.00282322, 0.15392992, -0.02505935]]
-            placeTensor("", "hidden_state", 910, 240, hidden_state, fadeIn, contentsChanged);
+            placeTensor(containerId, "", "hidden_state", 910, 240, hidden_state, fadeIn, contentsChanged);
         }
 
-        function goState41(doTransition) {
-            goState40(false);
+        function goState41(containerId, doTransition) {
+            goState40(containerId, false);
 
             let fadeIn = doTransition;
             let contentsChanged = false;
             let outputs = [[-0.01102358, -0.02113569]]
-            placeTensor_2Elements("o", "o", 880, 20, outputs, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "o", "o", 880, 20, outputs, fadeIn, contentsChanged);
         }
 
-        function goState42(doTransition) {
-            goState41(false);
+        function goState42(containerId, doTransition) {
+            goState41(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
 
             let probabilities = [[0.502528, 0.497472]]
-            placeTensor_2Elements("p", "p", 970, 20, probabilities, fadeIn, contentsChanged);
+            placeTensor_2Elements(containerId, "p", "p", 970, 20, probabilities, fadeIn, contentsChanged);
         }
 
-        function goState43(doTransition) {
-            goState42(false);
+        function goState43(containerId, doTransition) {
+            goState42(containerId, false);
 
             let fadeIn = false;
             let contentsChanged = doTransition;
 
             d3.select('#loss').remove();
-            placeText_Big("loss", "loss", "2.77402", 0, 25, fadeIn, contentsChanged);
+            placeText_Big(containerId, "loss", "loss", "2.77402", 0, 25, fadeIn, contentsChanged);
         }
 
-        function goState(state, linePrefix, doTransition) {
+        function goState(state, containerId, linePrefix, doTransition) {
             //Clear the svg and but our arrowhead definitions
-            d3.select("svg").selectAll("*").remove()
-            d3.select("svg").append("defs")
+            var container = d3.select(containerId)
+            container.selectAll("*").remove()
+            container.append("defs")
                 .append("marker")
                 .attr("id", "arrow")
                 .attr("markerWidth", 10)
@@ -739,226 +744,227 @@
                 currentActiveLine.classList.remove('active-line')
             }
 
+            console.log(containerId);
+
             if (state == 0) {
-                console.log(linePrefix + "line1")
                 var activeLine = document.getElementById(linePrefix + "-line1")
                 activeLine.setAttribute('class', 'active-line')
-                goState0(doTransition)
+                goState0(containerId, doTransition)
             }
             else if (state == 1) {
                 var activeLine = document.getElementById(linePrefix + "-line2")
                 activeLine.setAttribute('class', 'active-line')
-                goState1(doTransition);
+                goState1(containerId, doTransition);
             }
             else if (state == 2) {
                 var activeLine = document.getElementById(linePrefix + "-line3")
                 activeLine.setAttribute('class', 'active-line')
-                goState2(doTransition);
+                goState2(containerId, doTransition);
             }
             else if (state == 3) {
                 var activeLine = document.getElementById(linePrefix + "-line4")
                 activeLine.setAttribute('class', 'active-line')
-                goState3(doTransition);
+                goState3(containerId, doTransition);
             }
             else if (state == 4) {
                 var activeLine = document.getElementById(linePrefix + "-line5")
                 activeLine.setAttribute('class', 'active-line')
-                goState4(doTransition);
+                goState4(containerId, doTransition);
             }
             else if (state == 5) {
                 var activeLine = document.getElementById(linePrefix + "-line7")
                 activeLine.setAttribute('class', 'active-line')
-                goState5(doTransition);
+                goState5(containerId, doTransition);
             }
             else if (state == 6) {
                 var activeLine = document.getElementById(linePrefix + "-line8")
                 activeLine.setAttribute('class', 'active-line')
-                goState6(doTransition);
+                goState6(containerId, doTransition);
             }
             else if (state == 7) {
                 var activeLine = document.getElementById(linePrefix + "-line9")
                 activeLine.setAttribute('class', 'active-line')
-                goState7(doTransition);
+                goState7(containerId, doTransition);
             }
             else if (state == 8) {
                 var activeLine = document.getElementById(linePrefix + "-line10")
                 activeLine.setAttribute('class', 'active-line')
-                goState8(doTransition);
+                goState8(containerId, doTransition);
             }
             else if (state == 9) {
                 var activeLine = document.getElementById(linePrefix + "-line12")
                 activeLine.setAttribute('class', 'active-line')
-                goState9(doTransition);
+                goState9(containerId, doTransition);
             }
             else if (state == 10) {
                 var activeLine = document.getElementById(linePrefix + "-line13")
                 activeLine.setAttribute('class', 'active-line')
-                goState10(doTransition);
+                goState10(containerId, doTransition);
             }
             else if (state == 11) {
                 var activeLine = document.getElementById(linePrefix + "-line14")
                 activeLine.setAttribute('class', 'active-line')
-                goState11(doTransition);
+                goState11(containerId, doTransition);
             }
             else if (state == 12) {
                 var activeLine = document.getElementById(linePrefix + "-line15")
                 activeLine.setAttribute('class', 'active-line')
-                goState12(doTransition);
+                goState12(containerId, doTransition);
             }
             else if (state == 13) {
                 var activeLine = document.getElementById(linePrefix + "-line17")
                 activeLine.setAttribute('class', 'active-line')
-                goState13(doTransition);
+                goState13(containerId, doTransition);
             }
             else if (state == 14) {
                 var activeLine = document.getElementById(linePrefix + "-line19")
                 activeLine.setAttribute('class', 'active-line')
-                goState14(doTransition);
+                goState14(containerId, doTransition);
             }
             else if (state == 15) {
                 var activeLine = document.getElementById(linePrefix + "-line20")
                 activeLine.setAttribute('class', 'active-line')
-                goState15(doTransition);
+                goState15(containerId, doTransition);
             }
             else if (state == 16) {
                 var activeLine = document.getElementById(linePrefix + "-line22")
                 activeLine.setAttribute('class', 'active-line')
-                goState16(doTransition);
+                goState16(containerId, doTransition);
             }
             else if (state == 17) {
                 var activeLine = document.getElementById(linePrefix + "-line10")
                 activeLine.setAttribute('class', 'active-line')
-                goState17(doTransition);
+                goState17(containerId, doTransition);
             }
             else if (state == 18) {
                 var activeLine = document.getElementById(linePrefix + "-line12")
                 activeLine.setAttribute('class', 'active-line')
-                goState18(doTransition);
+                goState18(containerId, doTransition);
             }
             else if (state == 19) {
                 var activeLine = document.getElementById(linePrefix + "-line13")
                 activeLine.setAttribute('class', 'active-line')
-                goState19(doTransition);
+                goState19(containerId, doTransition);
             }
             else if (state == 20) {
                 var activeLine = document.getElementById(linePrefix + "-line14")
                 activeLine.setAttribute('class', 'active-line')
-                goState20(doTransition);
+                goState20(containerId, doTransition);
             }
             else if (state == 21) {
                 var activeLine = document.getElementById(linePrefix + "-line15")
                 activeLine.setAttribute('class', 'active-line')
-                goState21(doTransition);
+                goState21(containerId, doTransition);
             }
             else if (state == 22) {
                 var activeLine = document.getElementById(linePrefix + "-line17")
                 activeLine.setAttribute('class', 'active-line')
-                goState22(doTransition);
+                goState22(containerId, doTransition);
             }
             else if (state == 23) {
                 var activeLine = document.getElementById(linePrefix + "-line19")
                 activeLine.setAttribute('class', 'active-line')
-                goState23(doTransition);
+                goState23(containerId, doTransition);
             }
             else if (state == 24) {
                 var activeLine = document.getElementById(linePrefix + "-line20")
                 activeLine.setAttribute('class', 'active-line')
-                goState24(doTransition);
+                goState24(containerId, doTransition);
             }
             else if (state == 25) {
                 var activeLine = document.getElementById(linePrefix + "-line22")
                 activeLine.setAttribute('class', 'active-line')
-                goState25(doTransition);
+                goState25(containerId, doTransition);
             }
             else if (state == 26) {
                 var activeLine = document.getElementById(linePrefix + "-line10")
                 activeLine.setAttribute('class', 'active-line')
-                goState26(doTransition);
+                goState26(containerId, doTransition);
             }
             else if (state == 27) {
                 var activeLine = document.getElementById(linePrefix + "-line12")
                 activeLine.setAttribute('class', 'active-line')
-                goState27(doTransition);
+                goState27(containerId, doTransition);
             }
             else if (state == 28) {
                 var activeLine = document.getElementById(linePrefix + "-line13")
                 activeLine.setAttribute('class', 'active-line')
-                goState28(doTransition);
+                goState28(containerId, doTransition);
             }
             else if (state == 29) {
                 var activeLine = document.getElementById(linePrefix + "-line14")
                 activeLine.setAttribute('class', 'active-line')
-                goState29(doTransition);
+                goState29(containerId, doTransition);
             }
             else if (state == 30) {
                 var activeLine = document.getElementById(linePrefix + "-line15")
                 activeLine.setAttribute('class', 'active-line')
-                goState30(doTransition);
+                goState30(containerId, doTransition);
             }
             else if (state == 31) {
                 var activeLine = document.getElementById(linePrefix + "-line17")
                 activeLine.setAttribute('class', 'active-line')
-                goState31(doTransition);
+                goState31(containerId, doTransition);
             }
             else if (state == 32) {
                 var activeLine = document.getElementById(linePrefix + "-line19")
                 activeLine.setAttribute('class', 'active-line')
-                goState32(doTransition);
+                goState32(containerId, doTransition);
             }
             else if (state == 33) {
                 var activeLine = document.getElementById(linePrefix + "-line20");
                 activeLine.setAttribute('class', 'active-line');
-                goState33(doTransition);
+                goState33(containerId, doTransition);
             }
             else if (state == 34) {
                 var activeLine = document.getElementById(linePrefix + "-line22");
                 activeLine.setAttribute('class', 'active-line');
-                goState34(doTransition);
+                goState34(containerId, doTransition);
             }
             else if (state == 35) {
                 var activeLine = document.getElementById(linePrefix + "-line10");
                 activeLine.setAttribute('class', 'active-line');
-                goState35(doTransition);
+                goState35(containerId, doTransition);
             }
             else if (state == 36) {
                 var activeLine = document.getElementById(linePrefix + "-line12");
                 activeLine.setAttribute('class', 'active-line');
-                goState36(doTransition);
+                goState36(containerId, doTransition);
             }
             else if (state == 37) {
                 var activeLine = document.getElementById(linePrefix + "-line13");
                 activeLine.setAttribute('class', 'active-line');
-                goState37(doTransition);
+                goState37(containerId, doTransition);
             }
             else if (state == 38) {
                 var activeLine = document.getElementById(linePrefix + "-line14");
                 activeLine.setAttribute('class', 'active-line');
-                goState38(doTransition);
+                goState38(containerId, doTransition);
             }
             else if (state == 39) {
                 var activeLine = document.getElementById(linePrefix + "-line15");
                 activeLine.setAttribute('class', 'active-line');
-                goState39(doTransition);
+                goState39(containerId, doTransition);
             }
             else if (state == 40) {
                 var activeLine = document.getElementById(linePrefix + "-line17");
                 activeLine.setAttribute('class', 'active-line');
-                goState40(doTransition);
+                goState40(containerId, doTransition);
             }
             else if (state == 41) {
                 var activeLine = document.getElementById(linePrefix + "-line19");
                 activeLine.setAttribute('class', 'active-line');
-                goState41(doTransition);
+                goState41(containerId, doTransition);
             }
             else if (state == 42) {
                 var activeLine = document.getElementById(linePrefix + "-line20");
                 activeLine.setAttribute('class', 'active-line');
-                goState42(doTransition);
+                goState42(containerId, doTransition);
             }
             else if (state == 43) {
                 var activeLine = document.getElementById(linePrefix + "-line22");
                 activeLine.setAttribute('class', 'active-line');
-                goState43(doTransition);
+                goState43(containerId, doTransition);
             }
 
             function hoverElement(selectId, selectClass) {
@@ -1019,10 +1025,10 @@
             setupHoverHandlers("#p", ".probabilities");
         }
 
-        function placeText_Big(name, id, value, xOffset, yOffset, fadeIn, contentsChanged) {
+        function placeText_Big(containerId, name, id, value, xOffset, yOffset, fadeIn, contentsChanged) {
 
             //TODO: Make it look better (font and size)
-            var container = d3.select("svg").append("svg")
+            var container = d3.select(containerId).append("svg")
                 .attr('id', id);
 
             var label = container.append("text")
@@ -1066,10 +1072,10 @@
 
         }
 
-        function placeText(name, id, value, xOffset, yOffset, fadeIn, contentsChanged) {
+        function placeText(containerId, name, id, value, xOffset, yOffset, fadeIn, contentsChanged) {
 
             //TODO: Make it look better (font and size)
-            var container = d3.select("svg").append("svg")
+            var container = d3.select(containerId).append("svg")
                 .attr('id', id);
 
             var label = container.append("text")
@@ -1107,12 +1113,11 @@
                     item.style('fill', 'red')
                 }
             }
-
         }
 
-        function placeRNNBlock(xOffset, yOffset, fadeIn) {
+        function placeRNNBlock(containerId, xOffset, yOffset, fadeIn) {
             //Create diagram container
-            var diagramContainer = d3.select("svg").append("svg");
+            var diagramContainer = d3.select(containerId).append("svg");
             //Draw first hidden-state square
             var rect = diagramContainer.append("rect")
                 .attr("x", xOffset + 200)
@@ -1160,9 +1165,9 @@
             }
         }
 
-        function placeTensor(name, id, xOffset, yOffset, tensorElements, fadeIn, contentsChanged) {
+        function placeTensor(containerId, name, id, xOffset, yOffset, tensorElements, fadeIn, contentsChanged) {
 
-            var container = d3.select("svg").append('svg')
+            var container = d3.select(container).append('svg')
                 .attr('x', xOffset)
                 .attr('y', yOffset)
                 .attr('id', id)
@@ -1226,9 +1231,9 @@
             }
         }
 
-        function placeTensor_2Elements(name, id, xOffset, yOffset, tensorElements, fadeIn, contentsChanged) {
+        function placeTensor_2Elements(containerId, name, id, xOffset, yOffset, tensorElements, fadeIn, contentsChanged) {
 
-            var container = d3.select("svg").append('svg')
+            var container = d3.select(containerId).append('svg')
                 .attr('x', xOffset)
                 .attr('y', yOffset)
                 .attr('id', id)
