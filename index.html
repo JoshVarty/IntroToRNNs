@@ -205,7 +205,6 @@
         Click "Play" below.
     </section>
 
-    <p>
         <pre>
 <span id="line0"><span class='comment'>#Initialize weights and biases</span></span>
 <span id="line1"><span class='input_weights_U'>input_weights_U</span> = np.random.randn(hidden_size, vocab_size) * 0.01</span>
@@ -236,13 +235,8 @@
             <button class="stop" onclick="pause()" title="Stop"></button>
             <button class="forward" onclick="goFoward()" title="Next"></button>
         </div>
-    </p>
 
-    <br />
-
-    <svg width=1500 height=600>
-    </svg>
-
+    <svg width=1500 height=600></svg>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
@@ -340,7 +334,7 @@
             goState5(false);
             let fadeIn = doTransition;
 
-            placeText("loss", "loss", "0", 0, 20, fadeIn);
+            placeText_Big("loss", "loss", "0", 0, 25, fadeIn);
         }
 
         function goState7(doTransition) {
@@ -420,7 +414,7 @@
             let contentsChanged = doTransition;
 
             d3.select('#loss').remove();
-            placeText("loss", "loss", "0.69665", 0, 20, fadeIn, contentsChanged);
+            placeText_Big("loss", "loss", "0.69665", 0, 25, fadeIn, contentsChanged);
         }
 
         function goState17(doTransition) {
@@ -520,7 +514,7 @@
             let contentsChanged = doTransition;
 
             d3.select('#loss').remove();
-            placeText("loss", "loss", "1.38501", 0, 20, fadeIn, contentsChanged);
+            placeText_Big("loss", "loss", "1.38501", 0, 25, fadeIn, contentsChanged);
         }
 
         function goState26(doTransition) {
@@ -584,7 +578,7 @@
             goState29(false);
             let fadeIn = doTransition;
 
-            placeText("target", "target_2", "1", 700, 15, fadeIn);
+            placeText("target", "target_2", "0", 700, 15, fadeIn);
         }
 
         function goState31(doTransition) {
@@ -621,7 +615,7 @@
             let contentsChanged = doTransition;
 
             d3.select('#loss').remove();
-            placeText("loss", "loss", "2.08315", 0, 20, fadeIn, contentsChanged);
+            placeText_Big("loss", "loss", "2.08315", 0, 25, fadeIn, contentsChanged);
         }
 
         function goState35(doTransition) {
@@ -720,7 +714,7 @@
             let contentsChanged = doTransition;
 
             d3.select('#loss').remove();
-            placeText("loss", "loss", "2.77402", 0, 20, fadeIn, contentsChanged);
+            placeText_Big("loss", "loss", "2.77402", 0, 25, fadeIn, contentsChanged);
         }
 
         function goState(state, doTransition) {
@@ -968,7 +962,7 @@
 
             function hoverElement(selectId, selectClass) {
                 d3.selectAll(selectClass)
-                    .attr('style', 'background:red;');
+                    .attr('style', 'background:#BB0000;');
 
                 var offset = 5;
                 d3.select(selectId + " g")
@@ -1023,12 +1017,62 @@
             setupHoverHandlers("#o", ".outputs");
             setupHoverHandlers("#p", ".probabilities");
         }
+        
+        function placeText_Big(name, id, value, xOffset, yOffset, fadeIn, contentsChanged) {
 
-        function placeText(name, id, value, xOffset, yOffset, fadeIn, contentsChanged) {
             //TODO: Make it look better (font and size)
             var container = d3.select("svg").append("svg")
                 .attr('id', id);
+
             var label = container.append("text")
+                .attr('font-family', 'Arial,"Helvetica Neue",Helvetica,sans-serif')
+                .attr('font-size', '24px')
+                .text(name)
+                .attr('x', xOffset)
+                .attr('y', yOffset);
+
+            //We have to account for the number of characters in our "name" label
+            let numberOfCharactersInName = name.length;
+            let nameOffset = numberOfCharactersInName * 11;
+
+            var equals = container.append("text")
+                .attr('font-family', 'Arial,"Helvetica Neue",Helvetica,sans-serif')
+                .attr('font-size', '24px')
+                .text('=')
+                .attr('x', xOffset + nameOffset + 2)
+                .attr('y', yOffset);
+
+            var value = container.append("text")
+                .attr('font-family', '')
+                .attr('font-size', '24px')
+                .text(value)
+                .attr('x', xOffset + nameOffset + 18)
+                .attr('y', yOffset);
+
+            if (fadeIn) {
+                for (let item of [label, equals, value]) {
+                    item.attr('opacity', 0)
+                        .transition()
+                        .attr('opacity', 1)
+                }
+            }
+
+            if (contentsChanged === true) {
+                for (let item of [value]) {
+                    item.style('fill', 'red')
+                }
+            }
+
+        }
+
+        function placeText(name, id, value, xOffset, yOffset, fadeIn, contentsChanged) {
+
+            //TODO: Make it look better (font and size)
+            var container = d3.select("svg").append("svg")
+                .attr('id', id);
+
+            var label = container.append("text")
+                .attr('font-family', 'Arial,"Helvetica Neue",Helvetica,sans-serif')
                 .text(name)
                 .attr('x', xOffset)
                 .attr('y', yOffset);
@@ -1038,13 +1082,15 @@
             let nameOffset = numberOfCharactersInName * 7;
 
             var equals = container.append("text")
+                .attr('font-family', 'Arial,"Helvetica Neue",Helvetica,sans-serif')
                 .text('=')
-                .attr('x', xOffset + nameOffset)
+                .attr('x', xOffset + nameOffset + 2)
                 .attr('y', yOffset);
 
             var value = container.append("text")
+                .attr('font-family', '')
                 .text(value)
-                .attr('x', xOffset + nameOffset + 12)
+                .attr('x', xOffset + nameOffset + 13)
                 .attr('y', yOffset);
 
             if (fadeIn) {
