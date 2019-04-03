@@ -238,7 +238,7 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
 
-        var parametersDict = {
+        var untrainedParametersDict = {
             "U": [[0.04967142, 0.06476885, -0.02341534], [-0.01382643, 0.15230299, -0.0234137]],
             "W": [[0.15792128, 0.054256, 0.02419623],[0.07674347, -0.04634177, -0.19132802],[-0.04694744, -0.04657298, -0.17249178]],
             "hidden_bias": [[0.00, 0.00, 0.00]],
@@ -275,15 +275,6 @@
             "probabilities_0":[[0.50239675, 0.49760325]],
             "probabilities_0":[[0.50248985, 0.49751015]],
             "probabilities_0":[[0.502528, 0.497472]],
-
-
-
-
-
-
-
-
-
         }
 
         var glowingPlayButton = d3.select('.play');
@@ -298,9 +289,11 @@
 
         function goBack(linePrefix) {
             var containerId = '#untrained-diagram';
+            var paramDict = untrainedParametersDict;
+
             clearInterval(runningInterval);
             state = Math.max(state - 1, 0);
-            goState(state, containerId, linePrefix, false)
+            goState(state, containerId, linePrefix, paramDict, false)
         }
 
         function goFoward(linePrefix) {
@@ -310,7 +303,7 @@
             }
 
             state = (state + 1) % MAX_STATE_NUMBER;
-            goState(state, containerId, linePrefix, true)
+            goState(state, containerId, linePrefix, paramDict, true)
         }
 
         function pause() {
@@ -326,11 +319,11 @@
             runningInterval = setInterval(function () {
                 var containerId = '#untrained-diagram';
                 state = (state + 1) % MAX_STATE_NUMBER;
-                goState(state, containerId, linePrefix, true)
+                goState(state, containerId, linePrefix, paramDict, true)
             }, 1000);
         }
 
-        function goState0(containerId, doTransition) {
+        function goState0(containerId, paramDict, doTransition) {
             let fadeIn = doTransition
             placeRNNBlock(containerId, 50, 100, fadeIn)
 
@@ -338,7 +331,7 @@
             placeTensor(containerId, "U", "U", 300, 370, U, fadeIn);
         }
 
-        function goState1(containerId, doTransition) {
+        function goState1(containerId, paramDict, doTransition) {
             goState0(containerId, false);
             let fadeIn = doTransition
 
@@ -346,7 +339,7 @@
             placeTensor(containerId, "W", "W", 65, 195, W, fadeIn);
         }
 
-        function goState2(containerId, doTransition) {
+        function goState2(containerId, paramDict, doTransition) {
             goState1(containerId, false);
             let fadeIn = doTransition;
 
@@ -354,7 +347,7 @@
             placeTensor(containerId, "", "hidden_bias", 145, 130, hidden_bias, fadeIn);
         }
 
-        function goState3(containerId, doTransition) {
+        function goState3(containerId, paramDict, doTransition) {
             goState2(containerId, false);
             let fadeIn = doTransition;
 
@@ -363,7 +356,7 @@
             placeTensor_2Elements(containerId, "V", "V", 300, 120, output_weights, fadeIn);
         }
 
-        function goState4(containerId, doTransition) {
+        function goState4(containerId, paramDict, doTransition) {
             goState3(containerId, false);
             let fadeIn = doTransition
 
@@ -371,18 +364,18 @@
             placeTensor_2Elements(containerId, "", "output_bias", 440, 120, output_bias, fadeIn);
         }
 
-        function goState5(containerId, doTransition) {
+        function goState5(containerId, paramDict, doTransition) {
             goState4(containerId, false);
         }
 
-        function goState6(containerId, doTransition) {
+        function goState6(containerId, paramDict, doTransition) {
             goState5(containerId, false);
             let fadeIn = doTransition;
 
             placeText_Big(containerId, "loss", "loss", "0", 0, 25, fadeIn);
         }
 
-        function goState7(containerId, doTransition) {
+        function goState7(containerId, paramDict, doTransition) {
             goState6(containerId, false);
             let fadeIn = doTransition;
 
@@ -390,11 +383,11 @@
             placeTensor(containerId, "", "h", 0, 250, hidden_state_prev, fadeIn);
         }
 
-        function goState8(containerId, doTransition) {
+        function goState8(containerId, paramDict, doTransition) {
             goState7(containerId, false);
         }
 
-        function goState9(containerId, doTransition) {
+        function goState9(containerId, paramDict, doTransition) {
             goState8(containerId, false);
             let fadeIn = doTransition;
 
@@ -402,14 +395,14 @@
             placeTensor_2Elements(containerId, "x", "x", 238, 450, input_tensor, fadeIn);
         }
 
-        function goState10(containerId, doTransition) {
+        function goState10(containerId, paramDict, doTransition) {
             goState9(containerId, false);
             let fadeIn = doTransition;
 
             placeText(containerId, "character", "character_0", "1", 260, 535, fadeIn);
         }
 
-        function goState11(containerId, doTransition) {
+        function goState11(containerId, paramDict, doTransition) {
             goState10(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
@@ -419,14 +412,14 @@
             placeTensor_2Elements(containerId, "x", "x", 238, 450, input_tensor, fadeIn, contentsChanged);
         }
 
-        function goState12(containerId, doTransition) {
+        function goState12(containerId, paramDict, doTransition) {
             goState11(containerId, false);
             let fadeIn = doTransition;
 
             placeText(containerId, "target", "target_0", "0", 270, 15, fadeIn);
         }
 
-        function goState13(containerId, doTransition) {
+        function goState13(containerId, paramDict, doTransition) {
             goState12(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
@@ -435,7 +428,7 @@
             placeTensor(containerId, "", "hidden_state", 238, 240, hidden_state, fadeIn, contentsChanged);
         }
 
-        function goState14(containerId, doTransition) {
+        function goState14(containerId, paramDict, doTransition) {
             goState13(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
@@ -444,7 +437,7 @@
             placeTensor_2Elements(containerId, "o", "o", 190, 30, outputs, fadeIn, contentsChanged);
         }
 
-        function goState15(containerId, doTransition) {
+        function goState15(containerId, paramDict, doTransition) {
             goState14(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
@@ -453,7 +446,7 @@
             placeTensor_2Elements(containerId, "p", "p", 280, 30, probabilities, fadeIn, contentsChanged);
         }
 
-        function goState16(containerId, doTransition) {
+        function goState16(containerId, paramDict, doTransition) {
             goState15(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
@@ -462,7 +455,7 @@
             placeText_Big(containerId, "loss", "loss", "0.69665", 0, 25, fadeIn, contentsChanged);
         }
 
-        function goState17(containerId, doTransition) {
+        function goState17(containerId, paramDict, doTransition) {
             goState16(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
@@ -491,7 +484,7 @@
             }
         }
 
-        function goState18(containerId, doTransition) {
+        function goState18(containerId, paramDict, doTransition) {
             goState17(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
@@ -500,14 +493,14 @@
             placeTensor_2Elements(containerId, "x", "x", 460, 450, input_tensor, fadeIn);
         }
 
-        function goState19(containerId, doTransition) {
+        function goState19(containerId, paramDict, doTransition) {
             goState18(containerId, false);
             let fadeIn = doTransition;
 
             placeText(containerId, "character", "character_1", "0", 480, 535, fadeIn);
         }
 
-        function goState20(containerId, doTransition) {
+        function goState20(containerId, paramDict, doTransition) {
             goState19(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
@@ -517,14 +510,14 @@
             placeTensor_2Elements(containerId, "x", "x", 460, 450, input_tensor, fadeIn, contentsChanged);
         }
 
-        function goState21(containerId, doTransition) {
+        function goState21(containerId, paramDict, doTransition) {
             goState20(containerId, false);
             let fadeIn = doTransition;
 
             placeText(containerId, "target", "target_1", "1", 480, 15, fadeIn);
         }
 
-        function goState22(containerId, doTransition) {
+        function goState22(containerId, paramDict, doTransition) {
             goState21(containerId, false);
 
             let fadeIn = doTransition;
@@ -534,7 +527,7 @@
             placeTensor(containerId, "", "hidden_state", 460, 240, hidden_state, fadeIn, contentsChanged);
         }
 
-        function goState23(containerId, doTransition) {
+        function goState23(containerId, paramDict, doTransition) {
             goState22(containerId, false);
 
             let fadeIn = doTransition;
@@ -544,7 +537,7 @@
             placeTensor_2Elements(containerId, "o", "o", 430, 20, outputs, fadeIn, contentsChanged);
         }
 
-        function goState24(containerId, doTransition) {
+        function goState24(containerId, paramDict, doTransition) {
             goState23(containerId, false);
 
             let fadeIn = doTransition;
@@ -553,7 +546,7 @@
             placeTensor_2Elements(containerId, "p", "p", 520, 20, probabilities, fadeIn, contentsChanged);
         }
 
-        function goState25(containerId, doTransition) {
+        function goState25(containerId, paramDict, doTransition) {
             goState24(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
@@ -562,7 +555,7 @@
             placeText_Big(containerId, "loss", "loss", "1.38501", 0, 25, fadeIn, contentsChanged);
         }
 
-        function goState26(containerId, doTransition) {
+        function goState26(containerId, paramDict, doTransition) {
             goState25(containerId, false);
 
             let fadeIn = doTransition;
@@ -592,7 +585,7 @@
 
         }
 
-        function goState27(containerId, doTransition) {
+        function goState27(containerId, paramDict, doTransition) {
             goState26(containerId, false);
 
             let fadeIn = doTransition;
@@ -602,14 +595,14 @@
             placeTensor_2Elements(containerId, "x", "x", 686, 450, input_tensor, fadeIn);
         }
 
-        function goState28(containerId, doTransition) {
+        function goState28(containerId, paramDict, doTransition) {
             goState27(containerId, false);
 
             let fadeIn = doTransition;
             placeText(containerId, "character", "character_2", "1", 700, 535, fadeIn);
         }
 
-        function goState29(containerId, doTransition) {
+        function goState29(containerId, paramDict, doTransition) {
             goState28(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
@@ -619,14 +612,14 @@
             placeTensor_2Elements(containerId, "x", "x", 686, 450, input_tensor, fadeIn, contentsChanged);
         }
 
-        function goState30(containerId, doTransition) {
+        function goState30(containerId, paramDict, doTransition) {
             goState29(containerId, false);
             let fadeIn = doTransition;
 
             placeText(containerId, "target", "target_2", "0", 700, 15, fadeIn);
         }
 
-        function goState31(containerId, doTransition) {
+        function goState31(containerId, paramDict, doTransition) {
             goState30(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
@@ -635,7 +628,7 @@
             placeTensor(containerId, "", "hidden_state", 686, 240, hidden_state, fadeIn, contentsChanged);
         }
 
-        function goState32(containerId, doTransition) {
+        function goState32(containerId, paramDict, doTransition) {
             goState31(containerId, false);
 
             let fadeIn = doTransition;
@@ -645,7 +638,7 @@
             placeTensor_2Elements(containerId, "o", "o", 660, 20, outputs, fadeIn, contentsChanged);
         }
 
-        function goState33(containerId, doTransition) {
+        function goState33(containerId, paramDict, doTransition) {
             goState32(containerId, false);
 
             let fadeIn = doTransition;
@@ -654,7 +647,7 @@
             placeTensor_2Elements(containerId, "p", "p", 750, 20, probabilities, fadeIn, contentsChanged);
         }
 
-        function goState34(containerId, doTransition) {
+        function goState34(containerId, paramDict, doTransition) {
             goState33(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
@@ -663,7 +656,7 @@
             placeText_Big(containerId, "loss", "loss", "2.08315", 0, 25, fadeIn, contentsChanged);
         }
 
-        function goState35(containerId, doTransition) {
+        function goState35(containerId, paramDict, doTransition) {
             goState34(containerId, false);
             let fadeIn = doTransition;
 
@@ -691,7 +684,7 @@
             }
         }
 
-        function goState36(containerId, doTransition) {
+        function goState36(containerId, paramDict, doTransition) {
             goState35(containerId, false);
 
             let fadeIn = doTransition;
@@ -699,14 +692,14 @@
             placeTensor_2Elements(containerId, "x", "x", 910, 450, input_tensor, fadeIn);
         }
 
-        function goState37(containerId, doTransition) {
+        function goState37(containerId, paramDict, doTransition) {
             goState36(containerId, false);
 
             let fadeIn = doTransition;
             placeText(containerId, "character", "character_2", "0", 935, 535, fadeIn);
         }
 
-        function goState38(containerId, doTransition) {
+        function goState38(containerId, paramDict, doTransition) {
             goState37(containerId, false);
             let fadeIn = false;
             let contentsChanged = doTransition;
@@ -716,7 +709,7 @@
             placeTensor_2Elements(containerId, "x", "x", 910, 450, input_tensor, fadeIn, contentsChanged);
         }
 
-        function goState39(containerId, doTransition) {
+        function goState39(containerId, paramDict, doTransition) {
             goState38(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
@@ -724,7 +717,7 @@
             placeText(containerId, "target", "target_3", "0", 933, 15, fadeIn);
         }
 
-        function goState40(containerId, doTransition) {
+        function goState40(containerId, paramDict, doTransition) {
             goState39(containerId, false);
 
             let fadeIn = doTransition;
@@ -734,7 +727,7 @@
             placeTensor(containerId, "", "hidden_state", 910, 240, hidden_state, fadeIn, contentsChanged);
         }
 
-        function goState41(containerId, doTransition) {
+        function goState41(containerId, paramDict, doTransition) {
             goState40(containerId, false);
 
             let fadeIn = doTransition;
@@ -743,7 +736,7 @@
             placeTensor_2Elements(containerId, "o", "o", 880, 20, outputs, fadeIn, contentsChanged);
         }
 
-        function goState42(containerId, doTransition) {
+        function goState42(containerId, paramDict, doTransition) {
             goState41(containerId, false);
             let fadeIn = doTransition;
             let contentsChanged = false;
@@ -752,7 +745,7 @@
             placeTensor_2Elements(containerId, "p", "p", 970, 20, probabilities, fadeIn, contentsChanged);
         }
 
-        function goState43(containerId, doTransition) {
+        function goState43(containerId, paramDict, doTransition) {
             goState42(containerId, false);
 
             let fadeIn = false;
@@ -762,7 +755,7 @@
             placeText_Big(containerId, "loss", "loss", "2.77402", 0, 25, fadeIn, contentsChanged);
         }
 
-        function goState(state, containerId, linePrefix, doTransition) {
+        function goState(state, containerId, linePrefix, paramDict, doTransition) {
             //Clear the svg and but our arrowhead definitions
             var container = d3.select(containerId)
             container.selectAll("*").remove()
@@ -790,222 +783,222 @@
             if (state == 0) {
                 var activeLine = document.getElementById(linePrefix + "-line1")
                 activeLine.setAttribute('class', 'active-line')
-                goState0(containerId, doTransition)
+                goState0(containerId, paramDict, doTransition)
             }
             else if (state == 1) {
                 var activeLine = document.getElementById(linePrefix + "-line2")
                 activeLine.setAttribute('class', 'active-line')
-                goState1(containerId, doTransition);
+                goState1(containerId, paramDict, doTransition);
             }
             else if (state == 2) {
                 var activeLine = document.getElementById(linePrefix + "-line3")
                 activeLine.setAttribute('class', 'active-line')
-                goState2(containerId, doTransition);
+                goState2(containerId, paramDict, doTransition);
             }
             else if (state == 3) {
                 var activeLine = document.getElementById(linePrefix + "-line4")
                 activeLine.setAttribute('class', 'active-line')
-                goState3(containerId, doTransition);
+                goState3(containerId, paramDict, doTransition);
             }
             else if (state == 4) {
                 var activeLine = document.getElementById(linePrefix + "-line5")
                 activeLine.setAttribute('class', 'active-line')
-                goState4(containerId, doTransition);
+                goState4(containerId, paramDict, doTransition);
             }
             else if (state == 5) {
                 var activeLine = document.getElementById(linePrefix + "-line7")
                 activeLine.setAttribute('class', 'active-line')
-                goState5(containerId, doTransition);
+                goState5(containerId, paramDict, doTransition);
             }
             else if (state == 6) {
                 var activeLine = document.getElementById(linePrefix + "-line8")
                 activeLine.setAttribute('class', 'active-line')
-                goState6(containerId, doTransition);
+                goState6(containerId, paramDict, doTransition);
             }
             else if (state == 7) {
                 var activeLine = document.getElementById(linePrefix + "-line9")
                 activeLine.setAttribute('class', 'active-line')
-                goState7(containerId, doTransition);
+                goState7(containerId, paramDict, doTransition);
             }
             else if (state == 8) {
                 var activeLine = document.getElementById(linePrefix + "-line10")
                 activeLine.setAttribute('class', 'active-line')
-                goState8(containerId, doTransition);
+                goState8(containerId, paramDict, doTransition);
             }
             else if (state == 9) {
                 var activeLine = document.getElementById(linePrefix + "-line12")
                 activeLine.setAttribute('class', 'active-line')
-                goState9(containerId, doTransition);
+                goState9(containerId, paramDict, doTransition);
             }
             else if (state == 10) {
                 var activeLine = document.getElementById(linePrefix + "-line13")
                 activeLine.setAttribute('class', 'active-line')
-                goState10(containerId, doTransition);
+                goState10(containerId, paramDict, doTransition);
             }
             else if (state == 11) {
                 var activeLine = document.getElementById(linePrefix + "-line14")
                 activeLine.setAttribute('class', 'active-line')
-                goState11(containerId, doTransition);
+                goState11(containerId, paramDict, doTransition);
             }
             else if (state == 12) {
                 var activeLine = document.getElementById(linePrefix + "-line15")
                 activeLine.setAttribute('class', 'active-line')
-                goState12(containerId, doTransition);
+                goState12(containerId, paramDict, doTransition);
             }
             else if (state == 13) {
                 var activeLine = document.getElementById(linePrefix + "-line17")
                 activeLine.setAttribute('class', 'active-line')
-                goState13(containerId, doTransition);
+                goState13(containerId, paramDict, doTransition);
             }
             else if (state == 14) {
                 var activeLine = document.getElementById(linePrefix + "-line19")
                 activeLine.setAttribute('class', 'active-line')
-                goState14(containerId, doTransition);
+                goState14(containerId, paramDict, doTransition);
             }
             else if (state == 15) {
                 var activeLine = document.getElementById(linePrefix + "-line20")
                 activeLine.setAttribute('class', 'active-line')
-                goState15(containerId, doTransition);
+                goState15(containerId, paramDict, doTransition);
             }
             else if (state == 16) {
                 var activeLine = document.getElementById(linePrefix + "-line22")
                 activeLine.setAttribute('class', 'active-line')
-                goState16(containerId, doTransition);
+                goState16(containerId, paramDict, doTransition);
             }
             else if (state == 17) {
                 var activeLine = document.getElementById(linePrefix + "-line10")
                 activeLine.setAttribute('class', 'active-line')
-                goState17(containerId, doTransition);
+                goState17(containerId, paramDict, doTransition);
             }
             else if (state == 18) {
                 var activeLine = document.getElementById(linePrefix + "-line12")
                 activeLine.setAttribute('class', 'active-line')
-                goState18(containerId, doTransition);
+                goState18(containerId, paramDict, doTransition);
             }
             else if (state == 19) {
                 var activeLine = document.getElementById(linePrefix + "-line13")
                 activeLine.setAttribute('class', 'active-line')
-                goState19(containerId, doTransition);
+                goState19(containerId, paramDict, doTransition);
             }
             else if (state == 20) {
                 var activeLine = document.getElementById(linePrefix + "-line14")
                 activeLine.setAttribute('class', 'active-line')
-                goState20(containerId, doTransition);
+                goState20(containerId, paramDict, doTransition);
             }
             else if (state == 21) {
                 var activeLine = document.getElementById(linePrefix + "-line15")
                 activeLine.setAttribute('class', 'active-line')
-                goState21(containerId, doTransition);
+                goState21(containerId, paramDict, doTransition);
             }
             else if (state == 22) {
                 var activeLine = document.getElementById(linePrefix + "-line17")
                 activeLine.setAttribute('class', 'active-line')
-                goState22(containerId, doTransition);
+                goState22(containerId, paramDict, doTransition);
             }
             else if (state == 23) {
                 var activeLine = document.getElementById(linePrefix + "-line19")
                 activeLine.setAttribute('class', 'active-line')
-                goState23(containerId, doTransition);
+                goState23(containerId, paramDict, doTransition);
             }
             else if (state == 24) {
                 var activeLine = document.getElementById(linePrefix + "-line20")
                 activeLine.setAttribute('class', 'active-line')
-                goState24(containerId, doTransition);
+                goState24(containerId, paramDict, doTransition);
             }
             else if (state == 25) {
                 var activeLine = document.getElementById(linePrefix + "-line22")
                 activeLine.setAttribute('class', 'active-line')
-                goState25(containerId, doTransition);
+                goState25(containerId, paramDict, doTransition);
             }
             else if (state == 26) {
                 var activeLine = document.getElementById(linePrefix + "-line10")
                 activeLine.setAttribute('class', 'active-line')
-                goState26(containerId, doTransition);
+                goState26(containerId, paramDict, doTransition);
             }
             else if (state == 27) {
                 var activeLine = document.getElementById(linePrefix + "-line12")
                 activeLine.setAttribute('class', 'active-line')
-                goState27(containerId, doTransition);
+                goState27(containerId, paramDict, doTransition);
             }
             else if (state == 28) {
                 var activeLine = document.getElementById(linePrefix + "-line13")
                 activeLine.setAttribute('class', 'active-line')
-                goState28(containerId, doTransition);
+                goState28(containerId, paramDict, doTransition);
             }
             else if (state == 29) {
                 var activeLine = document.getElementById(linePrefix + "-line14")
                 activeLine.setAttribute('class', 'active-line')
-                goState29(containerId, doTransition);
+                goState29(containerId, paramDict, doTransition);
             }
             else if (state == 30) {
                 var activeLine = document.getElementById(linePrefix + "-line15")
                 activeLine.setAttribute('class', 'active-line')
-                goState30(containerId, doTransition);
+                goState30(containerId, paramDict, doTransition);
             }
             else if (state == 31) {
                 var activeLine = document.getElementById(linePrefix + "-line17")
                 activeLine.setAttribute('class', 'active-line')
-                goState31(containerId, doTransition);
+                goState31(containerId, paramDict, doTransition);
             }
             else if (state == 32) {
                 var activeLine = document.getElementById(linePrefix + "-line19")
                 activeLine.setAttribute('class', 'active-line')
-                goState32(containerId, doTransition);
+                goState32(containerId, paramDict, doTransition);
             }
             else if (state == 33) {
                 var activeLine = document.getElementById(linePrefix + "-line20");
                 activeLine.setAttribute('class', 'active-line');
-                goState33(containerId, doTransition);
+                goState33(containerId, paramDict, doTransition);
             }
             else if (state == 34) {
                 var activeLine = document.getElementById(linePrefix + "-line22");
                 activeLine.setAttribute('class', 'active-line');
-                goState34(containerId, doTransition);
+                goState34(containerId, paramDict, doTransition);
             }
             else if (state == 35) {
                 var activeLine = document.getElementById(linePrefix + "-line10");
                 activeLine.setAttribute('class', 'active-line');
-                goState35(containerId, doTransition);
+                goState35(containerId, paramDict, doTransition);
             }
             else if (state == 36) {
                 var activeLine = document.getElementById(linePrefix + "-line12");
                 activeLine.setAttribute('class', 'active-line');
-                goState36(containerId, doTransition);
+                goState36(containerId, paramDict, doTransition);
             }
             else if (state == 37) {
                 var activeLine = document.getElementById(linePrefix + "-line13");
                 activeLine.setAttribute('class', 'active-line');
-                goState37(containerId, doTransition);
+                goState37(containerId, paramDict, doTransition);
             }
             else if (state == 38) {
                 var activeLine = document.getElementById(linePrefix + "-line14");
                 activeLine.setAttribute('class', 'active-line');
-                goState38(containerId, doTransition);
+                goState38(containerId, paramDict, doTransition);
             }
             else if (state == 39) {
                 var activeLine = document.getElementById(linePrefix + "-line15");
                 activeLine.setAttribute('class', 'active-line');
-                goState39(containerId, doTransition);
+                goState39(containerId, paramDict, doTransition);
             }
             else if (state == 40) {
                 var activeLine = document.getElementById(linePrefix + "-line17");
                 activeLine.setAttribute('class', 'active-line');
-                goState40(containerId, doTransition);
+                goState40(containerId, paramDict, doTransition);
             }
             else if (state == 41) {
                 var activeLine = document.getElementById(linePrefix + "-line19");
                 activeLine.setAttribute('class', 'active-line');
-                goState41(containerId, doTransition);
+                goState41(containerId, paramDict, doTransition);
             }
             else if (state == 42) {
                 var activeLine = document.getElementById(linePrefix + "-line20");
                 activeLine.setAttribute('class', 'active-line');
-                goState42(containerId, doTransition);
+                goState42(containerId, paramDict, doTransition);
             }
             else if (state == 43) {
                 var activeLine = document.getElementById(linePrefix + "-line22");
                 activeLine.setAttribute('class', 'active-line');
-                goState43(containerId, doTransition);
+                goState43(containerId, paramDict, doTransition);
             }
 
             function hoverElement(selectId, selectClass) {
