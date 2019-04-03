@@ -238,6 +238,54 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
 
+        var parametersDict = {
+            "U": [[0.04967142, 0.06476885, -0.02341534], [-0.01382643, 0.15230299, -0.0234137]],
+            "W": [[0.15792128, 0.054256, 0.02419623],[0.07674347, -0.04634177, -0.19132802],[-0.04694744, -0.04657298, -0.17249178]],
+            "hidden_bias": [[0.00, 0.00, 0.00]],
+            "output_weights": [[-0.05622875, -0.09080241],[-0.10128311, -0.14123037],[0.03142473, 0.14656488]],
+            "output_bias": [[0, 0]],
+            "loss": 0,
+            "loss_0": 0.69665,
+            "loss_1": 1.38501,
+            "loss_2": 2.08315,
+            "loss_3": 2.77402,
+            "hidden_state_prev": [[0.0, 0.0, 0.0]],
+            "input_tensor": [[0.0, 0.0]],
+            "input_tensor_0": [[0.0, 1.0]],
+            "input_tensor_1": [[1.0, 0.0]],
+            "input_tensor_2": [[0.0, 1.0]],
+            "input_tensor_3": [[1.0, 0.0]],
+            "character_0": 1,
+            "character_1": 0,
+            "character_2": 1,
+            "character_3": 0,
+            "target_0": 0,
+            "target_1": 1,
+            "target_2": 0,
+            "target_3": 1,
+            "hidden_state_0": [[0.0496306, 0.06467844, -0.02341106]],
+            "hidden_state_1": [[7.40357596e-05, 1.51903922e-01, -3.05399045e-02]],
+            "hidden_state_2": [[0.06269218, 0.0590868, -0.0471741]],
+            "hidden_state_3":  [[0.00282322, 0.15392992, -0.02505935]],
+            "outputs_0":[[-0.01007719, -0.01707238]],
+            "outputs_1":[[-0.01634917, -0.02593625]],
+            "outputs_2":[[-0.01099203, -0.02095152]],
+            "outputs_3":[[-0.01102358, -0.02113569]],
+            "probabilities_0":[[0.50174879, 0.49825121]],
+            "probabilities_0":[[0.50239675, 0.49760325]],
+            "probabilities_0":[[0.50248985, 0.49751015]],
+            "probabilities_0":[[0.502528, 0.497472]],
+
+
+
+
+
+
+
+
+
+        }
+
         var glowingPlayButton = d3.select('.play');
 
         var glowInterval = window.setInterval(function () {
@@ -294,9 +342,7 @@
             goState0(containerId, false);
             let fadeIn = doTransition
 
-            var W = [[0.15792128, 0.054256, 0.02419623],
-            [0.07674347, -0.04634177, -0.19132802],
-            [-0.04694744, -0.04657298, -0.17249178]]
+            var W = [[0.15792128, 0.054256, 0.02419623],[0.07674347, -0.04634177, -0.19132802],[-0.04694744, -0.04657298, -0.17249178]]
             placeTensor(containerId, "W", "W", 65, 195, W, fadeIn);
         }
 
@@ -312,9 +358,7 @@
             goState2(containerId, false);
             let fadeIn = doTransition;
 
-            var output_weights = [[-0.05622875, -0.09080241],
-            [-0.10128311, -0.14123037],
-            [0.03142473, 0.14656488]]
+            var output_weights = [[-0.05622875, -0.09080241],[-0.10128311, -0.14123037],[0.03142473, 0.14656488]]
 
             placeTensor_2Elements(containerId, "V", "V", 300, 120, output_weights, fadeIn);
         }
