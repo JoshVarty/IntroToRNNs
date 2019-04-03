@@ -6,6 +6,43 @@
             background: #1e1e1e;
             padding: 15px;
             color: #dfdfdf;
+            margin-bottom: 0;
+        }
+
+        .header {
+            top: 0;
+            width: 100%;
+            height: 150px;
+            color: black;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+            padding-top: 20px;
+            margin-left: 50px;
+        }
+
+        .header h1 {
+            font-size: 60px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+        }
+
+        .header h2 {
+            font-size: 18px;
+        }
+
+        section {
+            font-family: Georgia, "Times New Roman", serif;
+            width: 700px;
+            font-size: 18px;
+            margin-left: 50px;
+            line-height: 30px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        code {
+            padding: 2px 5px;
+            font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+            background: #eee;
         }
 
         .comment {
@@ -38,11 +75,135 @@
             background: #8e8f32;
             color: #ddd;
         }
+
+        .controls-container {
+            background: #1e1e1e;
+            box-shadow: 0px 5px 7px black;
+            width: 216px;
+            height: 32px;
+        }
+
+
+        .controls-container button {
+            background: transparent;
+            border: none;
+            width: 28px;
+            height: 28px;
+            float: left;
+            background-repeat: no-repeat;
+            background-position: center;
+            padding: 0 20px;
+        }
+
+        .controls-container button:hover {
+            cursor: pointer;
+        }
+
+        .controls-container .play {
+            background-size: 20px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PGRlZnM+PHN0eWxlPi5pY29uLWNhbnZhcy10cmFuc3BhcmVudCwuaWNvbi12cy1vdXR7ZmlsbDojZjZmNmY2O30uaWNvbi1jYW52YXMtdHJhbnNwYXJlbnR7b3BhY2l0eTowO30uaWNvbi12cy1hY3Rpb24tZ3JlZW57ZmlsbDojMzg4YTM0O308L3N0eWxlPjwvZGVmcz48dGl0bGU+Y29udGludWU8L3RpdGxlPjxnIGlkPSJjYW52YXMiPjxwYXRoIGNsYXNzPSJpY29uLWNhbnZhcy10cmFuc3BhcmVudCIgZD0iTTE2LDBWMTZIMFYwWiIvPjwvZz48ZyBpZD0ib3V0bGluZSIgc3R5bGU9ImRpc3BsYXk6IG5vbmU7Ij48cGF0aCBjbGFzcz0iaWNvbi12cy1vdXQiIGQ9Ik0xNC4zMzQsOCwzLjY2NywxNkgzVjBoLjY2N1oiLz48L2c+PGcgaWQ9Imljb25CZyI+PHBhdGggY2xhc3M9Imljb24tdnMtYWN0aW9uLWdyZWVuIiBkPSJNNCwxLjV2MTNMMTIuNjY3LDgsNCwxLjVaIi8+PC9nPjwvc3ZnPg==');
+        }
+
+        .controls-container .back {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwKSI+CjxwYXRoIGQ9Ik02IDEzQzYgMTMuMzk1NiA2LjExNzMgMTMuNzgyMiA2LjMzNzA2IDE0LjExMTFDNi41NTY4MiAxNC40NCA2Ljg2OTE4IDE0LjY5NjQgNy4yMzQ2MyAxNC44NDc4QzcuNjAwMDggMTQuOTk5MSA4LjAwMjIyIDE1LjAzODcgOC4zOTAxOCAxNC45NjE2QzguNzc4MTQgMTQuODg0NCA5LjEzNDUxIDE0LjY5MzkgOS40MTQyMSAxNC40MTQyQzkuNjkzOTIgMTQuMTM0NSA5Ljg4NDQgMTMuNzc4MSA5Ljk2MTU3IDEzLjM5MDJDMTAuMDM4NyAxMy4wMDIyIDkuOTk5MTMgMTIuNjAwMSA5Ljg0Nzc2IDEyLjIzNDZDOS42OTYzOCAxMS44NjkyIDkuNDQwMDQgMTEuNTU2OCA5LjExMTE0IDExLjMzNzFDOC43ODIyNCAxMS4xMTczIDguMzk1NTYgMTEgOCAxMUM3LjQ2OTU3IDExIDYuOTYwODYgMTEuMjEwNyA2LjU4NTc5IDExLjU4NThDNi4yMTA3MSAxMS45NjA5IDYgMTIuNDY5NiA2IDEzWiIgZmlsbD0iIzQyNDI0MiIvPgo8cGF0aCBkPSJNMC45OTk5OTggMlY4SDdWNkg0Ljc2M0M1LjI3MzAzIDUuMjMzMjMgNi4wMDY5MyA0LjY0MjI0IDYuODY0ODEgNC4zMDc0MkM3LjcyMjY5IDMuOTcyNjEgOC42NjI5IDMuOTEwMjQgOS41NTc0OSA0LjEyODgxQzEwLjQ1MjEgNC4zNDczNyAxMS4yNTc2IDQuODM2MjYgMTEuODY0NCA1LjUyODkzQzEyLjQ3MTMgNi4yMjE2MSAxMi44NSA3LjA4NDQzIDEyLjk0OSA4SDE0Ljk3NUMxNC44NzMzIDYuNjM1MiAxNC4zNDIyIDUuMzM3NiAxMy40NTc5IDQuMjkzMTJDMTIuNTczNiAzLjI0ODYzIDExLjM4MTMgMi41MTA4NiAxMC4wNTIgMi4xODU0OUM4LjcyMjYyIDEuODYwMTIgNy4zMjQ0IDEuOTYzODUgNi4wNTc2MyAyLjQ4MTgzQzQuNzkwODUgMi45OTk4MSAzLjcyMDUzIDMuOTA1NDUgMyA1LjA2OVYySDAuOTk5OTk4WiIgZmlsbD0iIzAwNTM5QyIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwIj4KPHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJtYXRyaXgoLTEgMCAwIDEgMTYgMCkiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4=');
+            margin-left: 20px;
+        }
+
+        .controls-container .stop {
+            background-size: 20px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PGRlZnM+PHN0eWxlPi5pY29uLWNhbnZhcy10cmFuc3BhcmVudCwuaWNvbi12cy1vdXR7ZmlsbDojZjZmNmY2O30uaWNvbi1jYW52YXMtdHJhbnNwYXJlbnR7b3BhY2l0eTowO30uaWNvbi12cy1hY3Rpb24tcmVke2ZpbGw6I2ExMjYwZDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPnN0b3A8L3RpdGxlPjxnIGlkPSJjYW52YXMiPjxwYXRoIGNsYXNzPSJpY29uLWNhbnZhcy10cmFuc3BhcmVudCIgZD0iTTE2LDBWMTZIMFYwWiIvPjwvZz48ZyBpZD0ib3V0bGluZSIgc3R5bGU9ImRpc3BsYXk6IG5vbmU7Ij48cGF0aCBjbGFzcz0iaWNvbi12cy1vdXQiIGQ9Ik0xNCwyVjE0SDJWMloiLz48L2c+PGcgaWQ9Imljb25CZyI+PHBhdGggY2xhc3M9Imljb24tdnMtYWN0aW9uLXJlZCIgZD0iTTEzLDNWMTNIM1YzWiIvPjwvZz48L3N2Zz4=');
+        }
+
+        .controls-container .forward {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwKSI+CjxwYXRoIGQ9Ik02IDEzQzYgMTMuMzk1NiA2LjExNzMgMTMuNzgyMiA2LjMzNzA2IDE0LjExMTFDNi41NTY4MiAxNC40NCA2Ljg2OTE4IDE0LjY5NjQgNy4yMzQ2MyAxNC44NDc4QzcuNjAwMDggMTQuOTk5MSA4LjAwMjIyIDE1LjAzODcgOC4zOTAxOCAxNC45NjE2QzguNzc4MTQgMTQuODg0NCA5LjEzNDUxIDE0LjY5MzkgOS40MTQyMSAxNC40MTQyQzkuNjkzOTIgMTQuMTM0NSA5Ljg4NDQgMTMuNzc4MSA5Ljk2MTU3IDEzLjM5MDJDMTAuMDM4NyAxMy4wMDIyIDkuOTk5MTMgMTIuNjAwMSA5Ljg0Nzc2IDEyLjIzNDZDOS42OTYzOCAxMS44NjkyIDkuNDQwMDQgMTEuNTU2OCA5LjExMTE0IDExLjMzNzFDOC43ODIyNCAxMS4xMTczIDguMzk1NTYgMTEgOCAxMUM3LjQ2OTU3IDExIDYuOTYwODYgMTEuMjEwNyA2LjU4NTc5IDExLjU4NThDNi4yMTA3MSAxMS45NjA5IDYgMTIuNDY5NiA2IDEzWiIgZmlsbD0iIzQyNDI0MiIvPgo8cGF0aCBkPSJNMC45OTk5OTggMlY4SDdWNkg0Ljc2M0M1LjI3MzAzIDUuMjMzMjMgNi4wMDY5MyA0LjY0MjI0IDYuODY0ODEgNC4zMDc0MkM3LjcyMjY5IDMuOTcyNjEgOC42NjI5IDMuOTEwMjQgOS41NTc0OSA0LjEyODgxQzEwLjQ1MjEgNC4zNDczNyAxMS4yNTc2IDQuODM2MjYgMTEuODY0NCA1LjUyODkzQzEyLjQ3MTMgNi4yMjE2MSAxMi44NSA3LjA4NDQzIDEyLjk0OSA4SDE0Ljk3NUMxNC44NzMzIDYuNjM1MiAxNC4zNDIyIDUuMzM3NiAxMy40NTc5IDQuMjkzMTJDMTIuNTczNiAzLjI0ODYzIDExLjM4MTMgMi41MTA4NiAxMC4wNTIgMi4xODU0OUM4LjcyMjYyIDEuODYwMTIgNy4zMjQ0IDEuOTYzODUgNi4wNTc2MyAyLjQ4MTgzQzQuNzkwODUgMi45OTk4MSAzLjcyMDUzIDMuOTA1NDUgMyA1LjA2OVYySDAuOTk5OTk4WiIgZmlsbD0iIzAwNTM5QyIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwIj4KPHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJtYXRyaXgoLTEgMCAwIDEgMTYgMCkiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4=');
+            transform: scaleX(-1);
+        }
+
+        #myGlower {
+            border: 1px solid transparent;
+            -webkit-transition: border 0.1s linear, box-shadow 0.1s linear;
+            -moz-transition: border 0.1s linear, box-shadow 0.1s linear;
+            transition: border 0.1s linear, box-shadow 0.1s linear;
+        }
+
+        #myGlower.active {
+            border-color: #DAA520;
+            -webkit-box-shadow: 0 0 5px #DAA520;
+            -moz-box-shadow: 0 0 5px #DAA520;
+            box-shadow: 0 0 5px #DAA520;
+        }
+
     </style>
 </head>
 
 <body style="margin-left:0px; margin-right:0px;">
 
+    <div class="header">
+        <h1>Visualizing RNNs</h1>
+        <h2>Josh Varty</h2>
+    </div>
+
+    <section>
+        Much has been said about the <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">enreasonable
+            effectiveness of recurrent neural networks</a>. One thing that always troubled me with RNNs was that I
+        struggle to picture what's going on. I have a lot of trouble reconciling <strong>this:</strong>
+    </section>
+
+    <section>
+        <script src="https://gist.github.com/JoshVarty/03e55e39c0fda828c08c6d8730c81368.js"></script>
+    </section>
+
+    <section>
+        with <strong>this:</strong>
+    </section>
+
+    <section>
+        <img width="500" src="https://i.imgur.com/Iveichs.jpg" />
+    </section>
+
+    <section>
+        To help me understand exactly what's going on I want visualize every step of the forward pass. What do our
+        inputs look like? What do our weights look like? How do things look at the beginning of training when compared
+        to the end?
+    </section>
+
+    <section>
+        In order to tackle this I quickly realized that we're going to have to use very small weight matrices or things
+        will get out of hand very quickly. Even Andrej Karpathy's simple <a
+            href="https://gist.github.com/karpathy/d4dee566867f8291f086">Min-Char RNN</a> has weight matrices with
+        <strong>thousands</strong> of parameters. No matter how hard we try, we won't be able to put all those numbers
+        on screen.
+    </section>
+
+    <section>
+        Instead of predicting the next character in English text, let’s build a network that simply predicts the next
+        output in the sequence
+        <code>1</code>,<code>0</code>,<code>1</code>,<code>0</code>,<code>1</code>,<code>0</code>,<code>1</code>,<code>0</code>,<code>1</code>,<code>0</code>&nbsp;<code>...</code>&nbsp;This
+        seems simple. Maybe even <strong>too</strong> simple, but that’s often the best way to approach something you
+        don’t quite understand. A simple sequence like this will allow us to have tiny weight matrices, the largest of
+        which will be <code>3x3</code>.
+    </section>
+
+    <section>
+        For this project we’ll be using a <a
+            href="https://github.com/JoshVarty/IntroToRNNs/blob/master/rnn.py">modified</a> version of Min-Char RNN.
+        Since we’re preicting such a simple pattern we’ll use<span style="color:var(--color-neutral-600);">&nbsp;a
+        </span><code>vocab_size</code><span style="color:var(--color-neutral-600);">&nbsp;of </span><code>2</code><span
+            style="color:var(--color-neutral-600);">&nbsp;and a </span><code>hidden_size</code><span
+            style="color:var(--color-neutral-600);">&nbsp;of </span><code>3</code><span
+            style="color:var(--color-neutral-600);">.&nbsp;</span>
+    </section>
+
+    <section>
+        Our program is fed an input of <code>1</code>,<code>0</code>,<code>1</code>,<code>0</code>&nbsp;and is tasked
+        with predicting the target output sequence <code>0</code>,<code>1</code>,<code>0</code>,<code>1</code>, one
+        character at a time. Since our network hasn’t been trained, observe that it output probabilities of roughly
+        <code>0.50</code>&nbsp;at each time step.
+    </section>
+
+    <section>
+        Click "Play" below.
+    </section>
 
     <p>
         <pre>
@@ -69,12 +230,14 @@
     <span id="line20"><span class='probabilities'>probabilities[t]</span> = np.exp(<span class='outputs'>outputs[t]</span>) / np.sum(np.exp(<span class='outputs'>outputs[t]</span>))</span>
     <span id="line21"><span class="comment">#Compute cross-entropy loss</span></span>
     <span id="line22"><span class='loss'>loss</span> += -np.log(<span class='probabilities'>probabilities[t]</span>[<span class='target'>target</span>,0]) </span></pre>
+        <div class="controls-container">
+            <button class="back" onclick="goBack()" title="Back"></button>
+            <button id="myGlower" class="play" onclick="play()" title="Play"></button>
+            <button class="stop" onclick="pause()" title="Stop"></button>
+            <button class="forward" onclick="goFoward()" title="Next"></button>
+        </div>
     </p>
 
-    <button onclick="goBack()">Back</button>
-    <button onclick="pause()">Pause</button>
-    <button onclick="play()">Play</button>
-    <button onclick="goFoward()">Forward</button>
     <br />
 
     <svg width=1500 height=600>
@@ -84,14 +247,19 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
 
+        var glower = d3.select('#myGlower');
+
+        var glowInterval = window.setInterval(function() {  
+            glower.classed("active", !glower.classed("active"))
+        }, 1000);
+
+        let MAX_STATE_NUMBER = 44;
         var state = -1
         var runningInterval = null;
 
         function goBack() {
-            if (runningInterval !== null) {
-                clearInterval(runningInterval);
-            }
-            state = state - 1;
+            clearInterval(runningInterval);
+            state = Math.max(state - 1, 0);
             goState(state, false)
         }
 
@@ -99,19 +267,22 @@
             if (runningInterval !== null) {
                 clearInterval(runningInterval);
             }
-            state = state + 1;
+
+            state = (state + 1) % MAX_STATE_NUMBER;
             goState(state, true)
         }
-        
+
         function pause() {
-            if (runningInterval !== null) {
-                clearInterval(runningInterval);
-            }
+            clearInterval(runningInterval);
         }
 
         function play() {
-            runningInterval =  setInterval(function () {
-                state = state + 1;
+            clearInterval(glowInterval);
+            glower.classed("active", false);
+            clearInterval(runningInterval);
+
+            runningInterval = setInterval(function () {
+                state = (state + 1) % MAX_STATE_NUMBER;
                 goState(state, true)
             }, 1000);
         }
@@ -258,7 +429,7 @@
             let contentsChanged = false;
 
             placeRNNBlock(275, 100, fadeIn);
-            
+
             d3.select("#o").remove();
             d3.select("#p").remove();
             d3.select("#x").remove();
@@ -389,7 +560,7 @@
             let contentsChanged = false;
 
             let input_tensor = [[0.0, 0.0]];
-            placeTensor_2Elements("x", "x", 686, 450 , input_tensor, fadeIn);
+            placeTensor_2Elements("x", "x", 686, 450, input_tensor, fadeIn);
         }
 
         function goState28(doTransition) {
@@ -458,7 +629,7 @@
             let fadeIn = doTransition;
 
             placeRNNBlock(725, 100, fadeIn);
-            
+
             d3.select("#o").remove();
             d3.select("#p").remove();
             d3.select("#x").remove();
@@ -488,14 +659,14 @@
             let input_tensor = [[0.0, 0.0]];
             placeTensor_2Elements("x", "x", 910, 450, input_tensor, fadeIn);
         }
-        
+
         function goState37(doTransition) {
             goState36(false);
-            
+
             let fadeIn = doTransition;
             placeText("character", "character_2", "0", 935, 535, fadeIn);
         }
-        
+
         function goState38(doTransition) {
             goState37(false);
             let fadeIn = false;
@@ -505,7 +676,7 @@
             let input_tensor = [[1.0, 0.0]];
             placeTensor_2Elements("x", "x", 910, 450, input_tensor, fadeIn, contentsChanged);
         }
-        
+
         function goState39(doTransition) {
             goState38(false);
             let fadeIn = doTransition;
@@ -513,17 +684,17 @@
 
             placeText("target", "target_3", "0", 933, 15, fadeIn);
         }
-        
+
         function goState40(doTransition) {
             goState39(false);
 
             let fadeIn = doTransition;
             let contentsChanged = false;
 
-            let hidden_state = [[ 0.00282322,  0.15392992, -0.02505935]]
+            let hidden_state = [[0.00282322, 0.15392992, -0.02505935]]
             placeTensor("", "hidden_state", 910, 240, hidden_state, fadeIn, contentsChanged);
         }
-        
+
         function goState41(doTransition) {
             goState40(false);
 
@@ -541,7 +712,7 @@
             let probabilities = [[0.502528, 0.497472]]
             placeTensor_2Elements("p", "p", 970, 20, probabilities, fadeIn, contentsChanged);
         }
-        
+
         function goState43(doTransition) {
             goState42(false);
 
@@ -802,12 +973,12 @@
                 var offset = 5;
                 d3.select(selectId + " g")
                     .transition()
-                        .attr('style', 'fill:red;')
-                        .attr('transform','scale(1.05) translate(-' + offset + ')')
-                        .duration(100)
+                    .attr('style', 'fill:red;')
+                    .attr('transform', 'scale(1.05) translate(-' + offset + ')')
+                    .duration(100)
                     .transition()
-                        .attr('transform', 'scale(1)')
-                        .duration(100)
+                    .attr('transform', 'scale(1)')
+                    .duration(100)
 
             }
 
@@ -816,26 +987,26 @@
                     .attr('style', '');
                 d3.select(selectId + " g")
                     .transition()
-                        .attr('style', '')
-                        .attr('transform', '')
+                    .attr('style', '')
+                    .attr('transform', '')
             }
 
             function setupHoverHandlers(selectId, selectClass) {
                 //When hovering over the element on the diagram
                 d3.select(selectId)
-                    .on('mouseover', function() {
+                    .on('mouseover', function () {
                         hoverElement(selectId, selectClass);
                     })
-                    .on('mouseleave', function() {
+                    .on('mouseleave', function () {
                         leaveElement(selectId, selectClass);
                     });
 
                 //When hovering over the element in code
-                d3.selectAll(selectClass) 
-                    .on('mouseover', function() {
+                d3.selectAll(selectClass)
+                    .on('mouseover', function () {
                         hoverElement(selectId, selectClass);
                     })
-                    .on('mouseleave', function() {
+                    .on('mouseleave', function () {
                         leaveElement(selectId, selectClass);
                     });
             }
@@ -885,7 +1056,6 @@
             }
 
             if (contentsChanged === true) {
-                console.log("Black to red");
                 for (let item of [value]) {
                     item.style('fill', 'red')
                 }
@@ -981,12 +1151,12 @@
                 .attr("y", function (d, i, j) {
                     return (i * 20) + 20;
                 })
-            
+
             var rect = container.append('rect')
                 .attr('x', 0)
                 .attr('y', 0)
                 .attr('width', ((numberOfColumns * 40) + 50))
-                .attr('height', (numberOfRows * 20) )
+                .attr('height', (numberOfRows * 20))
                 .attr('fill', 'transparent')
 
             if (fadeIn === true) {
@@ -996,14 +1166,13 @@
                 }
 
                 container
-                .attr('transform','scale(0.95) translate(' + offset +  ')')
-                .attr('opacity', 0)
-                .transition().attr('transform','scale(1.05) translate(-' + offset + ')').attr('opacity','1')
-                .transition().attr('transform', 'scale(1)')
+                    .attr('transform', 'scale(0.95) translate(' + offset + ')')
+                    .attr('opacity', 0)
+                    .transition().attr('transform', 'scale(1.05) translate(-' + offset + ')').attr('opacity', '1')
+                    .transition().attr('transform', 'scale(1)')
             }
 
             if (contentsChanged === true) {
-                console.log("Black to red");
                 for (let item of [elements]) {
                     item.style('fill', 'red')
                 }
@@ -1017,7 +1186,7 @@
                 .attr('y', yOffset)
                 .attr('id', id)
                 .append('g')
-            
+
             var numberOfColumns = tensorElements.length;
             var numberOfRows = 2;
 
@@ -1048,12 +1217,12 @@
                 .attr("y", function (d, i, j) {
                     return (i * 20) + 30;
                 })
-            
+
             var rect = container.append('rect')
                 .attr('x', 23)
                 .attr('y', 0)
                 .attr('width', (numberOfColumns * 40) + 30)
-                .attr('height', (numberOfRows * 20) + 30 )
+                .attr('height', (numberOfRows * 20) + 30)
                 .attr('fill', 'transparent')
 
             if (fadeIn === true) {
@@ -1063,10 +1232,10 @@
                 }
 
                 container
-                .attr('transform','scale(0.95) translate(' + offset +  ')')
-                .attr('opacity', 0)
-                .transition().attr('transform','scale(1.05) translate(-' + offset + ')').attr('opacity','1')
-                .transition().attr('transform', 'scale(1)')
+                    .attr('transform', 'scale(0.95) translate(' + offset + ')')
+                    .attr('opacity', 0)
+                    .transition().attr('transform', 'scale(1.05) translate(-' + offset + ')').attr('opacity', '1')
+                    .transition().attr('transform', 'scale(1)')
             }
 
             if (contentsChanged === true) {
