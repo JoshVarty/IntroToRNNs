@@ -482,7 +482,7 @@
             let fadeIn = false;
             let contentsChanged = doTransition;
 
-            d3.select('#x').remove();
+            d3.select(containerId).select('#x').remove();
             let input_tensor = paramDict["input_tensor_0"];
             placeTensor_2Elements(containerId, "x", "x", 238, 450, input_tensor, fadeIn, contentsChanged);
         }
@@ -527,7 +527,7 @@
             let fadeIn = false;
             let contentsChanged = doTransition;
 
-            d3.select('#loss').remove();
+            d3.select(containerId).select('#loss').remove();
             var loss = paramDict["loss_0"]
             placeText_Big(containerId, "loss", "loss", loss, 0, 25, fadeIn, contentsChanged);
         }
@@ -539,25 +539,27 @@
 
             placeRNNBlock(containerId, 275, 100, fadeIn);
 
-            d3.select("#o").remove();
-            d3.select("#p").remove();
-            d3.select("#x").remove();
-            d3.select("#h").remove();
-            d3.select('#hidden_state').attr('id', 'h');
+            var container = d3.select(containerId);
+
+            container.select("#o").remove();
+            container.select("#p").remove();
+            container.select("#x").remove();
+            container.select("#h").remove();
+            container.select('#hidden_state').attr('id', 'h');
 
             if (doTransition) {
-                d3.select('#W').transition().attr('x', 320).attr('y', 155);
-                d3.select('#V').transition().attr('x', 525).attr('y', 155);
-                d3.select('#U').transition().attr('x', 525)
-                d3.select('#hidden_bias').transition().attr('x', 400).attr('y', 90);
-                d3.select('#output_bias').transition().attr('x', 665).attr('y', 155)
+                container.select('#W').transition().attr('x', 320).attr('y', 155);
+                container.select('#V').transition().attr('x', 525).attr('y', 155);
+                container.select('#U').transition().attr('x', 525)
+                container.select('#hidden_bias').transition().attr('x', 400).attr('y', 90);
+                container.select('#output_bias').transition().attr('x', 665).attr('y', 155)
             }
             else {
-                d3.select('#W').attr('x', 320).attr('y', 155);
-                d3.select('#V').attr('x', 525).attr('y', 155);
-                d3.select('#U').attr('x', 525)
-                d3.select('#hidden_bias').attr('x', 400).attr('y', 90);
-                d3.select('#output_bias').attr('x', 665).attr('y', 155)
+                container.select('#W').attr('x', 320).attr('y', 155);
+                container.select('#V').attr('x', 525).attr('y', 155);
+                container.select('#U').attr('x', 525)
+                container.select('#hidden_bias').attr('x', 400).attr('y', 90);
+                container.select('#output_bias').attr('x', 665).attr('y', 155)
             }
         }
 
@@ -583,7 +585,7 @@
             let fadeIn = false;
             let contentsChanged = doTransition;
 
-            d3.select('#x').remove();
+            d3.select(containerId).select('#x').remove();
             let input_tensor = paramDict["input_tensor_1"]
             placeTensor_2Elements(containerId, "x", "x", 460, 450, input_tensor, fadeIn, contentsChanged);
         }
@@ -630,7 +632,7 @@
             let fadeIn = false;
             let contentsChanged = doTransition;
 
-            d3.select('#loss').remove();
+            d3.select(containerId).select('#loss').remove();
             var loss = paramDict["loss_1"];
             placeText_Big(containerId, "loss", "loss", loss, 0, 25, fadeIn, contentsChanged);
         }
@@ -642,27 +644,27 @@
 
             placeRNNBlock(containerId, 500, 100, fadeIn);
 
-            d3.select("#o").remove();
-            d3.select("#p").remove();
-            d3.select("#x").remove();
-            d3.select("#h").remove();
-            d3.select('#hidden_state').attr('id', 'h');
+            var container = d3.select(containerId);
+            container.select("#o").remove();
+            container.select("#p").remove();
+            container.select("#x").remove();
+            container.select("#h").remove();
+            container.select('#hidden_state').attr('id', 'h');
 
             if (doTransition) {
-                d3.select('#W').transition().attr('x', 545)
-                d3.select('#V').transition().attr('x', 750);
-                d3.select('#U').transition().attr('x', 750);
-                d3.select('#hidden_bias').transition().attr('x', 625)
-                d3.select('#output_bias').transition().attr('x', 890);
+                container.select('#W').transition().attr('x', 545)
+                container.select('#V').transition().attr('x', 750);
+                container.select('#U').transition().attr('x', 750);
+                container.select('#hidden_bias').transition().attr('x', 625)
+                container.select('#output_bias').transition().attr('x', 890);
             }
             else {
-                d3.select('#W').attr('x', 545)
-                d3.select('#V').attr('x', 750);
-                d3.select('#U').attr('x', 750);
-                d3.select('#hidden_bias').attr('x', 625)
-                d3.select('#output_bias').attr('x', 890);
+                container.select('#W').attr('x', 545)
+                container.select('#V').attr('x', 750);
+                container.select('#U').attr('x', 750);
+                container.select('#hidden_bias').attr('x', 625)
+                container.select('#output_bias').attr('x', 890);
             }
-
         }
 
         function goState27(containerId, paramDict, doTransition) {
@@ -688,7 +690,7 @@
             let fadeIn = false;
             let contentsChanged = doTransition;
 
-            d3.select('#x').remove();
+            d3.select(containerId).select('#x').remove();
             let input_tensor = paramDict["input_tensor_2"];
             placeTensor_2Elements(containerId, "x", "x", 686, 450, input_tensor, fadeIn, contentsChanged);
         }
@@ -734,7 +736,7 @@
             let fadeIn = false;
             let contentsChanged = doTransition;
 
-            d3.select('#loss').remove();
+            d3.select(containerId).select('#loss').remove();
             var loss = paramDict["loss_2"];
             placeText_Big(containerId, "loss", "loss", loss, 0, 25, fadeIn, contentsChanged);
         }
@@ -745,25 +747,26 @@
 
             placeRNNBlock(containerId, 725, 100, fadeIn);
 
-            d3.select("#o").remove();
-            d3.select("#p").remove();
-            d3.select("#x").remove();
-            d3.select("#h").remove();
-            d3.select('#hidden_state').attr('id', 'h');
+            var container = d3.select(containerId);
+            container.select("#o").remove();
+            container.select("#p").remove();
+            container.select("#x").remove();
+            container.select("#h").remove();
+            container.select('#hidden_state').attr('id', 'h');
 
             if (doTransition) {
-                d3.select('#W').transition().attr('x', 755)
-                d3.select('#V').transition().attr('x', 975);
-                d3.select('#U').transition().attr('x', 975);
-                d3.select('#hidden_bias').transition().attr('x', 835)
-                d3.select('#output_bias').transition().attr('x', 1115);
+                container.select('#W').transition().attr('x', 755)
+                container.select('#V').transition().attr('x', 975);
+                container.select('#U').transition().attr('x', 975);
+                container.select('#hidden_bias').transition().attr('x', 835)
+                container.select('#output_bias').transition().attr('x', 1115);
             }
             else {
-                d3.select('#W').attr('x', 755)
-                d3.select('#V').attr('x', 975);
-                d3.select('#U').attr('x', 975);
-                d3.select('#hidden_bias').attr('x', 835)
-                d3.select('#output_bias').attr('x', 1115);
+                container.select('#W').attr('x', 755)
+                container.select('#V').attr('x', 975);
+                container.select('#U').attr('x', 975);
+                container.select('#hidden_bias').attr('x', 835)
+                container.select('#output_bias').attr('x', 1115);
             }
         }
 
@@ -788,7 +791,7 @@
             let fadeIn = false;
             let contentsChanged = doTransition;
 
-            d3.select('#x').remove();
+            d3.select(containerId).select('#x').remove();
             let input_tensor = paramDict["input_tensor_3"];
             placeTensor_2Elements(containerId, "x", "x", 910, 450, input_tensor, fadeIn, contentsChanged);
         }
@@ -837,7 +840,7 @@
             let contentsChanged = doTransition;
 
             var loss = paramDict["loss_3"];
-            d3.select('#loss').remove();
+            d3.select(containerId).select('#loss').remove();
             placeText_Big(containerId, "loss", "loss", "2.77402", 0, 25, fadeIn, contentsChanged);
         }
 
@@ -1090,7 +1093,7 @@
                     .attr('style', 'background:#BB0000;');
 
                 var offset = 5;
-                d3.select(selectId + " g")
+                d3.selectAll(selectId + " g")
                     .transition()
                     .attr('style', 'fill:red;')
                     .attr('transform', 'scale(1.05) translate(-' + offset + ')')
@@ -1098,13 +1101,12 @@
                     .transition()
                     .attr('transform', 'scale(1)')
                     .duration(100)
-
             }
 
             function leaveElement(selectId, selectClass) {
                 d3.selectAll(selectClass)
                     .attr('style', '');
-                d3.select(selectId + " g")
+                d3.selectAll(selectId + " g")
                     .transition()
                     .attr('style', '')
                     .attr('transform', '')
@@ -1112,7 +1114,7 @@
 
             function setupHoverHandlers(selectId, selectClass) {
                 //When hovering over the element on the diagram
-                d3.select(selectId)
+                d3.selectAll(selectId)
                     .on('mouseover', function () {
                         hoverElement(selectId, selectClass);
                     })
