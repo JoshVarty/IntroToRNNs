@@ -132,7 +132,6 @@
             -moz-box-shadow: 0 0 5px #DAA520;
             box-shadow: 0 0 5px #DAA520;
         }
-
     </style>
 </head>
 
@@ -144,7 +143,7 @@
     </div>
 
     <section>
-        Much has been said about the <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">enreasonable
+        Much has been said about the <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">unreasonable
             effectiveness of recurrent neural networks</a>. One thing that always troubled me with RNNs was that I
         struggle to picture what's going on. I have a lot of trouble reconciling <strong>this:</strong>
     </section>
@@ -205,45 +204,46 @@
         Click "Play" below.
     </section>
 
-        <pre>
-<span id="line0"><span class='comment'>#Initialize weights and biases</span></span>
-<span id="line1"><span class='input_weights_U'>input_weights_U</span> = np.random.randn(hidden_size, vocab_size) * 0.01</span>
-<span id="line2"><span class='hidden_weights_W'>hidden_weights_W</span> = np.random.randn(hidden_size, hidden_size) * 0.01</span>
-<span id="line3"><span class='hidden_bias'>hidden_bias</span> = np.zeros((hidden_size, 1)) # hidden bias</span>
-<span id="line4"><span class='output_weights_V'>output_weights_V</span> = np.random.randn(vocab_size, hidden_size) * 0.01    # hidden to output</span>
-<span id="line5"><span class='output_bias'>output_bias</span> = np.zeros((vocab_size, 1)) # output bias</span>
-<span id="line6"><span class='comment'>#Forward pass</span></span>
-<span id="line7">xs, hidden_states, outputs, probabilities = {}, {}, {}, {}</span>
-<span id="line8"><span class='loss'>loss</span> = 0</span>
-<span id="line9">hidden_states[-1] = np.copy(hidden_state_prev)</span>
-<span id="line10"><span class="for">for</span> t <span class="in">in</span> range(len(inputs)): </span>
-    <span id="line11"><span class="comment"># one-hot-encoding the input character</span> </span>
-    <span id="line12"><span class='xs'>xs[t]</span> = np.zeros((vocab_size,1))  </span>
-    <span id="line13"><span class='character'>character</span> = inputs[t]</span>
-    <span id="line14"><span class='xs'>xs[t]</span>[character] = 1 </span>
-    <span id="line15"><span class='target'>target</span> = targets[t]</span>
-    <span id="line16"><span class="comment"># Compute hidden state </span></span>
-    <span id="line17"><span class='hidden_state'>hidden_states[t]</span> = np.tanh(<span class='input_weights_U'>input_weights_U</span> @ <span class='xs'>xs[t]</span> + <span class='hidden_weights_W'>hidden_weights_W</span> @ <span class='hidden_state_prev'>hidden_states[t-1]</span> + <span class='hidden_bias'>hidden_bias</span>) </span>
-    <span id="line18"><span class="comment"># Compute output and probabilities</span></span>
-    <span id="line19"><span class='outputs'>outputs[t]</span> = <span class='output_weights_v'>output_weights_V</span> @ <span class="hidden_state">hidden_states[t]</span> + <span class='output_bias'>output_bias</span></span>
-    <span id="line20"><span class='probabilities'>probabilities[t]</span> = np.exp(<span class='outputs'>outputs[t]</span>) / np.sum(np.exp(<span class='outputs'>outputs[t]</span>))</span>
-    <span id="line21"><span class="comment">#Compute cross-entropy loss</span></span>
-    <span id="line22"><span class='loss'>loss</span> += -np.log(<span class='probabilities'>probabilities[t]</span>[<span class='target'>target</span>,0]) </span></pre>
-        <div class="controls-container">
-            <button class="back" onclick="goBack()" title="Back"></button>
-            <button id="myGlower" class="play" onclick="play()" title="Play"></button>
-            <button class="stop" onclick="pause()" title="Stop"></button>
-            <button class="forward" onclick="goFoward()" title="Next"></button>
-        </div>
+    <pre>
+<span id="untrained-line0"><span class='comment'>#Initialize weights and biases</span></span>
+<span id="untrained-line1"><span class='input_weights_U'>input_weights_U</span> = np.random.randn(hidden_size, vocab_size) * 0.01</span>
+<span id="untrained-line2"><span class='hidden_weights_W'>hidden_weights_W</span> = np.random.randn(hidden_size, hidden_size) * 0.01</span>
+<span id="untrained-line3"><span class='hidden_bias'>hidden_bias</span> = np.zeros((hidden_size, 1)) # hidden bias</span>
+<span id="untrained-line4"><span class='output_weights_V'>output_weights_V</span> = np.random.randn(vocab_size, hidden_size) * 0.01    # hidden to output</span>
+<span id="untrained-line5"><span class='output_bias'>output_bias</span> = np.zeros((vocab_size, 1)) # output bias</span>
+<span id="untrained-line6"><span class='comment'>#Forward pass</span></span>
+<span id="untrained-line7">xs, hidden_states, outputs, probabilities = {}, {}, {}, {}</span>
+<span id="untrained-line8"><span class='loss'>loss</span> = 0</span>
+<span id="untrained-line9">hidden_states[-1] = np.copy(hidden_state_prev)</span>
+<span id="untrained-line10"><span class="for">for</span> t <span class="in">in</span> range(len(inputs)): </span>
+    <span id="untrained-line11"><span class="comment"># one-hot-encoding the input character</span> </span>
+    <span id="untrained-line12"><span class='xs'>xs[t]</span> = np.zeros((vocab_size,1))  </span>
+    <span id="untrained-line13"><span class='character'>character</span> = inputs[t]</span>
+    <span id="untrained-line14"><span class='xs'>xs[t]</span>[character] = 1 </span>
+    <span id="untrained-line15"><span class='target'>target</span> = targets[t]</span>
+    <span id="untrained-line16"><span class="comment"># Compute hidden state </span></span>
+    <span id="untrained-line17"><span class='hidden_state'>hidden_states[t]</span> = np.tanh(<span class='input_weights_U'>input_weights_U</span> @ <span class='xs'>xs[t]</span> + <span class='hidden_weights_W'>hidden_weights_W</span> @ <span class='hidden_state_prev'>hidden_states[t-1]</span> + <span class='hidden_bias'>hidden_bias</span>) </span>
+    <span id="untrained-line18"><span class="comment"># Compute output and probabilities</span></span>
+    <span id="untrained-line19"><span class='outputs'>outputs[t]</span> = <span class='output_weights_v'>output_weights_V</span> @ <span class="hidden_state">hidden_states[t]</span> + <span class='output_bias'>output_bias</span></span>
+    <span id="untrained-line20"><span class='probabilities'>probabilities[t]</span> = np.exp(<span class='outputs'>outputs[t]</span>) / np.sum(np.exp(<span class='outputs'>outputs[t]</span>))</span>
+    <span id="untrained-line21"><span class="comment">#Compute cross-entropy loss</span></span>
+    <span id="untrained-line22"><span class='loss'>loss</span> += -np.log(<span class='probabilities'>probabilities[t]</span>[<span class='target'>target</span>,0]) </span></pre>
+    <div class="controls-container">
+        <button class="back" onclick="goBack('untrained')" title="Back"></button>
+        <button id="myGlower" class="play" onclick="play('untrained')" title="Play"></button>
+        <button class="stop" onclick="pause('untrained')" title="Stop"></button>
+        <button class="forward" onclick="goFoward('untrained')" title="Next"></button>
+    </div>
 
     <svg width=1500 height=600></svg>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
 
+
         var glower = d3.select('#myGlower');
 
-        var glowInterval = window.setInterval(function() {  
+        var glowInterval = window.setInterval(function () {
             glower.classed("active", !glower.classed("active"))
         }, 1000);
 
@@ -254,30 +254,30 @@
         function goBack() {
             clearInterval(runningInterval);
             state = Math.max(state - 1, 0);
-            goState(state, false)
+            goState(state, linePrefix, false)
         }
 
-        function goFoward() {
+        function goFoward(linePrefix) {
             if (runningInterval !== null) {
                 clearInterval(runningInterval);
             }
 
             state = (state + 1) % MAX_STATE_NUMBER;
-            goState(state, true)
+            goState(state, linePrefix, true)
         }
 
         function pause() {
             clearInterval(runningInterval);
         }
 
-        function play() {
+        function play(linePrefix) {
             clearInterval(glowInterval);
             glower.classed("active", false);
             clearInterval(runningInterval);
 
             runningInterval = setInterval(function () {
                 state = (state + 1) % MAX_STATE_NUMBER;
-                goState(state, true)
+                goState(state, linePrefix, true)
             }, 1000);
         }
 
@@ -717,7 +717,7 @@
             placeText_Big("loss", "loss", "2.77402", 0, 25, fadeIn, contentsChanged);
         }
 
-        function goState(state, doTransition) {
+        function goState(state, linePrefix, doTransition) {
             //Clear the svg and but our arrowhead definitions
             d3.select("svg").selectAll("*").remove()
             d3.select("svg").append("defs")
@@ -740,222 +740,223 @@
             }
 
             if (state == 0) {
-                var activeLine = document.getElementById("line1")
+                console.log(linePrefix + "line1")
+                var activeLine = document.getElementById(linePrefix + "-line1")
                 activeLine.setAttribute('class', 'active-line')
                 goState0(doTransition)
             }
             else if (state == 1) {
-                var activeLine = document.getElementById("line2")
+                var activeLine = document.getElementById(linePrefix + "-line2")
                 activeLine.setAttribute('class', 'active-line')
                 goState1(doTransition);
             }
             else if (state == 2) {
-                var activeLine = document.getElementById("line3")
+                var activeLine = document.getElementById(linePrefix + "-line3")
                 activeLine.setAttribute('class', 'active-line')
                 goState2(doTransition);
             }
             else if (state == 3) {
-                var activeLine = document.getElementById("line4")
+                var activeLine = document.getElementById(linePrefix + "-line4")
                 activeLine.setAttribute('class', 'active-line')
                 goState3(doTransition);
             }
             else if (state == 4) {
-                var activeLine = document.getElementById("line5")
+                var activeLine = document.getElementById(linePrefix + "-line5")
                 activeLine.setAttribute('class', 'active-line')
                 goState4(doTransition);
             }
             else if (state == 5) {
-                var activeLine = document.getElementById("line7")
+                var activeLine = document.getElementById(linePrefix + "-line7")
                 activeLine.setAttribute('class', 'active-line')
                 goState5(doTransition);
             }
             else if (state == 6) {
-                var activeLine = document.getElementById("line8")
+                var activeLine = document.getElementById(linePrefix + "-line8")
                 activeLine.setAttribute('class', 'active-line')
                 goState6(doTransition);
             }
             else if (state == 7) {
-                var activeLine = document.getElementById("line9")
+                var activeLine = document.getElementById(linePrefix + "-line9")
                 activeLine.setAttribute('class', 'active-line')
                 goState7(doTransition);
             }
             else if (state == 8) {
-                var activeLine = document.getElementById("line10")
+                var activeLine = document.getElementById(linePrefix + "-line10")
                 activeLine.setAttribute('class', 'active-line')
                 goState8(doTransition);
             }
             else if (state == 9) {
-                var activeLine = document.getElementById("line12")
+                var activeLine = document.getElementById(linePrefix + "-line12")
                 activeLine.setAttribute('class', 'active-line')
                 goState9(doTransition);
             }
             else if (state == 10) {
-                var activeLine = document.getElementById("line13")
+                var activeLine = document.getElementById(linePrefix + "-line13")
                 activeLine.setAttribute('class', 'active-line')
                 goState10(doTransition);
             }
             else if (state == 11) {
-                var activeLine = document.getElementById("line14")
+                var activeLine = document.getElementById(linePrefix + "-line14")
                 activeLine.setAttribute('class', 'active-line')
                 goState11(doTransition);
             }
             else if (state == 12) {
-                var activeLine = document.getElementById("line15")
+                var activeLine = document.getElementById(linePrefix + "-line15")
                 activeLine.setAttribute('class', 'active-line')
                 goState12(doTransition);
             }
             else if (state == 13) {
-                var activeLine = document.getElementById("line17")
+                var activeLine = document.getElementById(linePrefix + "-line17")
                 activeLine.setAttribute('class', 'active-line')
                 goState13(doTransition);
             }
             else if (state == 14) {
-                var activeLine = document.getElementById("line19")
+                var activeLine = document.getElementById(linePrefix + "-line19")
                 activeLine.setAttribute('class', 'active-line')
                 goState14(doTransition);
             }
             else if (state == 15) {
-                var activeLine = document.getElementById("line20")
+                var activeLine = document.getElementById(linePrefix + "-line20")
                 activeLine.setAttribute('class', 'active-line')
                 goState15(doTransition);
             }
             else if (state == 16) {
-                var activeLine = document.getElementById("line22")
+                var activeLine = document.getElementById(linePrefix + "-line22")
                 activeLine.setAttribute('class', 'active-line')
                 goState16(doTransition);
             }
             else if (state == 17) {
-                var activeLine = document.getElementById("line10")
+                var activeLine = document.getElementById(linePrefix + "-line10")
                 activeLine.setAttribute('class', 'active-line')
                 goState17(doTransition);
             }
             else if (state == 18) {
-                var activeLine = document.getElementById("line12")
+                var activeLine = document.getElementById(linePrefix + "-line12")
                 activeLine.setAttribute('class', 'active-line')
                 goState18(doTransition);
             }
             else if (state == 19) {
-                var activeLine = document.getElementById("line13")
+                var activeLine = document.getElementById(linePrefix + "-line13")
                 activeLine.setAttribute('class', 'active-line')
                 goState19(doTransition);
             }
             else if (state == 20) {
-                var activeLine = document.getElementById("line14")
+                var activeLine = document.getElementById(linePrefix + "-line14")
                 activeLine.setAttribute('class', 'active-line')
                 goState20(doTransition);
             }
             else if (state == 21) {
-                var activeLine = document.getElementById("line15")
+                var activeLine = document.getElementById(linePrefix + "-line15")
                 activeLine.setAttribute('class', 'active-line')
                 goState21(doTransition);
             }
             else if (state == 22) {
-                var activeLine = document.getElementById("line17")
+                var activeLine = document.getElementById(linePrefix + "-line17")
                 activeLine.setAttribute('class', 'active-line')
                 goState22(doTransition);
             }
             else if (state == 23) {
-                var activeLine = document.getElementById("line19")
+                var activeLine = document.getElementById(linePrefix + "-line19")
                 activeLine.setAttribute('class', 'active-line')
                 goState23(doTransition);
             }
             else if (state == 24) {
-                var activeLine = document.getElementById("line20")
+                var activeLine = document.getElementById(linePrefix + "-line20")
                 activeLine.setAttribute('class', 'active-line')
                 goState24(doTransition);
             }
             else if (state == 25) {
-                var activeLine = document.getElementById("line22")
+                var activeLine = document.getElementById(linePrefix + "-line22")
                 activeLine.setAttribute('class', 'active-line')
                 goState25(doTransition);
             }
             else if (state == 26) {
-                var activeLine = document.getElementById("line10")
+                var activeLine = document.getElementById(linePrefix + "-line10")
                 activeLine.setAttribute('class', 'active-line')
                 goState26(doTransition);
             }
             else if (state == 27) {
-                var activeLine = document.getElementById("line12")
+                var activeLine = document.getElementById(linePrefix + "-line12")
                 activeLine.setAttribute('class', 'active-line')
                 goState27(doTransition);
             }
             else if (state == 28) {
-                var activeLine = document.getElementById("line13")
+                var activeLine = document.getElementById(linePrefix + "-line13")
                 activeLine.setAttribute('class', 'active-line')
                 goState28(doTransition);
             }
             else if (state == 29) {
-                var activeLine = document.getElementById("line14")
+                var activeLine = document.getElementById(linePrefix + "-line14")
                 activeLine.setAttribute('class', 'active-line')
                 goState29(doTransition);
             }
             else if (state == 30) {
-                var activeLine = document.getElementById("line15")
+                var activeLine = document.getElementById(linePrefix + "-line15")
                 activeLine.setAttribute('class', 'active-line')
                 goState30(doTransition);
             }
             else if (state == 31) {
-                var activeLine = document.getElementById("line17")
+                var activeLine = document.getElementById(linePrefix + "-line17")
                 activeLine.setAttribute('class', 'active-line')
                 goState31(doTransition);
             }
             else if (state == 32) {
-                var activeLine = document.getElementById("line19")
+                var activeLine = document.getElementById(linePrefix + "-line19")
                 activeLine.setAttribute('class', 'active-line')
                 goState32(doTransition);
             }
             else if (state == 33) {
-                var activeLine = document.getElementById("line20");
+                var activeLine = document.getElementById(linePrefix + "-line20");
                 activeLine.setAttribute('class', 'active-line');
                 goState33(doTransition);
             }
             else if (state == 34) {
-                var activeLine = document.getElementById("line22");
+                var activeLine = document.getElementById(linePrefix + "-line22");
                 activeLine.setAttribute('class', 'active-line');
                 goState34(doTransition);
             }
             else if (state == 35) {
-                var activeLine = document.getElementById("line10");
+                var activeLine = document.getElementById(linePrefix + "-line10");
                 activeLine.setAttribute('class', 'active-line');
                 goState35(doTransition);
             }
             else if (state == 36) {
-                var activeLine = document.getElementById("line12");
+                var activeLine = document.getElementById(linePrefix + "-line12");
                 activeLine.setAttribute('class', 'active-line');
                 goState36(doTransition);
             }
             else if (state == 37) {
-                var activeLine = document.getElementById("line13");
+                var activeLine = document.getElementById(linePrefix + "-line13");
                 activeLine.setAttribute('class', 'active-line');
                 goState37(doTransition);
             }
             else if (state == 38) {
-                var activeLine = document.getElementById("line14");
+                var activeLine = document.getElementById(linePrefix + "-line14");
                 activeLine.setAttribute('class', 'active-line');
                 goState38(doTransition);
             }
             else if (state == 39) {
-                var activeLine = document.getElementById("line15");
+                var activeLine = document.getElementById(linePrefix + "-line15");
                 activeLine.setAttribute('class', 'active-line');
                 goState39(doTransition);
             }
             else if (state == 40) {
-                var activeLine = document.getElementById("line17");
+                var activeLine = document.getElementById(linePrefix + "-line17");
                 activeLine.setAttribute('class', 'active-line');
                 goState40(doTransition);
             }
             else if (state == 41) {
-                var activeLine = document.getElementById("line19");
+                var activeLine = document.getElementById(linePrefix + "-line19");
                 activeLine.setAttribute('class', 'active-line');
                 goState41(doTransition);
             }
             else if (state == 42) {
-                var activeLine = document.getElementById("line20");
+                var activeLine = document.getElementById(linePrefix + "-line20");
                 activeLine.setAttribute('class', 'active-line');
                 goState42(doTransition);
             }
             else if (state == 43) {
-                var activeLine = document.getElementById("line22");
+                var activeLine = document.getElementById(linePrefix + "-line22");
                 activeLine.setAttribute('class', 'active-line');
                 goState43(doTransition);
             }
@@ -1017,7 +1018,7 @@
             setupHoverHandlers("#o", ".outputs");
             setupHoverHandlers("#p", ".probabilities");
         }
-        
+
         function placeText_Big(name, id, value, xOffset, yOffset, fadeIn, contentsChanged) {
 
             //TODO: Make it look better (font and size)
