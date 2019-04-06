@@ -52,7 +52,7 @@
         code {
             padding: 2px 5px;
             font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
-            background: #eee;
+            background: #ddd;
         }
 
         .comment {
@@ -151,8 +151,8 @@
     </div>
 
     <section>
-        Much has been said about the <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">unreasonable
-        effectiveness of recurrent neural networks</a>. In particular I know:
+        After reading about the <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">unreasonable
+        effectiveness of recurrent neural networks</a> I know:
             <ul>
                 <li>They work with sequences (eg. stock data, natural language)</li>
                 <li>We can train them with backprop, the same way we do with convolutional nets</li>
@@ -167,8 +167,8 @@
             
     </section>
     <section>
-        One thing I have always struggled with is visualizing what's actually going on.
-        I have a lot of trouble reconciling <strong>this code:</strong>
+        One thing I struggle with is visualizing what's actually going on.
+        In particular I have a lot of trouble reconciling <strong>this code:</strong>
     </section>
 
     <section>
@@ -203,29 +203,25 @@
         output in the sequence: <br />
         <code>1</code>,<code>0</code>,<code>1</code>,<code>0</code>,<code>1</code>,<code>0</code>,<code>1</code>,<code>0</code>,<code>1</code>,<code>0</code>&nbsp;<code>...</code>&nbsp;<br/>
         This
-        seems simple. Maybe even <strong>too</strong> simple, but a simple sequence like this will allow us to have small weight matrices, the largest of
+        seems simple. Maybe even <strong>too</strong> simple, but a sequence like this will allow us to have small weight matrices, the largest of
         which will be just <code>3x3</code>.
     </section>
 
     <section>
         For this visualization we’ll use a <a
             href="https://github.com/JoshVarty/IntroToRNNs/blob/master/rnn.py">modified</a> version of Min-Char RNN.
-        Since we’re preicting such a simple pattern we’ll use<span style="color:var(--color-neutral-600);"> a
-        </span><code>vocab_size</code><span style="color:var(--color-neutral-600);">&nbsp;of </span><code>2</code><span
-            style="color:var(--color-neutral-600);">&nbsp;and a </span><code>hidden_size</code><span
-            style="color:var(--color-neutral-600);">&nbsp;of </span><code>3</code><span
-            style="color:var(--color-neutral-600);">.&nbsp;</span>
+        Our <code>vocab_size</code> is just <code>2</code> (each input character is <code>1</code> or <code>0</code>) and since we’re predicting such a simple pattern we’ll use a <code>hidden_size</code> of <code>3</code>.
     </section>
 
     <section>
-        Our program is fed an input of <code>1</code>,<code>0</code>,<code>1</code>,<code>0</code>&nbsp;and is tasked
+        Our network is fed an input of <code>1</code>,<code>0</code>,<code>1</code>,<code>0</code>&nbsp;and is tasked
         with predicting the target output sequence <code>0</code>,<code>1</code>,<code>0</code>,<code>1</code>, one
-        character at a time. Since our network hasn’t been trained, observe that it output probabilities of roughly
+        character at a time. Since our network is untrained, note that it outputs probabilities of roughly
         <code>0.50</code>&nbsp;at each time step.
     </section>
 
     <section>
-        Click "Play" below.
+        Click "Play" below or step through at your own pace:
     </section>
 
     <pre>
@@ -267,9 +263,10 @@
         The big takeaways here are:
         <ul>
             <li>Computing hidden state is most of the work</li>
+            <li>We use the same weights for every input of our forward pass</li>
             <li><code>hidden_states[t-1]</code> changes as we go through each step</li>
-            <li>We output probabilities for the next character at each step</li>
-            <li>Since our network is untrained the probabilities are:</li>
+            <li>We output probabilities for the target character at each step</li>
+            <li>Since our network is untrained the output probabilities are:</li>
             <ul>
                 <li>50% <code>0</code></li>
                 <li>50% <code>1</code></li>
@@ -320,6 +317,26 @@
     </div>
 
     <svg id="trained-diagram" width=1500 height=540></svg>
+    
+    <section>
+        This time our network outputs probabilities that alternate between <code>0</code> and <code>1</code> with almost 100% certainty. If you pay close attention to <code>hidden_state</code> you'll notice that it 
+        also alternates between <code>[1,-1,1]</code> and <code>[-1,1,-1].</code> I can't pretend that I know why this is, but it's interesting to see.
+    </section>
+
+    <section>
+        In fact, the more we start thinking about it, the more it's interesting that <code>hidden_state</code> learns anything at all. Hidden state is meant to encode useful information about things we've seen in the past, but our problem doesn't depend on past information. 
+        Our network should really only care about whatever the current input (<code>1</code> or <code>0</code>) to our network is.
+    </section>
+
+    <h2>Make Hidden State Important Again</h2>
+
+    <section>
+        If we want hidden state to be useful, we'll have to give it a problem where it's actually required. For this, we'll modify our sequence slightly and have our network predict the next character in 
+        <br/>
+        <code>1</code>,<code>1</code>,<code>0</code>,<code>1</code>,<code>1</code>,<code>0</code>,<code>1</code>,<code>1</code>,<code>0</code>, <code>...</code>&nbsp;<br/>
+        Now our network can no longer get away with predicting the opposite of the input. It will have to take special care to determine whether we're on the first or second <code>1</code> when predicting the output.
+        
+    </section>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
