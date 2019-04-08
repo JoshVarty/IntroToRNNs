@@ -147,7 +147,7 @@
 
     <div class="header">
         <h1>Visualizing RNNs</h1>
-        <h2>Josh Varty</h2>
+        <h2><a href='https://twitter.com/ThisIsJoshVarty'>Josh Varty</a></h2>
     </div>
 
     <section>
@@ -319,7 +319,7 @@
     <svg id="trained-diagram" width=1500 height=540></svg>
     
     <section>
-        This time our network outputs probabilities that alternate between <code>0</code> and <code>1</code> with almost 100% certainty. If you pay close attention to <code>hidden_state</code> you'll notice that it 
+        This time our network outputs probabilities for <code>0</code> and <code>1</code> with almost 100% confidence. If you pay close attention to <code>hidden_state</code> you'll notice that it 
         also alternates between <code>[1,-1,1]</code> and <code>[-1,1,-1].</code> I can't pretend that I know why this is, but it's interesting to see.
     </section>
 
@@ -328,14 +328,67 @@
         Our network should really only care about whatever the current input (<code>1</code> or <code>0</code>) to our network is.
     </section>
 
-    <h2>Make Hidden State Important Again</h2>
+    <h2>Making Hidden State Useful</h2>
 
     <section>
-        If we want hidden state to be useful, we'll have to give it a problem where it's actually required. For this, we'll modify our sequence slightly and have our network predict the next character in 
+        If we want hidden state to be useful, we'll have to give it a problem where it's actually needed. We'll modify our original sequence slightly and have our network predict the next character in 
         <br/>
         <code>1</code>,<code>1</code>,<code>0</code>,<code>1</code>,<code>1</code>,<code>0</code>,<code>1</code>,<code>1</code>,<code>0</code>, <code>...</code>&nbsp;<br/>
-        Now our network can no longer get away with predicting the opposite of the input. It will have to take special care to determine whether we're on the first or second <code>1</code> when predicting the output.
-        
+        Now our network can no longer get away with simply predicting the opposite of the input. It will have to take special care to determine whether we're on the first or second <code>1</code> when predicting the output.
+    </section>
+
+    <section>
+        Below is an RNN trained to respond to input characters <code>1</code>,<code>1</code>,<code>0</code>,<code>1</code> with <code>1</code>,<code>0</code>,<code>1</code>,<code>1</code>.
+        Keep an eye on <code>hidden_state</code> as the animation progresses.
+    </section>
+
+      <pre>
+<span id="new-trained-line0"><span class='comment'>#Initialize weights and biases</span></span>
+<span id="new-trained-line1"><span class='input_weights_U'>input_weights_U</span> = ...  <span class="comment">#trained via gradient descent</span></span>
+<span id="new-trained-line2"><span class='hidden_weights_W'>hidden_weights_W</span> = ... <span class="comment">#trained via gradient descent</span></span>
+<span id="new-trained-line3"><span class='hidden_bias'>hidden_bias</span> = ...      <span class="comment">#trained via gradient descent</span></span>
+<span id="new-trained-line4"><span class='output_weights_V'>output_weights_V</span> = ... <span class="comment">#trained via gradient descent</span></span>
+<span id="new-trained-line5"><span class='output_bias'>output_bias</span> = ...      <span class="comment">#trained via gradient descent</span></span>
+<span id="new-trained-line6"><span class='comment'>#Forward pass</span></span>
+<span id="new-trained-line7">xs, hidden_states, outputs, probabilities = {}, {}, {}, {}</span>
+<span id="new-trained-line8"><span class='loss'>loss</span> = 0</span>
+<span id="new-trained-line9">hidden_states[-1] = np.copy(hidden_state_prev)</span>
+<span id="new-trained-line10"><span class="for">for</span> t <span class="in">in</span> range(len(inputs)): </span>
+    <span id="new-trained-line11"><span class="comment"># one-hot-encoding the input character</span> </span>
+    <span id="new-trained-line12"><span class='xs'>xs[t]</span> = np.zeros((vocab_size,1))  </span>
+    <span id="new-trained-line13"><span class='character'>character</span> = inputs[t]</span>
+    <span id="new-trained-line14"><span class='xs'>xs[t]</span>[character] = 1 </span>
+    <span id="new-trained-line15"><span class='target'>target</span> = targets[t]</span>
+    <span id="new-trained-line16"><span class="comment"># Compute hidden state </span></span>
+    <span id="new-trained-line17"><span class='hidden_state'>hidden_states[t]</span> = np.tanh(<span class='input_weights_U'>input_weights_U</span> @ <span class='xs'>xs[t]</span> + <span class='hidden_weights_W'>hidden_weights_W</span> @ <span class='hidden_state_prev'>hidden_states[t-1]</span> + <span class='hidden_bias'>hidden_bias</span>) </span>
+    <span id="new-trained-line18"><span class="comment"># Compute output and probabilities</span></span>
+    <span id="new-trained-line19"><span class='outputs'>outputs[t]</span> = <span class='output_weights_v'>output_weights_V</span> @ <span class="hidden_state">hidden_states[t]</span> + <span class='output_bias'>output_bias</span></span>
+    <span id="new-trained-line20"><span class='probabilities'>probabilities[t]</span> = np.exp(<span class='outputs'>outputs[t]</span>) / np.sum(np.exp(<span class='outputs'>outputs[t]</span>))</span>
+    <span id="new-trained-line21"><span class="comment">#Compute cross-entropy loss</span></span>
+    <span id="new-trained-line22"><span class='loss'>loss</span> += -np.log(<span class='probabilities'>probabilities[t]</span>[<span class='target'>target</span>,0]) </span></pre>
+    <div class="controls-container">
+        <button class="back" onclick="goBack('new-trained')" title="Back"></button>
+        <button class="play" onclick="play('new-trained')" title="Play"></button>
+        <button class="stop" onclick="pause('new-trained')" title="Stop"></button>
+        <button class="forward" onclick="goFoward('new-trained')" title="Next"></button>
+    </div>
+
+    <svg id="new-trained-diagram" width=1500 height=540></svg>
+
+    <section>
+        This time hidden state is actually encoding useful information we can observe directly. Whenever the network sees the first <code>1</code> in 
+        the sequence, hidden state is set to <code>[0.72, 0.58, 0.96]</code>. You can see this at the first and final steps of the animation. In contrast
+        when the network sees the second <code>1</code>, hidden state is set to <code>[-0.76, 0.89, 0.95]</code>. Varying hidden state like this allows our network
+        to output the proper probabilities at each step despite our inputs (<code>1</code>) and parameters (<code>U</code>, <code>W</code> and <code>V</code>) being the same.
+    </section>
+
+    <section>
+        Indeed much of the power of RNNs stems from hidden state and interesting ways of convincing our network to either remember or forget different things about the input sequences.
+        Andrej's original <a href='http://karpathy.github.io/2015/05/21/rnn-effectiveness/'>blog post</a> covers this in detail for a number of different domains.  
+    </section>
+
+    <section>
+        Interested in more about RNNs? Follow me on Twitter at: <a href="https://twitter.com/ThisIsJoshVarty">@ThisIsJoshVarty</a>
     </section>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -380,9 +433,46 @@
             "probabilities_3":[[0.502528, 0.497472]],
         };
 
+        var newTrainedParametersDict = {
+            "U": [[ 0.92309407, -1.09796539,  1.1311033 ],[-0.34187003,  0.92498021, -0.57262951]],
+            "W": [[ 0.36261242,  0.05800492,  0.65233051],[-0.92407338,  0.28833216, -2.01059973],[-0.95766068,  0.69999298, -1.16823456]],
+            "hidden_bias":[[ 0.54537906, -0.39005702,  0.60530282]],
+            "output_weights": [[-1.55536037,  1.40832921],[ 1.03402301, -1.27653649],[-3.05378695,  3.23177656]],
+            "output_bias": [[-0.85654389,  0.85654389]],
+            "loss": 0,
+            "loss_0": 0.0001957,
+            "loss_1": 0.0003945,
+            "loss_2": 0.0004583,
+            "loss_3": 0.0006542,
+            "hidden_state_prev": [[ 0.85591395, -0.9593103, 0.50792756]],
+            "input_tensor": [[0.0, 0.0]],
+            "input_tensor_0": [[0.0, 1.0]],
+            "input_tensor_1": [[0.0, 1.0]],
+            "input_tensor_2": [[1.0, 0.0]],
+            "input_tensor_3": [[0.0, 1.0]],
+            "character_0": 1,
+            "character_1": 1,
+            "character_2": 0,
+            "character_3": 1,
+            "target_0": 1,
+            "target_1": 0,
+            "target_2": 1,
+            "target_3": 1,
+            "hidden_state_0": [[0.72301076, 0.58069862, 0.95844325]],
+            "hidden_state_1": [[-0.75684583,  0.88859308, -0.94500874]],
+            "hidden_state_2": [[ 0.85592545, -0.9593124 ,  0.5080363 ]],
+            "hidden_state_3": [[0.72296397, 0.58074911, 0.95843386]],
+            "outputs_0": [[-4.30751193,  4.23097251]],
+            "outputs_1": [[ 4.12530518, -4.3977228 ]],
+            "outputs_2": [[-4.73120214,  4.9284258 ]],
+            "outputs_3": [[-4.30735828,  4.23081182]],
+            "probabilities_0":[[1.95748437e-04, 9.99804252e-01]],
+            "probabilities_1":[[9.99801203e-01, 1.98796913e-04]],
+            "probabilities_2":[[6.38041869e-05, 9.99936196e-01]],
+            "probabilities_3":[[1.95809966e-04, 9.99804190e-01]],
+        };
 
-
-         var trainedParametersDict = {
+        var trainedParametersDict = {
             "U": [[ 0.44096527, -0.60196343,  0.70867724], [-0.45647804,  0.80698425, -0.80276506]],
             "W": [[-0.25723532,  0.43204388, -0.36451699], [ 0.64050234, -0.66063676,  0.44806243],[-0.62353313,  0.58582799, -0.83103028]],
             "hidden_bias": [[-0.05135775, -0.01205102, -0.04725878]],
@@ -429,6 +519,7 @@
 
         let MAX_STATE_NUMBER = 44;
         var trained_state = -1;
+        var new_trained_state = -1;
         var untrained_state = -1;
 
         var runningInterval = null;
@@ -444,11 +535,17 @@
                 trained_state = Math.max(trained_state - 1, 0);
                 state = trained_state;
             }
-            else {
+            else if (linePrefix === "untrained") {
                 containerId = '#untrained-diagram';
                 paramDict = untrainedParametersDict;
                 untrained_state = Math.max(untrained_state - 1, 0);
                 state = untrained_state
+            }
+            else {
+                containerId = '#new-trained-diagram';
+                paramDict = newTrainedParametersDict;
+                new_trained_state = Math.max(new_trained_state - 1, 0);
+                state = new_trained_state
             }
             
             clearInterval(runningInterval);
@@ -471,18 +568,23 @@
                 trained_state = (trained_state + 1) % MAX_STATE_NUMBER;
                 state = trained_state;
             }
-            else {
+            else if (linePrefix === "untrained") {
                 containerId = '#untrained-diagram';
                 paramDict = untrainedParametersDict;
                 untrained_state = (untrained_state + 1) % MAX_STATE_NUMBER;
                 state = untrained_state
+            }
+            else {
+                containerId = '#new-trained-diagram';
+                paramDict = newTrainedParametersDict;
+                new_trained_state = (new_trained_state + 1) % MAX_STATE_NUMBER;
+                state = new_trained_state
             }
 
             goState(state, containerId, linePrefix, paramDict, true)
         }
 
         function pause() {
-            var containerId = '#untrained-diagram';
             clearInterval(runningInterval);
         }
 
@@ -1518,6 +1620,7 @@
 
         clearAndGoForward('untrained')
         clearAndGoForward('trained')
+        clearAndGoForward('new-trained')
     </script>
 </body>
 
